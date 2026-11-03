@@ -1,0 +1,57 @@
+- generic [active] [ref=f6e1]:
+  - button "Open Next.js Dev Tools" [ref=f6e151] [cursor=pointer]
+  - alert [ref=f6e155]: Pravega — Evidence-Verified Placement Intelligence
+  - generic [ref=f6e250]:
+    - complementary [ref=f6e251]:
+      - link "Pravega home" [ref=f6e253] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e254]: VPPCOE · T&P Cell
+        - generic [ref=f6e255]: Pravega.
+      - generic [ref=f6e256]:
+        - paragraph [ref=f6e257]: T&P Officer
+        - navigation "Main" [ref=f6e258]:
+          - link "Decision Queue" [ref=f6e259] [cursor=pointer]:
+            - /url: /officer
+            - generic [aria-hidden] [ref=f6e260]: ▍
+            - text: Decision Queue
+          - link "Cohort Heatmap" [ref=f6e261] [cursor=pointer]:
+            - /url: /officer/heatmap
+            - generic [aria-hidden] [ref=f6e262]: ▍
+            - text: Cohort Heatmap
+          - link "Eligibility Rules" [ref=f6e263] [cursor=pointer]:
+            - /url: /officer/rules
+            - generic [aria-hidden] [ref=f6e264]: ▍
+            - text: Eligibility Rules
+          - link "Fairness Check" [ref=f6e265] [cursor=pointer]:
+            - /url: /officer/fairness
+            - generic [aria-hidden] [ref=f6e266]: ▍
+            - text: Fairness Check
+          - link "Audit Trail" [ref=f6e267] [cursor=pointer]:
+            - /url: /officer/audit
+            - generic [aria-hidden] [ref=f6e268]: ▍
+            - text: Audit Trail
+      - generic [ref=f6e269]:
+        - paragraph [ref=f6e270]: Anjali Deshmukh
+        - paragraph [ref=f6e271]: "tenant: vpcoe"
+        - button "Sign out" [ref=f6e273]
+    - main [ref=f6e274]:
+      - generic [ref=f6e275]:
+        - generic [ref=f6e276]:
+          - paragraph [ref=f6e277]: AI drafts · human decides
+          - heading "Decision queue" [level=1] [ref=f6e278]
+          - paragraph [ref=f6e279]: Agents propose. You dispose. Every decision writes to the audit trail.
+        - paragraph [ref=f6e281]: 0 pending
+      - generic [ref=f6e282]:
+        - paragraph [ref=f6e358]: Queue is clear. Outstanding agent drafts will appear here.
+        - generic [ref=f6e349]:
+          - heading "Decided" [level=2] [ref=f6e350]
+          - list [ref=f6e351]:
+            - listitem [ref=f6e352]:
+              - generic [ref=f6e353]: agr-1 Nimbus Tech — Backend Dev interview set
+              - generic [ref=f6e354]: approved
+            - listitem [ref=f6e355]:
+              - generic [ref=f6e356]: agr-2 Nimbus Tech — eligibility sweep (7 students)
+              - generic [ref=f6e357]: overridden
+            - listitem [ref=f6e359]:
+              - generic [ref=f6e360]: agr-3 Nimbus Tech — 2 slots, Thu 14:00 / Fri 10:00
+              - generic [ref=f6e361]: deferred

@@ -1,0 +1,71 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - complementary [ref=f7e3]:
+      - link "Pravega home" [ref=f7e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f7e6]: VPPCOE · T&P Cell
+        - generic [ref=f7e7]: Pravega.
+      - generic [ref=f7e8]:
+        - paragraph [ref=f7e9]: T&P Officer
+        - navigation "Main" [ref=f7e10]:
+          - link "Decision Queue" [ref=f7e11] [cursor=pointer]:
+            - /url: /officer
+            - generic [aria-hidden] [ref=f7e12]: ▍
+            - text: Decision Queue
+          - link "Cohort Heatmap" [ref=f7e13] [cursor=pointer]:
+            - /url: /officer/heatmap
+            - generic [aria-hidden] [ref=f7e14]: ▍
+            - text: Cohort Heatmap
+          - link "Eligibility Rules" [ref=f7e15] [cursor=pointer]:
+            - /url: /officer/rules
+            - generic [aria-hidden] [ref=f7e16]: ▍
+            - text: Eligibility Rules
+          - link "Fairness Check" [ref=f7e17] [cursor=pointer]:
+            - /url: /officer/fairness
+            - generic [aria-hidden] [ref=f7e18]: ▍
+            - text: Fairness Check
+          - link "Audit Trail" [ref=f7e19] [cursor=pointer]:
+            - /url: /officer/audit
+            - generic [aria-hidden] [ref=f7e20]: ▍
+            - text: Audit Trail
+      - generic [ref=f7e21]:
+        - paragraph [ref=f7e22]: Anjali Deshmukh
+        - paragraph [ref=f7e23]: "tenant: vpcoe"
+        - button "Sign out" [ref=f7e25]
+    - main [ref=f7e26]:
+      - generic [ref=f7e27]:
+        - paragraph [ref=f7e28]: Append-only
+        - heading "The trail never lies" [level=1] [ref=f7e29]
+        - paragraph [ref=f7e30]: Every action on this platform writes one row here — verifications, eligibility decisions, agent approvals, overrides and appeals. There is no update path, and no delete tool exists in the app.
+      - table [ref=f7e32]:
+        - rowgroup [ref=f7e33]:
+          - row [ref=f7e34]:
+            - columnheader "#" [ref=f7e35]
+            - columnheader "Time" [ref=f7e36]
+            - columnheader "Action" [ref=f7e37]
+            - columnheader "Actor" [ref=f7e38]
+            - columnheader "Target" [ref=f7e39]
+            - columnheader "Detail" [ref=f7e40]
+        - rowgroup [ref=f7e41]:
+          - row [ref=f7e42]:
+            - cell "4" [ref=f7e43]
+            - cell "4 Nov, 12:41:16 am" [ref=f7e44]
+            - cell "agent.deferred" [ref=f7e45]
+            - cell "Anjali Deshmukh" [ref=f7e46]
+            - cell "agent_run:agr-3" [ref=f7e47]
+            - 'cell "{\"kind\":\"schedule_draft\",\"reason\":null,\"subject\":\"Nimbus Tech — 2 slots, Thu 14:00 / Fri 10:00\"}" [ref=f7e48]'
+          - row [ref=f7e50]:
+            - cell "3" [ref=f7e51]
+            - cell "4 Nov, 12:41:00 am" [ref=f7e52]
+            - cell "agent.overridden" [ref=f7e53]
+            - cell "Anjali Deshmukh" [ref=f7e54]
+            - cell "agent_run:agr-2" [ref=f7e55]
+            - 'cell "{\"kind\":\"eligibility_sweep\",\"reason\":\"Blocked list looks stale - Karan should be c2 (backlogs) not c1; re-run sweep after Priya consent form lands\",\"subject\":\"Nimbus Tech — eligibility sweep (7 students)\"}" [ref=f7e56]'
+          - row [ref=f7e58]:
+            - cell "2" [ref=f7e59]
+            - cell "4 Nov, 12:40:42 am" [ref=f7e60]
+            - cell "agent.approved" [ref=f7e61]
+            - cell "Anjali Deshmukh" [ref=f7e62]
+            - cell "agent_run:agr-1" [ref=f7e63]
+            - 'cell "{\"kind\":\"interview_questions\",\"reason\":null,\"subject\":\"Nimbus Tech — Backend Dev interview set\"}" [ref=f7e64]'
+  - button "Open Next.js Dev Tools" [ref=f7e71] [cursor=pointer]

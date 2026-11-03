@@ -1,0 +1,152 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - complementary [ref=f5e3]:
+      - link "Pravega home" [ref=f5e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f5e6]: VPPCOE · T&P Cell
+        - generic [ref=f5e7]: Pravega.
+      - generic [ref=f5e8]:
+        - paragraph [ref=f5e9]: Student
+        - navigation "Main" [ref=f5e10]:
+          - link "My Ledger" [ref=f5e11] [cursor=pointer]:
+            - /url: /student
+            - generic [aria-hidden] [ref=f5e12]: ▍
+            - text: My Ledger
+          - link "Mock Drive" [ref=f5e13] [cursor=pointer]:
+            - /url: /student/mock-drive
+            - generic [aria-hidden] [ref=f5e14]: ▍
+            - text: Mock Drive
+          - link "Learning Path" [ref=f5e15] [cursor=pointer]:
+            - /url: /student/learning-path
+            - generic [aria-hidden] [ref=f5e16]: ▍
+            - text: Learning Path
+          - link "My Drives" [ref=f5e17] [cursor=pointer]:
+            - /url: /student/drives
+            - generic [aria-hidden] [ref=f5e18]: ▍
+            - text: My Drives
+          - link "My Privacy" [ref=f5e19] [cursor=pointer]:
+            - /url: /student/consent
+            - generic [aria-hidden] [ref=f5e20]: ▍
+            - text: My Privacy
+      - generic [ref=f5e21]:
+        - paragraph [ref=f5e22]: Rahul Jadhav
+        - paragraph [ref=f5e23]: "tenant: vpcoe"
+        - button "Sign out" [ref=f5e25]
+    - main [ref=f5e26]:
+      - generic [ref=f5e27]:
+        - generic [ref=f5e28]:
+          - paragraph [ref=f5e29]: My verified profile
+          - heading "Skill ledger — Rahul · Computer Engineering · Final year · CGPA 8.1" [level=1] [ref=f5e30]:
+            - text: Skill ledger — Rahul
+            - generic [ref=f5e31]: · Computer Engineering · Final year · CGPA 8.1
+        - generic [ref=f5e32]:
+          - generic [ref=f5e33]:
+            - paragraph [ref=f5e34]:
+              - text: "3"
+              - generic [ref=f5e35]: /5
+            - paragraph [ref=f5e36]: Verified skills
+          - link "Verify from GitHub →" [ref=f5e37] [cursor=pointer]:
+            - /url: /student/verify
+      - generic [ref=f5e38]:
+        - region "Skill ledger" [ref=f5e39]:
+          - table [ref=f5e40]:
+            - rowgroup [ref=f5e41]:
+              - row [ref=f5e42]:
+                - columnheader "Skill" [ref=f5e43]
+                - columnheader "State" [ref=f5e44]
+                - columnheader "Confidence" [ref=f5e45]
+                - columnheader "Expires" [ref=f5e46]
+                - columnheader "JD demand" [ref=f5e47]
+            - rowgroup [ref=f5e48]:
+              - row [ref=f5e49]:
+                - cell "Git ESCO" [ref=f5e50]:
+                  - text: Git
+                  - generic [ref=f5e51]: ESCO
+                - cell "verified" [ref=f5e52]
+                - cell "88/100" [ref=f5e55]
+                - cell "7 Jul 27" [ref=f5e56]
+                - cell "76%" [ref=f5e57]
+              - row [ref=f5e58]:
+                - cell "Python ESCO" [ref=f5e59]:
+                  - text: Python
+                  - generic [ref=f5e60]: ESCO
+                - cell "claimed" [ref=f5e61]
+                - cell "20/100" [ref=f5e64]
+                - cell "—" [ref=f5e65]
+                - cell "68%" [ref=f5e66]
+              - row [ref=f5e67]:
+                - cell "SQL ESCO" [ref=f5e68]:
+                  - text: SQL
+                  - generic [ref=f5e69]: ESCO
+                - cell "verified" [ref=f5e70]
+                - cell "82/100" [ref=f5e73]
+                - cell "13 Sept 27" [ref=f5e74]
+                - cell "61%" [ref=f5e75]
+              - row [ref=f5e76]:
+                - cell "React ESCO" [ref=f5e77]:
+                  - text: React
+                  - generic [ref=f5e78]: ESCO
+                - cell "verified" [ref=f5e79]
+                - cell "74/100" [ref=f5e82]
+                - cell "6 Aug 27" [ref=f5e83]
+                - cell "47%" [ref=f5e84]
+              - row [ref=f5e85]:
+                - cell "Docker ESCO" [ref=f5e86]:
+                  - text: Docker
+                  - generic [ref=f5e87]: ESCO
+                - cell "claimed" [ref=f5e88]
+                - cell "15/100" [ref=f5e91]
+                - cell "—" [ref=f5e92]
+                - cell "40%" [ref=f5e93]
+          - paragraph [ref=f5e94]: "States per verified-trust protocol: claimed = self-declared · verified = evidence-gated (expiry tracked) · expired = must refresh evidence"
+        - complementary [ref=f5e95]:
+          - heading "Evidence packets" [level=2] [ref=f5e96]
+          - generic [ref=f5e97]:
+            - figure [ref=f5e98]:
+              - generic [ref=f5e99]:
+                - generic [ref=f5e100]: TEST
+                - generic [ref=f5e101]: ev-r-sql-test
+              - blockquote [ref=f5e102]: SQL Proficiency Test (T&P mock series)
+              - generic [ref=f5e103]:
+                - generic [ref=f5e104]:
+                  - term [ref=f5e105]: "score:"
+                  - definition [ref=f5e106]: 82/100
+                - generic [ref=f5e107]:
+                  - term [ref=f5e108]: "version:"
+                  - definition [ref=f5e109]: tester-2025.11
+            - figure [ref=f5e110]:
+              - generic [ref=f5e111]:
+                - generic [ref=f5e112]: REPO
+                - generic [ref=f5e113]: ev-r-react-proj
+              - blockquote [ref=f5e114]: campus-events-board (React)
+              - generic [ref=f5e115]:
+                - generic [ref=f5e116]:
+                  - term [ref=f5e117]: "files:"
+                  - definition [ref=f5e118]: "31"
+                - generic [ref=f5e119]:
+                  - term [ref=f5e120]: "commits:"
+                  - definition [ref=f5e121]: "64"
+                - generic [ref=f5e122]:
+                  - term [ref=f5e123]: "languageShare:"
+                  - definition [ref=f5e124]: "{\"JavaScript\":61,\"TypeScript\":33}"
+            - figure [ref=f5e125]:
+              - generic [ref=f5e126]:
+                - generic [ref=f5e127]: ATTEST
+                - generic [ref=f5e128]: ev-r-git-attest
+              - blockquote [ref=f5e129]: Mentor attestation — Git workflow
+              - generic [ref=f5e130]:
+                - generic [ref=f5e131]:
+                  - term [ref=f5e132]: "role:"
+                  - definition [ref=f5e133]: Mentor
+                - generic [ref=f5e134]:
+                  - term [ref=f5e135]: "attestor:"
+                  - definition [ref=f5e136]: Prof. S. Kulkarni
+            - figure [ref=f5e137]:
+              - generic [ref=f5e138]:
+                - generic [ref=f5e139]: CERT
+                - generic [ref=f5e140]: ev-r-cert-old
+              - blockquote [ref=f5e141]: Python Foundation (Coursera)
+              - generic [ref=f5e143]:
+                - term [ref=f5e144]: "issuer:"
+                - definition [ref=f5e145]: Coursera
+  - button "Open Next.js Dev Tools" [ref=f5e151] [cursor=pointer]

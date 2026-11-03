@@ -1,0 +1,108 @@
+- generic [active] [ref=f6e1]:
+  - button "Open Next.js Dev Tools" [ref=f6e151] [cursor=pointer]
+  - alert [ref=f6e155]: Pravega — Evidence-Verified Placement Intelligence
+  - generic [ref=f6e250]:
+    - complementary [ref=f6e251]:
+      - link "Pravega home" [ref=f6e253] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e254]: VPPCOE · T&P Cell
+        - generic [ref=f6e255]: Pravega.
+      - generic [ref=f6e256]:
+        - paragraph [ref=f6e257]: T&P Officer
+        - navigation "Main" [ref=f6e258]:
+          - link "Decision Queue" [ref=f6e259] [cursor=pointer]:
+            - /url: /officer
+            - generic [aria-hidden] [ref=f6e260]: ▍
+            - text: Decision Queue
+          - link "Cohort Heatmap" [ref=f6e261] [cursor=pointer]:
+            - /url: /officer/heatmap
+            - generic [aria-hidden] [ref=f6e262]: ▍
+            - text: Cohort Heatmap
+          - link "Eligibility Rules" [ref=f6e263] [cursor=pointer]:
+            - /url: /officer/rules
+            - generic [aria-hidden] [ref=f6e264]: ▍
+            - text: Eligibility Rules
+          - link "Fairness Check" [ref=f6e265] [cursor=pointer]:
+            - /url: /officer/fairness
+            - generic [aria-hidden] [ref=f6e266]: ▍
+            - text: Fairness Check
+          - link "Audit Trail" [ref=f6e267] [cursor=pointer]:
+            - /url: /officer/audit
+            - generic [aria-hidden] [ref=f6e268]: ▍
+            - text: Audit Trail
+      - generic [ref=f6e269]:
+        - paragraph [ref=f6e270]: Anjali Deshmukh
+        - paragraph [ref=f6e271]: "tenant: vpcoe"
+        - button "Sign out" [ref=f6e273]
+    - main [ref=f6e274]:
+      - generic [ref=f6e275]:
+        - generic [ref=f6e276]:
+          - paragraph [ref=f6e277]: AI drafts · human decides
+          - heading "Decision queue" [level=1] [ref=f6e278]
+          - paragraph [ref=f6e279]: Agents propose. You dispose. Every decision writes to the audit trail.
+        - paragraph [ref=f6e281]: 3 pending
+      - generic [ref=f6e282]:
+        - article [ref=f6e283]:
+          - generic [ref=f6e284]:
+            - generic [ref=f6e285]: INTERVIEW SET
+            - generic [ref=f6e286]: agr-1 · conf 78%
+          - generic [ref=f6e287]:
+            - heading "Nimbus Tech — Backend Dev interview set" [level=2] [ref=f6e288]
+            - paragraph [ref=f6e289]: "why: Generated from JD skills [sql, node, docker] + cohort weakness heatmap: SQL joins (41% weak)"
+            - list [ref=f6e291]:
+              - listitem [ref=f6e292]:
+                - generic [ref=f6e293]: Q1
+                - text: "Walk through your hostel-ledger API: how would you page a 1M-row table?"
+              - listitem [ref=f6e294]:
+                - generic [ref=f6e295]: Q2
+                - text: A report query now takes 8s — diagnose and fix.
+              - listitem [ref=f6e296]:
+                - generic [ref=f6e297]: Q3
+                - text: When would you skip Docker for a small service?
+          - generic [ref=f6e298]:
+            - button "Approve" [ref=f6e300]
+            - generic [ref=f6e301]:
+              - textbox "Override reason" [ref=f6e302]:
+                - /placeholder: why are you overriding? (required, ≥8 chars)
+              - button "Override" [ref=f6e303]
+            - button "Defer" [ref=f6e305]
+        - article [ref=f6e306]:
+          - generic [ref=f6e307]:
+            - generic [ref=f6e308]: ELIGIBILITY SWEEP
+            - generic [ref=f6e309]: agr-2 · conf 85%
+          - generic [ref=f6e310]:
+            - heading "Nimbus Tech — eligibility sweep (7 students)" [level=2] [ref=f6e311]
+            - generic [ref=f6e313]:
+              - paragraph [ref=f6e314]:
+                - generic [ref=f6e315]: 3 eligible
+                - text: · rule
+                - generic [ref=f6e316]: v3
+              - list [ref=f6e317]:
+                - listitem [ref=f6e318]: u-student-vikram — 1 active backlog (rule c2)
+                - listitem [ref=f6e319]: u-student-karan — CGPA 58% < 60% + 2 backlogs
+          - generic [ref=f6e320]:
+            - button "Approve" [ref=f6e322]
+            - generic [ref=f6e323]:
+              - textbox "Override reason" [ref=f6e324]:
+                - /placeholder: why are you overriding? (required, ≥8 chars)
+              - button "Override" [ref=f6e325]
+            - button "Defer" [ref=f6e327]
+        - article [ref=f6e328]:
+          - generic [ref=f6e329]:
+            - generic [ref=f6e330]: SCHEDULE DRAFT
+            - generic [ref=f6e331]: agr-3 · conf 90%
+          - generic [ref=f6e332]:
+            - heading "Nimbus Tech — 2 slots, Thu 14:00 / Fri 10:00" [level=2] [ref=f6e333]
+            - generic [ref=f6e335]:
+              - list [ref=f6e336]:
+                - listitem [ref=f6e337]: → Thu 2026-11-05 14:00
+                - listitem [ref=f6e338]: → Fri 2026-11-06 10:00
+              - paragraph [ref=f6e339]: "clash: Zen Financial uses Fri 10:00 — conflict"
+              - paragraph [ref=f6e340]: "suggestion: Move Nimbus to Fri 14:00"
+          - generic [ref=f6e341]:
+            - button "Approve" [ref=f6e343]
+            - generic [ref=f6e344]:
+              - textbox "Override reason" [ref=f6e345]:
+                - /placeholder: why are you overriding? (required, ≥8 chars)
+              - button "Override" [ref=f6e346]
+            - button "Defer" [ref=f6e348]
