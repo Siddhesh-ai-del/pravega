@@ -68,6 +68,9 @@ export default async function HeatmapPage() {
           </table>
         </div>
 
+        <a href="/api/export/accreditation" className="mt-3 inline-flex items-center gap-2 border border-line bg-panel px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] hover:border-probe hover:text-probe">
+          Export NAAC outcomes (CSV) ↓
+        </a>
         <div className="mt-4 grid md:grid-cols-2 gap-3">
           <div className="border border-amber/40 bg-amber-wash p-3 text-[13px]">
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber">Signal</p>

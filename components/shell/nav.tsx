@@ -16,6 +16,7 @@ const NAV: Record<Role, { href: string; label: string }[]> = {
     { href: "/officer/heatmap", label: "Cohort Heatmap" },
     { href: "/officer/rules", label: "Eligibility Rules" },
     { href: "/officer/fairness", label: "Fairness Check" },
+    { href: "/officer/mail", label: "Mail Queue" },
     { href: "/officer/audit", label: "Audit Trail" },
   ],
   recruiter: [{ href: "/recruiter", label: "Talent Search" }],
