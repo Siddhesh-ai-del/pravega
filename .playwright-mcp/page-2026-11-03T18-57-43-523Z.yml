@@ -1,0 +1,75 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - complementary [ref=f4e3]:
+      - link "Pravega home" [ref=f4e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f4e6]: VPPCOE · T&P Cell
+        - generic [ref=f4e7]: Pravega.
+      - generic [ref=f4e8]:
+        - paragraph [ref=f4e9]: Student
+        - navigation "Main" [ref=f4e10]:
+          - link "My Ledger" [ref=f4e11] [cursor=pointer]:
+            - /url: /student
+            - generic [aria-hidden] [ref=f4e12]: ▍
+            - text: My Ledger
+          - link "Mock Drive" [ref=f4e13] [cursor=pointer]:
+            - /url: /student/mock-drive
+            - generic [aria-hidden] [ref=f4e14]: ▍
+            - text: Mock Drive
+          - link "Learning Path" [ref=f4e15] [cursor=pointer]:
+            - /url: /student/learning-path
+            - generic [aria-hidden] [ref=f4e16]: ▍
+            - text: Learning Path
+          - link "My Drives" [ref=f4e17] [cursor=pointer]:
+            - /url: /student/drives
+            - generic [aria-hidden] [ref=f4e18]: ▍
+            - text: My Drives
+          - link "My Privacy" [ref=f4e19] [cursor=pointer]:
+            - /url: /student/consent
+            - generic [aria-hidden] [ref=f4e20]: ▍
+            - text: My Privacy
+      - generic [ref=f4e21]:
+        - paragraph [ref=f4e22]: Rahul Jadhav
+        - paragraph [ref=f4e23]: "tenant: vpcoe"
+        - button "Sign out" [ref=f4e25]
+    - main [ref=f4e26]:
+      - generic [ref=f4e27]:
+        - paragraph [ref=f4e28]: Evidence-gated verification
+        - heading "Verify Python from your work." [level=1] [ref=f4e29]
+        - paragraph [ref=f4e30]: Claims don't travel. Repos do. We read language share, commit history, and test presence — nothing else — and flip the state only if the evidence crosses the bar. Consent is read-only and can be revoked at any time.
+      - generic [ref=f4e31]:
+        - generic [ref=f4e32]:
+          - generic [ref=f4e33]:
+            - text: Repository to verify — Python
+            - textbox "Repository to verify — Python" [ref=f4e34]:
+              - /placeholder: github.com/owner/repo
+              - text: github.com/rahuljadhav/placement-lab
+            - paragraph [ref=f4e35]:
+              - text: Try a seeded replay, or any public repo — e.g.
+              - button "github.com/pallets/click" [ref=f4e36]
+            - generic [ref=f4e37]:
+              - checkbox "I consent to read-only access (repo metadata, languages, commit timestamps). I can revoke this at any time in My Privacy." [checked] [ref=f4e38]
+              - generic [ref=f4e39]:
+                - text: I consent to read-only access (repo metadata, languages, commit timestamps). I can revoke this at any time in
+                - link "My Privacy" [ref=f4e40] [cursor=pointer]:
+                  - /url: /student/consent
+                - text: .
+            - button "Verify Python →" [ref=f4e41]
+          - list [ref=f4e42]:
+            - listitem [ref=f4e43]:
+              - generic [aria-hidden] [ref=f4e44]: "1"
+              - generic [ref=f4e45]: Fetching repository metadata (owner / repo)
+            - listitem [ref=f4e46]:
+              - generic [aria-hidden] [ref=f4e47]: "2"
+              - generic [ref=f4e48]: Sampling language bytes…
+            - listitem [ref=f4e49]:
+              - generic [aria-hidden] [ref=f4e50]: "3"
+              - generic [ref=f4e51]: Pulling last 100 commits and file tree
+            - listitem [ref=f4e52]:
+              - generic [aria-hidden] [ref=f4e53]: "4"
+              - generic [ref=f4e54]: Applying evidence thresholds (≥25% Python, ≥5 commits)
+        - complementary [ref=f4e55]:
+          - heading "Evidence chain" [level=2] [ref=f4e56]
+          - generic [ref=f4e57]: Rahul, your check will resolve into one of two outcomes — there is no "submit & hope". The chain shows why it passed or failed.
+  - button "Open Next.js Dev Tools" [ref=f4e63] [cursor=pointer]
+  - alert [ref=f4e67]

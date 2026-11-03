@@ -31,6 +31,14 @@ Time remaining: ~36h at kickoff
   deterministic explainable agents, fixtures-first external data.
 - 2026-11-03: Trigger cuts agreed: behind at slice 6 → drop slice 8 to static
   cameo and fold slice 9 into heatmap export.
+- 2026-11-03 (Nov 04, ~00:10 IST): Reused user's existing local Supabase stack
+  (port 54322); created dedicated `pravega` DB. Next 16 cacheComponents ENABLED
+  by default; auth-heavy internal tool → disabled per official docs
+  ("caching-without-cache-components"); pages use plain cookies() reads.
+- 2026-11-03/04: npm scripts can't run local bins in this sandbox — run tools
+  directly (./node_modules/.bin/tsc, next, tsx).
+- 2026-11-04: S0+S1 done & verified live: login → ledger (verified/claimed
+  flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 
 ## Artifacts
 - Research brief: `docs/research-brief.md` ✅ (2026-11-03, PASS WITH NOTES; provenance in outputs/.drafts/)
@@ -44,7 +52,7 @@ Time remaining: ~36h at kickoff
 - [x] research (2026-11-03 — brief delivered with inline sources)
 - [x] ideation (2026-11-03 — A+folded B/C chosen; matrix in docs/ideation.md)
 - [x] blueprint (2026-11-03 — docs/plan.md + docs/design-direction.md; git initialized, docs committed)
-- [ ] build
+- [x] build — slices 0+1 done & verified (Nov 04 ~00:10 IST). Next: slice 2 (GitHub verify flip).
 - [ ] harden
 - [ ] deploy
 - [ ] win package
