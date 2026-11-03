@@ -37,7 +37,10 @@ Time remaining: ~36h at kickoff
   ("caching-without-cache-components"); pages use plain cookies() reads.
 - 2026-11-03/04: npm scripts can't run local bins in this sandbox — run tools
   directly (./node_modules/.bin/tsc, next, tsx).
-- 2026-11-04: S0+S1 done & verified live: login → ledger (verified/claimed
+- 2026-11-04: S2 done & verified live (Playwright): Rahul Python flip via
+  labeled fixtures replay; audit rows written; seed re-run to reset demo state.
+  Sandbox rule: kill servers with `fuser -k <port>/tcp` (pkill self-matches).
+- 2026-11-03/04: S0+S1 done & verified live: login → ledger (verified/claimed
   flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 
 ## Artifacts
