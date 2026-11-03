@@ -1,7 +1,9 @@
-# HACKATHON STATE — Quasar 5.0 (VPPCOEVA, 36-Hour International Hackathon)
-Status: phase-6 | Deploy
-Deadline: ~11:30 IST / ~06:00 UTC, Thu Nov 5, 2026 (36h from start ~23:30 IST Tue Nov 3, 2026)
-Time remaining: ~36h at kickoff
+# HACKATHON STATE — Quasar 5.0 (VPPCOEVA, pre-competition)
+Status: phase-7 | Pre-competition prep (live presentation Jan 1, 2027)
+Deadline: **Jan 1, 2027 — LIVE presentation (selection gate)**
+Time remaining: ~58 days (2026-11-04 → 2027-01-01)
+NOTE: The 36-hour hackathon round happens ONLY after selection. Until then,
+the deliverable is a convincing LIVE presentation — not a rush build.
 
 ## Context
 - Hackathon: Quasar 5.0, hosted by VPPCOEVA T&P Office
@@ -45,6 +47,12 @@ Time remaining: ~36h at kickoff
 - 2026-11-04: National NAAC/NIRF CSV export checks out; heatmap export button renders.
 - 2026-11-04: Golden e2e (Playwright) passes 3/3 — tests/golden-flow.spec.ts
   (global setup reseeds factory data). Full keyboard+375px pass done via MCP.
+- 2026-11-04: TIMELINE CORRECTED by user: this is the PRE-competition stage.
+  Live presentation on **Jan 1, 2027** is the selection gate; the actual
+  36-hour build happens only after selection. ~58 days to prep. Feature-freeze
+  relaxed (polish allowed). New plan at docs/pre-competition-plan.md.
+- 2026-11-04: Deferred Phase 6 demo-reset + CSP + Redis notes → docs/remaining-work.md
+  (all preserved, none blocking for the pre-competition stage).
 - 2026-11-03/04: S0+S1 done & verified live: login → ledger (verified/claimed
   flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 
