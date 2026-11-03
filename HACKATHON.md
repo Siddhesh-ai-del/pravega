@@ -61,14 +61,13 @@ Time remaining: ~36h at kickoff
 - [x] ideation (2026-11-03 — A+folded B/C chosen; matrix in docs/ideation.md)
 - [x] blueprint (2026-11-03 — docs/plan.md + docs/design-direction.md; git initialized, docs committed)
 - [x] build — slices 0–9 DONE & verified live (Nov 04 ~02:00 IST); golden flow
-  walked end-to-end (login → ledger → verify flip → mock drive + live SQL gate →
-  path task → drives) with Playwright; build passes clean; recruiter + all 6
-  officer screens render; 375px pass OK (screenshot in .playwright-mcp/, gitignored). dogfood note:
-  npm scripts broken in sandbox → run binaries directly.
+  walked end-to-end with Playwright; build passes clean; 375px pass OK
 - [x] harden (2026-11-04 — docs/security-notes.md; golden e2e 3/3; build clean;
   feature freeze active)
-- [ ] deploy
-- [ ] win package
+- [ ] deploy (BLOCKED on Supabase project creation by user; see docs/remaining-work.md §B)
+- [ ] win package (not started; see docs/remaining-work.md §C)
+
+Remaining work tracked in docs/remaining-work.md (deferred demo-reset + deploy/win package steps).
 
 ## Time discipline callouts
 - Solo + 36h + AI-agent platform scope = highest risk is scope creep, not code quality.
