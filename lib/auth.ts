@@ -45,7 +45,7 @@ export async function getSession(): Promise<Session | null> {
 export const SESSION_COOKIE = COOKIE;
 export const sessionCookieOptions = {
   httpOnly: true,
-  sameSite: "lax" as const,
+  sameSite: "strict" as const,
   path: "/",
   maxAge: 60 * 60 * 12,
 };

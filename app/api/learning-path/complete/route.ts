@@ -1,9 +1,14 @@
 import { eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { recordAudit } from "@/lib/audit";
 import { randomUUID } from "node:crypto";
+import { z } from "zod";
+
+const BodySchema = z.object({
+  pathId: z.string().trim().min(1).max(64),
+  taskId: z.string().trim().min(1).max(64),
+});
 
 type Task = { id: string; title: string; kind: string; producesEvidence: boolean; done: boolean };
 
@@ -12,11 +17,9 @@ export async function POST(request: Request) {
   if (!session || session.role !== "student") {
     return Response.json({ error: "Sign in as a student" }, { status: 401 });
   }
-  const { pathId, taskId } = (await request.json().catch(() => ({}))) as {
-    pathId?: string;
-    taskId?: string;
-  };
-  if (!pathId || !taskId) return Response.json({ error: "pathId and taskId required" }, { status: 400 });
+  const parsed = BodySchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return Response.json({ error: "pathId and taskId required" }, { status: 400 });
+  const { pathId, taskId } = parsed.data;
 
   const [path] = await db
     .select()
