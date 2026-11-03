@@ -1,5 +1,5 @@
 # HACKATHON STATE — Quasar 5.0 (VPPCOEVA, 36-Hour International Hackathon)
-Status: phase-4 | Build (awaiting scope approval)
+Status: phase-6 | Deploy
 Deadline: ~11:30 IST / ~06:00 UTC, Thu Nov 5, 2026 (36h from start ~23:30 IST Tue Nov 3, 2026)
 Time remaining: ~36h at kickoff
 
@@ -17,7 +17,6 @@ Time remaining: ~36h at kickoff
 - 2026-11-03: PS chosen = EdTech Agentic Placement Intelligence. Software-only PS → best
   demo-ability for solo build in 36h; hardware PSes (CompostIQ, Vibration) rejected for scope risk.
 - 2026-11-03: PDF is image-based; text extracted by rendering pages to PNG and reading images.
-- 2026-11-03: Stack: to be decided in Phase 3 (Blueprint) — boring & fast per user.
 - 2026-11-03: Stack: to be decided in Phase 3 (Blueprint) — boring & fast per user.
 - 2026-11-03: Ideation pivot chosen: **A + folded B/C** — evidence-over-claims
   verification as demo spine; Act 2 = closed-loop gap→path→proof→retest (C);
@@ -39,7 +38,13 @@ Time remaining: ~36h at kickoff
   directly (./node_modules/.bin/tsc, next, tsx).
 - 2026-11-04: S2 done & verified live (Playwright): Rahul Python flip via
   labeled fixtures replay; audit rows written; seed re-run to reset demo state.
-  Sandbox rule: kill servers with `fuser -k <port>/tcp` (pkill self-matches).
+- 2026-11-04: Phase 5 hardening done: zod on POST routes, SameSite=strict cookie,
+  security headers, 10 req/min verify limiter, audit = append-only by construction;
+  npm audit: 0 high/critical (20 moderate transitive → noted). A11y spot-check:
+  Tab navigation on /login lands on persona button with visible 2px outline.
+- 2026-11-04: National NAAC/NIRF CSV export checks out; heatmap export button renders.
+- 2026-11-04: Golden e2e (Playwright) passes 3/3 — tests/golden-flow.spec.ts
+  (global setup reseeds factory data). Full keyboard+375px pass done via MCP.
 - 2026-11-03/04: S0+S1 done & verified live: login → ledger (verified/claimed
   flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 
@@ -60,7 +65,8 @@ Time remaining: ~36h at kickoff
   path task → drives) with Playwright; build passes clean; recruiter + all 6
   officer screens render; 375px pass OK (screenshot in .playwright-mcp/, gitignored). dogfood note:
   npm scripts broken in sandbox → run binaries directly.
-- [ ] harden
+- [x] harden (2026-11-04 — docs/security-notes.md; golden e2e 3/3; build clean;
+  feature freeze active)
 - [ ] deploy
 - [ ] win package
 
