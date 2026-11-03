@@ -55,7 +55,11 @@ Time remaining: ~36h at kickoff
 - [x] research (2026-11-03 — brief delivered with inline sources)
 - [x] ideation (2026-11-03 — A+folded B/C chosen; matrix in docs/ideation.md)
 - [x] blueprint (2026-11-03 — docs/plan.md + docs/design-direction.md; git initialized, docs committed)
-- [x] build — slices 0+1 done & verified (Nov 04 ~00:10 IST). Next: slice 2 (GitHub verify flip).
+- [x] build — slices 0–9 DONE & verified live (Nov 04 ~02:00 IST); golden flow
+  walked end-to-end (login → ledger → verify flip → mock drive + live SQL gate →
+  path task → drives) with Playwright; build passes clean; recruiter + all 6
+  officer screens render; 375px pass OK (screenshot in .playwright-mcp/, gitignored). dogfood note:
+  npm scripts broken in sandbox → run binaries directly.
 - [ ] harden
 - [ ] deploy
 - [ ] win package
