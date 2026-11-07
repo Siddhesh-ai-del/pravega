@@ -47,18 +47,18 @@ export default async function RecruiterPage({
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Talent discovery · evidence-first</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">Search verified skills, read the receipts</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Talent discovery · evidence-first</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Search verified skills, read the receipts</h1>
         <p className="mt-1 text-[13px] text-muted">Every match shows <b>why</b> — linked evidence, confidence, expiry. No composite scores, no black boxes.</p>
         <form className="mt-3 flex max-w-[520px] gap-2" action="/recruiter">
           <input name="q" defaultValue={query} placeholder="try: python · sql · react" aria-label="Search verified skills" className="flex-1 border border-line bg-panel px-3 py-2 text-[13px] font-mono" />
-          <button type="submit" className="bg-probe text-white px-4 py-2 text-[13px]">Search</button>
+          <button type="submit" className="bg-probe text-paper px-4 py-2 text-[13px]">Search</button>
         </form>
       </header>
 
       <div className="p-4 md:p-6 grid gap-4 max-w-[920px]">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
           {query ? `Verified matches for “${query}”` : "All verified candidates"} · {byStudent.size}
         </p>
         {byStudent.size === 0 && <p className="text-muted text-[14px]">No verified matches. Skills stay “claimed” until evidence lands — that’s the point.</p>}
@@ -85,7 +85,7 @@ export default async function RecruiterPage({
                         <p className="font-mono text-[10px] text-muted">verified {r.verifiedAt ? new Date(r.verifiedAt).toLocaleDateString("en-IN") : "?"} · expires {r.expiresAt ? new Date(r.expiresAt).toLocaleDateString("en-IN") : "?"}</p>
                       </div>
                       {related.length > 0 && (
-                        <ul className="mt-1 font-mono text-[10px] text-[#2e3138]">
+                        <ul className="mt-1 font-mono text-[10px] text-muted">
                           {related.map((e) => (
                             <li key={e.id}>↳ {e.kind.replace("_", " ")} — {e.title} <span className="text-muted">({e.id})</span></li>
                           ))}

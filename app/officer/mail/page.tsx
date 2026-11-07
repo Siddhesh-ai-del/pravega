@@ -14,9 +14,9 @@ export default async function MailQueuePage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Bulk mailing · logged, not blasted</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">Drafts, previews, audit</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Bulk mailing · logged, not blasted</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Drafts, previews, audit</h1>
         <p className="mt-1 text-[13px] text-muted">Mail never leaves without an explicit send. Every queued and sent mail is written to the audit trail.</p>
       </header>
       <div className="p-4 md:p-6 max-w-[880px] grid gap-4">

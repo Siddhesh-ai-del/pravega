@@ -35,15 +35,36 @@ export function MockDriveClient({
   const picked = LIVE_SQL.options.find((o) => o.id === liveAnswer);
   const sqlVerdict = useMemo(() => (liveAnswer === null ? null : picked?.correct ? "LIVE GATE: PASS" : "LIVE GATE: FAIL"), [liveAnswer, picked]);
 
+  if (!run) {
+    return (
+      <div className="p-6 md:p-10">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Mock Drive · {targetRole}</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">
+          No drive on file yet.
+        </h1>
+        <p className="mt-2 max-w-[52ch] text-[13px] leading-snug text-muted">
+          Rahul&rsquo;s replay appears here once your college runs a mock drive for you.
+          Your JD-match signals and the live SQL gate both live here.
+        </p>
+        <Link
+          href="/student"
+          className="mt-5 inline-flex h-10 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
+        >
+          Back to my ledger →
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <>
-      <header className="border-b border-line px-4 md:px-8 py-4 flex flex-wrap items-end justify-between gap-3">
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Mock Drive · {targetRole}</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight">Drive replay — evidence of the gap</h1>
+          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Mock Drive · {targetRole}</p>
+          <h1 className="mt-2 max-w-[22ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Drive replay — evidence of the gap</h1>
         </div>
         <div className="text-right">
-          <p className="font-mono text-3xl font-semibold leading-none">{pct}<span className="text-base text-muted">%</span></p>
+          <p className="text-[44px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">{pct}<span className="text-base text-muted">%</span></p>
           <p className="font-mono text-[10px] uppercase tracking-wider text-muted mt-1">composite (replay)</p>
         </div>
       </header>
@@ -56,7 +77,7 @@ export function MockDriveClient({
                 <h2 className="font-semibold">{pics[r.round]?.label ?? r.round}</h2>
                 <p className="font-mono">{r.score}<span className="text-muted">/{r.max}</span></p>
               </div>
-              <p className="mt-2 text-[13px] text-[#2e3138]">{r.note}</p>
+              <p className="mt-2 text-[13px] text-muted">{r.note}</p>
               {r.weakTopics.length > 0 && (
                 <p className="mt-2 font-mono text-[11px] text-amber">
                   weak: {r.weakTopics.join(" · ")}
@@ -99,7 +120,7 @@ export function MockDriveClient({
 
         {/* gap report rail */}
         <aside className="border-t lg:border-t-0 lg:border-l border-line p-4 md:p-6">
-          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Gap report</h2>
+          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Gap report</h2>
           <p className="mt-2 text-[14px] leading-snug">
             {name}, the machine test marks show <b>SQL weakness (12/20)</b>, echoing your report note.
             Nimbus&apos; backend JD asks for SQL; the cohort is <b>60% weak</b> here.
@@ -118,7 +139,7 @@ export function MockDriveClient({
           </div>
           <Link
             href="/student/learning-path"
-            className="mt-4 block bg-probe text-white text-center px-4 py-2.5 text-[13px] font-medium hover:bg-[#2a2cac]"
+            className="mt-4 block bg-probe text-paper text-center px-4 py-2.5 text-[13px] font-medium hover:bg-white"
           >
             Generate my gap-closing path →
           </Link>

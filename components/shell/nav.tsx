@@ -23,11 +23,14 @@ const NAV: Record<Role, { href: string; label: string }[]> = {
   admin: [{ href: "/officer", label: "Decision Queue" }],
 };
 
-export function NavRail({ role }: { role: Role }) {
+export function MobileNav({ role }: { role: Role }) {
   const pathname = usePathname();
   const items = NAV[role] ?? [];
   return (
-    <nav aria-label="Main" className="grid gap-1">
+    <nav
+      aria-label="Main"
+      className="md:hidden flex items-center gap-2 overflow-x-auto border-b border-line bg-panel px-3 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
       {items.map((item) => {
         const topLevel = item.href === "/student" || item.href === "/officer" || item.href === "/recruiter";
         const active = topLevel ? pathname === item.href : pathname.startsWith(item.href);
@@ -36,18 +39,43 @@ export function NavRail({ role }: { role: Role }) {
             key={item.href}
             href={item.href}
             aria-current={active ? "page" : undefined}
-            className={`group flex items-center gap-2 border-l-2 px-3 py-2 text-[13px] leading-snug transition-colors ${
+            className={`shrink-0 rounded-full border px-3 py-1.5 text-[11px] transition-colors ${
               active
-                ? "border-probe bg-panel-2 font-medium text-ink"
-                : "border-transparent text-muted hover:text-ink hover:bg-panel-2"
+                ? "border-ink bg-ink font-semibold text-paper"
+                : "border-line text-muted"
+            }`}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
+export function NavRail({ role }: { role: Role }) {
+  const pathname = usePathname();
+  const items = NAV[role] ?? [];
+  return (
+    <nav aria-label="Main" className="grid gap-0.5">
+      {items.map((item) => {
+        const topLevel = item.href === "/student" || item.href === "/officer" || item.href === "/recruiter";
+        const active = topLevel ? pathname === item.href : pathname.startsWith(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={active ? "page" : undefined}
+            className={`flex items-center gap-2.5 rounded-[6px] px-3 py-2 text-[13px] leading-snug transition-colors ${
+              active
+                ? "bg-ink font-semibold text-paper"
+                : "text-muted hover:bg-panel-2 hover:text-ink"
             }`}
           >
             <span
               aria-hidden
-              className={`font-mono text-[10px] ${active ? "text-probe" : "text-line-strong group-hover:text-muted"}`}
-            >
-              ▍
-            </span>
+              className={`h-1.5 w-1.5 rounded-full ${active ? "bg-paper" : "bg-line-strong"}`}
+            />
             {item.label}
           </Link>
         );

@@ -43,39 +43,58 @@ export default async function LoginPage() {
   return (
     <main className="min-h-screen grid md:grid-cols-[1fr_420px]">
       {/* left: is it a landing? No — it's the identity panel of the registry */}
-      <section className="relative flex flex-col justify-between border-b md:border-b-0 md:border-r border-line bg-[#14161c] p-6 md:p-10 text-[#f6f6f2]">
+      <section className="relative flex flex-col justify-between border-b md:border-b-0 md:border-r border-line m-dotgrid bg-[#101014] p-6 md:p-10 text-ink">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#a9a69d]">
-            VPPCOE &amp; VA — Training &amp; Placement Cell
+          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
+            ◈ VPPCOE &amp; VA — Training &amp; Placement Cell
           </p>
-          <h1 className="mt-4 text-4xl md:text-5xl font-semibold leading-[1.05] tracking-tight">
-            Pravega<span className="text-[#8fd0a8]">.</span>
-          </h1>
-          <p className="mt-3 max-w-[46ch] text-[15px] text-[#d7d5cd]">
+          <div className="mt-5 flex items-center gap-4">
+            <span
+              aria-hidden
+              className="grid h-16 w-16 shrink-0 place-items-center rounded-[10px] bg-ink"
+            >
+              <svg width="34" height="34" viewBox="0 0 13 13" fill="none">
+                <path
+                  d="M2.2 6.9 5.2 9.7 10.8 3.3"
+                  stroke="var(--paper)"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <h1 className="text-6xl md:text-7xl font-semibold leading-none tracking-[-0.03em]">
+              Pravega<span className="text-ledger">.</span>
+            </h1>
+          </div>
+          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.4em] text-muted">
+            The Verifying Ledger
+          </p>
+          <p className="mt-5 max-w-[46ch] text-[15px] leading-relaxed text-muted">
             One profile. One trail. Every decision explained. Skills move from
-            <span className="text-white"> claimed </span>
-            to <span className="text-[#8fd0a8]">verified</span> only against evidence.
+            <span className="text-ink"> claimed </span>
+            to <span className="text-ledger">verified</span> only against evidence.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-3 font-mono text-[11px] text-[#b9b7ae]">
-          <div className="flex items-center justify-between border-t border-[#2b2e38] pt-3">
+        <div className="mt-10 grid gap-3 font-mono text-[11px] text-muted">
+          <div className="flex items-center justify-between border-t border-line pt-3">
             <span>CASE EV-r-1029</span>
-            <span className="text-[#8fd0a8]">VERIFIED · SQL</span>
+            <span className="text-ledger">VERIFIED · SQL</span>
           </div>
-          <div className="flex items-center justify-between border-t border-[#2b2e38] pt-3">
+          <div className="flex items-center justify-between border-t border-line pt-3">
             <span>RULE nimbus-be v3</span>
-            <span className="text-[#f3c969]">2 students blocked</span>
+            <span className="text-amber">2 students blocked</span>
           </div>
-          <div className="flex items-center justify-between border-t border-[#2b2e38] pt-3">
+          <div className="flex items-center justify-between border-t border-line pt-3">
             <span>AGENT agr-2</span>
-            <span className="text-[#f0a0a0]">AWAITING HUMAN DECISION</span>
+            <span className="text-red">AWAITING HUMAN DECISION</span>
           </div>
         </div>
       </section>
 
       {/* right: pick a seeded persona */}
-      <section className="flex flex-col justify-center p-6 md:p-8">
+      <section className="m-dotgrid flex flex-col justify-center p-6 md:p-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
           Sign in · demo personas
         </p>
@@ -90,9 +109,9 @@ export default async function LoginPage() {
                 <input type="hidden" name="userId" value={u.id} />
                 <button
                   type="submit"
-                  className="w-full flex items-center gap-3 border border-line bg-panel px-3 py-2.5 text-left hover:bg-panel-2 transition-colors"
+                  className="group w-full flex items-center gap-3 rounded-[8px] border border-line bg-panel px-3 py-2.5 text-left transition-all hover:border-line-strong hover:bg-panel-2"
                 >
-                  <span className="grid place-items-center w-8 h-8 rounded-sm bg-[#14161c] text-[#f6f6f2] font-mono text-[11px]">
+                  <span className="grid place-items-center w-8 h-8 rounded-sm border border-line-strong bg-panel-2 text-ink font-mono text-[11px]">
                     {u.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}
                   </span>
                   <span className="min-w-0 flex-1">

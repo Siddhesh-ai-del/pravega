@@ -48,13 +48,13 @@ export function LearningPathClient({
 
   return (
     <>
-      <header className="border-b border-line px-4 md:px-8 py-4 flex flex-wrap items-end justify-between gap-3">
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Gap-closing path · {gapSkill}</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight">Close the gap, keep the evidence</h1>
+          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Gap-closing path · {gapSkill}</p>
+          <h1 className="mt-2 max-w-[22ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Close the gap, keep the evidence</h1>
         </div>
         <div className="text-right">
-          <p className="font-mono text-3xl font-semibold leading-none">{doneCount}<span className="text-base text-muted">/{tasks.length}</span></p>
+          <p className="text-[44px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">{doneCount}<span className="text-base text-muted">/{tasks.length}</span></p>
           <p className="font-mono text-[10px] uppercase tracking-wider text-muted mt-1">tasks done · {pct}%</p>
         </div>
       </header>
@@ -62,7 +62,7 @@ export function LearningPathClient({
       <div className="grid lg:grid-cols-[380px_1fr]">
         {/* why panel */}
         <aside className="border-b lg:border-b-0 lg:border-r border-line p-4 md:p-6">
-          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Why this path (explainable)</h2>
+          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Why this path (explainable)</h2>
           <div className="mt-3 border border-line bg-panel">
             {[
               ["Source", reason.source ?? "mock drive"],

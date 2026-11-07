@@ -18,9 +18,9 @@ export default async function FairnessPage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Fairness · four-fifths rule</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">Shortlist parity scan</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Fairness · four-fifths rule</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Shortlist parity scan</h1>
         <p className="mt-1 text-[13px] text-muted max-w-[68ch]">Adverse-impact screen per drive. Any segment below <b>80% of the reference rate</b> is flagged for human review — the system never disqualifies by itself. Review decision is recorded, not hidden.</p>
       </header>
 
@@ -36,23 +36,25 @@ export default async function FairnessPage() {
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-red border border-red/40 bg-red-wash px-2 py-0.5">1 flag open</span>
               </div>
-              <table className="w-full text-[13px]">
-                <thead className="font-mono text-[10px] uppercase text-muted text-left">
-                  <tr className="border-b border-line"><th className="px-4 py-1.5">Segment</th><th className="px-4 py-1.5">Group</th><th className="px-4 py-1.5">Applicants</th><th className="px-4 py-1.5">Shortlist rate</th></tr>
-                </thead>
-                <tbody className="divide-y divide-line">
-                  {Object.entries(segments).flatMap(([segment, groups]) =>
-                    Object.entries(groups).map(([group, seg]) => (
-                      <tr key={`${segment}-${group}`}>
-                        <td className="px-4 py-2 font-mono text-[11px] text-muted uppercase">{segment}</td>
-                        <td className="px-4 py-2">{group}</td>
-                        <td className="px-4 py-2 font-mono">{seg.applicants}</td>
-                        <td className="px-4 py-2 font-mono">{seg.shortlistRate}%</td>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[520px] text-[13px]">
+                  <thead className="font-mono text-[10px] uppercase text-muted text-left">
+                    <tr className="border-b border-line"><th className="px-4 py-1.5">Segment</th><th className="px-4 py-1.5">Group</th><th className="px-4 py-1.5">Applicants</th><th className="px-4 py-1.5">Shortlist rate</th></tr>
+                  </thead>
+                  <tbody className="divide-y divide-line">
+                    {Object.entries(segments).flatMap(([segment, groups]) =>
+                      Object.entries(groups).map(([group, seg]) => (
+                        <tr key={`${segment}-${group}`}>
+                          <td className="px-4 py-2 font-mono text-[11px] text-muted uppercase">{segment}</td>
+                          <td className="px-4 py-2">{group}</td>
+                          <td className="px-4 py-2 font-mono">{seg.applicants}</td>
+                          <td className="px-4 py-2 font-mono">{seg.shortlistRate}%</td>
                       </tr>
                     )),
                   )}
                 </tbody>
-              </table>
+                </table>
+              </div>
             </div>
 
             {findings.map((f, i) => (
@@ -67,7 +69,7 @@ export default async function FairnessPage() {
                     <option value="escalated">Escalate to employer + DPO</option>
                     <option value="logged-ok">Logged, explainable, no action</option>
                   </select>
-                  <button type="submit" className="border border-red text-red px-3 py-1.5 text-[12px] font-medium hover:bg-[#f9d9d5]">Record review outcome</button>
+                  <button type="submit" className="border border-red text-red px-3 py-1.5 text-[12px] font-medium hover:bg-red-wash">Record review outcome</button>
                 </form>
               </div>
             ))}

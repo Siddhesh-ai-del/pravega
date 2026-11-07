@@ -53,6 +53,12 @@ the deliverable is a convincing LIVE presentation — not a rush build.
   relaxed (polish allowed). New plan at docs/pre-competition-plan.md.
 - 2026-11-04: Deferred Phase 6 demo-reset + CSP + Redis notes → docs/remaining-work.md
   (all preserved, none blocking for the pre-competition stage).
+- 2026-11-05: UI direction LOCKED = **The Quiet Ledger** (monochrome graphite,
+  hairline rules, inverted neutral controls, ONE violet accent reserved for
+  verified/approved semantics + focus). Neo-brutalism skin built 2026-11-05 was
+  stashed as `stash@{0}` (recoverable). Design-lab variants 01–06 retained at
+  /design-lab; product screens restyled end-to-end (login, shell, all officer +
+  student + recruiter screens); mobile 375px nav added; empty states added.
 - 2026-11-03/04: S0+S1 done & verified live: login → ledger (verified/claimed
   flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 

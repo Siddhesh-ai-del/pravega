@@ -1,31 +1,35 @@
 @import "tailwindcss";
 
-/* Pravega — Swiss-dense audit registry w/ evidence-ledger metaphor
-   Light-first (projector-safe), AA-contrast pairs only */
+/* Pravega — THE QUIET LEDGER (main UI)
+   Single-hue graphite, near-black · hairline rules · inverted neutral
+   controls · ONE violet accent reserved for verified/approved semantics
+   and the focus ring. Projector-legible, AA-contrast pairs only. */
 
 :root {
-  color-scheme: light;
-  --paper: #f6f6f2;
-  --panel: #ffffff;
-  --panel-2: #efeee9;
-  --ink: #15171d;
-  --muted: #585c66;
-  --line: #dcdad3;
-  --line-strong: #c8c6bd;
-  --probe: #3436c4;      /* interactive only */
-  --ledger: #177245;     /* verified */
-  --amber: #8a5a00;      /* expired / expiring */
-  --red: #b42318;        /* flags / errors */
-  --red-wash: #fdecea;
-  --green-wash: #edf7f0;
-  --amber-wash: #fdf3d8;
-  --focus: #3436c4;
+  color-scheme: dark;
+  --paper: #0b0b0c;         /* page */
+  --panel: #131315;         /* cards */
+  --panel-2: #1a1a1d;       /* raised / hover */
+  --panel-3: #202024;       /* inputs */
+  --ink: #ededea;           /* primary text */
+  --muted: #a6a6a2;         /* secondary text */
+  --line: #26262a;          /* hairline */
+  --line-strong: #3a3a40;   /* emphasis hairline */
+  --probe: #ededea;         /* interactive = inverted neutral */
+  --ledger: #a78bfa;        /* the ONE accent — verified/approved */
+  --amber: #d4c290;         /* expiring / caution — desaturated */
+  --red: #d98c8c;           /* flags / errors — desaturated */
+  --red-wash: #221b1a;
+  --green-wash: #201d29;    /* violet-tinted verified wash */
+  --amber-wash: #232118;
+  --focus: #a78bfa;
 }
 
 @theme inline {
   --color-paper: var(--paper);
   --color-panel: var(--panel);
   --color-panel-2: var(--panel-2);
+  --color-panel-3: var(--panel-3);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
@@ -37,8 +41,8 @@
   --color-red-wash: var(--red-wash);
   --color-green-wash: var(--green-wash);
   --color-amber-wash: var(--amber-wash);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 html, body {
@@ -51,6 +55,7 @@ body {
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.45;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -69,12 +74,12 @@ body {
 }
 .receipt > * + * { border-top: 1px dashed var(--line-strong); }
 
-/* heatmap cell ramps: paper → ink */
-.heat-1 { background: #efeee9; }
-.heat-2 { background: #dcdadd; }
-.heat-3 { background: #b9b8cb; }
-.heat-4 { background: #8b8aa6; }
-.heat-5 { background: #4a4966; color: #f6f6f2; }
+/* heatmap cell ramps: single-hue paper → ink (lightness only) */
+.heat-1 { background: #17171a; }
+.heat-2 { background: #232327; }
+.heat-3 { background: #34343a; }
+.heat-4 { background: #55555e; color: #ededea; }
+.heat-5 { background: #ededea; color: #0b0b0c; }
 
 /* signature transition: verification stamp (reduced-motion = instant) */
 .verify-stamp { animation: stampIn 480ms cubic-bezier(0.2, 1.4, 0.4, 1); }
@@ -86,4 +91,67 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .verify-stamp { animation: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Direction 06 — “The Quiet Ledger” (design-lab only, .mono-scope)
+   Single-hue graphite + ONE violet accent (verified/approved + focus).
+   Same values as the main skin, re-scoped so lab variants stay stable.
+   ──────────────────────────────────────────────────────────────── */
+/* Portals (Radix Dialog / sonner) mount on <body>, outside .mono-scope —
+   mirror the accent focus ring there too. */
+.mono-portal :focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+}
+.mono-scope {
+  --m-bg: #0b0b0c;
+  --m-panel: #131315;
+  --m-panel-2: #1a1a1d;
+  --m-panel-3: #202024;
+  --m-line: #26262a;
+  --m-line-strong: #3a3a40;
+  --m-ink: #ededea;
+  --m-ink-dim: #a6a6a2;
+  --m-ink-faint: #6e6e6a;
+  --m-accent: #a78bfa;
+  --m-accent-ink: #0b0b0c;
+  --m-invert-bg: #ededea;
+  --m-invert-ink: #0b0b0c;
+  --m-danger: #d98c8c;
+
+  background: var(--m-bg);
+  color: var(--m-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-scope :focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+
+/* single-hue heatmap ramp (lightness only — no hue shift) */
+.mono-scope .m-heat-1 { background: #17171a; color: #6e6e6a; }
+.mono-scope .m-heat-2 { background: #232327; color: #a6a6a2; }
+.mono-scope .m-heat-3 { background: #34343a; color: #c9c9c6; }
+.mono-scope .m-heat-4 { background: #55555e; color: #ededea; }
+.mono-scope .m-heat-5 { background: #ededea; color: #0b0b0c; }
+
+/* faint dot-grid backdrop — fixed texture used by product + lab shells */
+.m-dotgrid {
+  background-image: radial-gradient(circle, #1d1d20 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* signature transition: verification stamp (reduced-motion = instant) */
+.mono-scope .m-stamp {
+  animation: mStampIn 480ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+@keyframes mStampIn {
+  0% { transform: rotate(-10deg) scale(0.4); opacity: 0; }
+  60% { transform: rotate(2deg) scale(1.28); opacity: 1; }
+  100% { transform: rotate(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mono-scope .m-stamp { animation: none; }
 }

@@ -15,9 +15,9 @@ export default async function AuditTrailPage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Append-only</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">The trail never lies</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Append-only</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">The trail never lies</h1>
         <p className="mt-1 text-[13px] text-muted max-w-[62ch]">Every action on this platform writes one row here — verifications, eligibility decisions, agent approvals, overrides and appeals. There is no update path, and no delete tool exists in the app.</p>
       </header>
       <div className="overflow-x-auto">
@@ -35,7 +35,7 @@ export default async function AuditTrailPage() {
                 <td className="px-4 py-2 font-mono">{r.action}</td>
                 <td className="px-4 py-2">{nameOf[r.actorId] ?? r.actorId}</td>
                 <td className="px-4 py-2 font-mono">{r.targetType}:{r.targetId}</td>
-                <td className="px-4 py-2 font-mono text-[10px] text-[#2e3138] max-w-[420px]"><span className="line-clamp-2">{JSON.stringify(r.detail)}</span></td>
+                <td className="px-4 py-2 font-mono text-[10px] text-muted max-w-[420px]"><span className="line-clamp-2 break-all">{JSON.stringify(r.detail)}</span></td>
               </tr>
             ))}
           </tbody>

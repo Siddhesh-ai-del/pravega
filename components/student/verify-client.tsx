@@ -89,7 +89,7 @@ export function VerifyClient({ name }: { name: string }) {
             type="button"
             onClick={run}
             disabled={!consent || busy || repo.trim().length < 9}
-            className="mt-4 inline-flex items-center gap-2 bg-probe text-white px-5 py-2.5 text-[14px] font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#2a2cac]"
+            className="mt-4 inline-flex items-center gap-2 bg-probe text-paper px-5 py-2.5 text-[14px] font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
           >
             {busy ? "Verifying…" : "Verify Python →"}
           </button>
@@ -129,7 +129,7 @@ export function VerifyClient({ name }: { name: string }) {
         {!result && !busy && (
           <div className="mt-4 rounded-none border border-dashed border-line-strong p-4 text-[13px] text-muted">
             {name}, your check will resolve into one of two outcomes — there is no
-            "submit &amp; hope". The chain shows <b>why</b> it passed or failed.
+            &quot;submit &amp; hope&quot;. The chain shows <b>why</b> it passed or failed.
           </div>
         )}
 

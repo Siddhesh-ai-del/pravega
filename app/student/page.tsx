@@ -58,21 +58,28 @@ export default async function StudentLedgerPage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4 flex flex-wrap items-end justify-between gap-3">
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">My verified profile</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight">
-            Skill ledger — {session.name.split(" ")[0]} <span className="text-muted font-normal">· {profile?.branch ?? "Engineering"} · Final year · CGPA {profile?.cgpa}</span>
+          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
+            ◈ My verified profile
+          </p>
+          <h1 className="mt-2 text-[32px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:text-[38px]">
+            Skill ledger — {session.name.split(" ")[0]}
+            <span className="mt-1 block text-[15px] font-normal text-muted md:inline md:text-[20px]">
+              {" "}· {profile?.branch ?? "Engineering"} · Final year · CGPA {profile?.cgpa}
+            </span>
           </h1>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className="text-right">
-            <p className="font-mono text-3xl font-semibold leading-none">{verifiedCount}<span className="text-muted text-base">/{skills.length}</span></p>
-            <p className="font-mono text-[10px] uppercase tracking-wider text-muted mt-1">Verified skills</p>
+            <p className="text-[44px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">
+              {verifiedCount}<span className="text-muted">/{skills.length}</span>
+            </p>
+            <p className="mt-1.5 font-mono text-[8px] uppercase tracking-[0.24em] text-muted">Verified skills</p>
           </div>
           <Link
             href="/student/verify"
-            className="inline-flex items-center gap-2 bg-probe text-white px-4 py-2 text-[13px] font-medium hover:bg-[#2a2cac] transition-colors"
+            className="inline-flex h-11 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
           >
             Verify from GitHub →
           </Link>
@@ -82,6 +89,23 @@ export default async function StudentLedgerPage() {
       <div className="grid md:grid-cols-[1fr_360px] gap-0">
         {/* ledger table */}
         <section aria-label="Skill ledger" className="overflow-x-auto">
+          {skills.length === 0 && (
+            <div className="m-8 rounded-[8px] border border-dashed border-line-strong p-6">
+              <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Empty register</p>
+              <p className="mt-2 text-[16px] font-semibold text-ink">No skills on file yet.</p>
+              <p className="mt-1 max-w-[52ch] text-[12px] leading-snug text-muted">
+                Nothing self-declared, nothing verified — which is allowed. When you claim a
+                skill, attach evidence in the same breath: a repo, a test, an attestation.
+              </p>
+              <Link
+                href="/student/verify"
+                className="mt-4 inline-flex h-10 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
+              >
+                Verify from GitHub →
+              </Link>
+            </div>
+          )}
+          {skills.length > 0 && (
           <table className="w-full min-w-[720px] text-[13px]">
             <thead>
               <tr className="text-left font-mono text-[10px] uppercase tracking-[0.15em] text-muted border-b border-line">
@@ -115,6 +139,7 @@ export default async function StudentLedgerPage() {
               ))}
             </tbody>
           </table>
+          )}
           <p className="px-4 md:px-8 pt-3 pb-4 font-mono text-[10px] text-muted">
             States per verified-trust protocol: <b>claimed</b> = self-declared · <b>verified</b> = evidence-gated (expiry tracked) · <b>expired</b> = must refresh evidence
           </p>
@@ -122,8 +147,23 @@ export default async function StudentLedgerPage() {
 
         {/* evidence packets rail */}
         <aside className="border-t md:border-t-0 md:border-l border-line p-4 md:p-5">
-          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Evidence packets</h2>
+          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Evidence packets</h2>
           <div className="mt-3 grid gap-4">
+            {evs.length === 0 && (
+              <div className="rounded-[8px] border border-dashed border-line-strong p-4">
+                <p className="text-[12px] font-medium text-ink">No receipts yet.</p>
+                <p className="mt-1 text-[11px] text-muted">
+                  Verify a skill from your GitHub and this rail fills with
+                  tamper-evident packets — repo reads, test scores, attestations.
+                </p>
+                <Link
+                  href="/student/verify"
+                  className="mt-3 inline-flex h-9 items-center gap-2 rounded-[6px] bg-probe px-4 text-[12px] font-medium text-paper transition-colors hover:bg-white"
+                >
+                  Verify from GitHub →
+                </Link>
+              </div>
+            )}
             {evs.map((e) => (
               <figure key={e.id} className="receipt p-3">
                 <div className="flex items-center justify-between gap-2">
@@ -133,7 +173,7 @@ export default async function StudentLedgerPage() {
                   <figcaption className="font-mono text-[10px] text-muted truncate">{e.id}</figcaption>
                 </div>
                 <blockquote className="pt-2 text-[13px] font-medium leading-snug">{e.title}</blockquote>
-                <dl className="pt-2 font-mono text-[11px] leading-5 text-[#2e3138]">
+                <dl className="pt-2 font-mono text-[11px] leading-5 text-muted">
                   {Object.entries(e.refs as Record<string, unknown>).slice(0, 4).map(([k, v]) => (
                     <div key={k} className="flex gap-2">
                       <dt className="text-muted min-w-[88px]">{k}:</dt>

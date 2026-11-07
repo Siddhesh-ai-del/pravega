@@ -21,9 +21,9 @@ export default async function OfficerRulesPage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Versioned eligibility</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">Rules are code, not sheets</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Versioned eligibility</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Rules are code, not sheets</h1>
         <p className="mt-1 text-[13px] text-muted max-w-[72ch]">
           Every decision records the exact rule <b>version</b> and failed clauses. If a policy
           changes, the rule increments its version — old decisions stay explainable forever.
@@ -44,19 +44,21 @@ export default async function OfficerRulesPage() {
                   <span className="font-mono text-[10px] px-2 py-0.5 border border-ledger/40 text-ledger bg-green-wash">ACTIVE</span>
                 </div>
               </div>
-              <table className="w-full text-[12px]">
-                <thead className="font-mono text-[10px] uppercase text-muted">
-                  <tr className="text-left"><th className="px-3 py-1.5">Clause</th><th className="px-3 py-1.5">Check</th></tr>
-                </thead>
-                <tbody className="divide-y divide-line">
-                  {(rule.clauses as unknown as Clause[]).map((c) => (
-                    <tr key={c.id}>
-                      <td className="px-3 py-2 font-mono text-[11px] text-muted">{c.id}</td>
-                      <td className="px-3 py-2">{c.label}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[380px] text-[12px]">
+                  <thead className="font-mono text-[10px] uppercase text-muted">
+                    <tr className="text-left"><th className="px-3 py-1.5">Clause</th><th className="px-3 py-1.5">Check</th></tr>
+                  </thead>
+                  <tbody className="divide-y divide-line">
+                    {(rule.clauses as unknown as Clause[]).map((c) => (
+                      <tr key={c.id}>
+                        <td className="px-3 py-2 font-mono text-[11px] text-muted">{c.id}</td>
+                        <td className="px-3 py-2">{c.label}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           ))}
           <p className="mt-3 font-mono text-[10px] text-muted">
@@ -67,7 +69,7 @@ export default async function OfficerRulesPage() {
 
         {/* cohort sweep */}
         <section className="p-4 md:p-6">
-          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Cohort sweep — rule v3</h2>
+          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Cohort sweep — rule v3</h2>
           <div className="mt-2 overflow-x-auto">
             <table className="w-full min-w-[640px] text-[13px]">
               <thead className="font-mono text-[10px] uppercase text-muted text-left">

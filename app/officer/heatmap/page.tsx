@@ -28,9 +28,9 @@ export default async function HeatmapPage() {
 
   return (
     <AppShell session={session}>
-      <header className="border-b border-line px-4 md:px-8 py-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Cohort analytics · NAAC-ready</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">The batch, at a glance</h1>
+      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
+        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Cohort analytics · NAAC-ready</p>
+        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">The batch, at a glance</h1>
         <p className="mt-1 text-[13px] text-muted">Share of students weak per skill, measured from mock drives + verified evidence, not self-declaration.</p>
       </header>
 
@@ -68,7 +68,7 @@ export default async function HeatmapPage() {
           </table>
         </div>
 
-        <a href="/api/export/accreditation" className="mt-3 inline-flex items-center gap-2 border border-line bg-panel px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] hover:border-probe hover:text-probe">
+        <a href="/api/export/accreditation" className="mt-3 inline-flex items-center gap-2 rounded-[6px] bg-probe px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-paper hover:bg-white">
           Export NAAC outcomes (CSV) ↓
         </a>
         <div className="mt-4 grid md:grid-cols-2 gap-3">
