@@ -13,8 +13,8 @@
 > built for the Quasar 5.0 international hackathon (VPPCOE & VA, EdTech track).
 
 <p align="center">
-  <img src="docs/screenshots/ledger.png" alt="Pravega skill ledger — verified/claimed/expired states with evidence packets" width="49%" />
-  <img src="docs/screenshots/verify-result.png" alt="Evidence-gated verification — Claimed flips to Verified against repo evidence, labeled replay mode" width="49%" />
+  <img src="docs/screenshots/brutalist-ledger.png" alt="Pravega skill ledger — verified/claimed/expired states with evidence packets" width="49%" />
+  <img src="docs/screenshots/brutalist-verify.png" alt="Evidence-gated verification — Claimed flips to Verified against repo evidence, labeled replay mode" width="49%" />
 </p>
 
 ## Why Pravega
