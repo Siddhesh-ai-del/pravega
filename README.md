@@ -1,5 +1,9 @@
 # Pravega
 
+<p align="center">
+  <img src="public/logo.svg" alt="Pravega — Bold Brutalist Ledger logo" width="480" />
+</p>
+
 [![CI](https://img.shields.io/github/actions/workflow/status/Siddhesh-ai-del/pravega/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=1e1e2e&color=a6e3a1&logo=githubactions&logoColor=1e1e2e)](https://github.com/Siddhesh-ai-del/pravega/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-16-89b4fa?style=for-the-badge&logo=nextdotjs&logoColor=1e1e2e&labelColor=1e1e2e)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-89b4fa?style=for-the-badge&logo=typescript&logoColor=1e1e2e&labelColor=1e1e2e)](https://www.typescriptlang.org)

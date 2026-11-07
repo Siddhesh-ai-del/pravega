@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pravega — Logo Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Fira Sans', sans-serif; background: #E8E5DE; padding: 40px; }
+  h1 { font-family: 'Fira Sans Condensed', sans-serif; font-weight: 900; font-size: 32px; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 24px; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6560; margin-bottom: 8px; margin-top: 32px; }
+  .preview-card { background: #F5F3ED; border: 3px solid #0A0A0A; padding: 32px; margin-bottom: 16px; box-shadow: 6px 6px 0 0 #0A0A0A; }
+  .preview-card.dark { background: #0A0A0A; }
+  .preview-card.concrete { background: #D6D3CC; }
+  .logo-display { display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .mark-display { display: flex; gap: 24px; align-items: center; justify-content: center; padding: 24px; flex-wrap: wrap; }
+  .mark-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .mark-box span { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #6B6560; text-transform: uppercase; letter-spacing: 0.1em; }
+  .size-label { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #6B6560; }
+</style>
+</head>
+<body>
+  <h1>PRAVEGA LOGO — BOLD BRUTALIST LEDGER</h1>
+
+  <h2>PRIMARY LOGO (LIGHT BACKGROUND)</h2>
+  <div class="preview-card concrete">
+    <div class="logo-display">
+      <img src="/logo.svg" alt="Pravega logo" width="480" height="120" />
+    </div>
+  </div>
+
+  <h2>DARK VARIANT (DARK BACKGROUND)</h2>
+  <div class="preview-card dark">
+    <div class="logo-display">
+      <img src="/logo-dark.svg" alt="Pravega logo dark" width="480" height="120" />
+    </div>
+  </div>
+
+  <h2>MARK ONLY (ICON / FAVICON)</h2>
+  <div class="preview-card concrete">
+    <div class="mark-display">
+      <div class="mark-box">
+        <img src="/mark.svg" alt="Pravega mark" width="120" height="120" />
+        <span>120×120</span>
+      </div>
+      <div class="mark-box">
+        <img src="/mark.svg" alt="Pravega mark" width="64" height="64" />
+        <span>64×64</span>
+      </div>
+      <div class="mark-box">
+        <img src="/mark.svg" alt="Pravega mark" width="32" height="32" />
+        <span>32×32</span>
+      </div>
+      <div class="mark-box">
+        <img src="/mark.svg" alt="Pravega mark" width="16" height="16" />
+        <span>16×16</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>USAGE NOTES</h2>
+  <div class="preview-card">
+    <p style="font-size: 13px; line-height: 1.6; max-width: 72ch;">
+      <b>Primary logo</b> — use on concrete/white backgrounds. The hazard-orange period is the single accent.<br>
+      <b>Dark variant</b> — use on black/dark backgrounds. Concrete text, orange accent.<br>
+      <b>Mark only</b> — use for favicon, app icon, avatar, social media profile. Works down to 16×16.<br><br>
+      <b>Typography:</b> Fira Sans Condensed 900 (display) + JetBrains Mono 700 (micro-label).<br>
+      <b>Colors:</b> Ink #0A0A0A · Concrete #D6D3CC · Paper #F5F3ED · Spot #FF4A00 · Muted #6B6560<br>
+      <b>Rules:</b> No rounded corners. No gradients. No shadows. Hard edges only. The orange accent appears exactly once per logo instance.<br>
+      <b>Minimum size:</b> 80px wide for full logo, 16px for mark only.<br>
+      <b>Clear space:</b> 1× the height of the "P" in PRAVEGA on all sides.
+    </p>
+  </div>
+</body>
+</html>
+EOF
+echo "preview written"

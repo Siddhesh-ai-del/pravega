@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120" role="img" aria-label="Pravega logo">
+  <title>Pravega — Evidence-Verified Placement Intelligence</title>
+  <desc>Bold Brutalist Ledger logo: hard-edged geometric mark + PRAVEGA wordmark in Fira Sans Condensed Black, hazard-orange accent.</desc>
+
+  <!-- Mark: hard-edged square with diagonal cut, hazard-orange wedge -->
+  <g transform="translate(0, 10)">
+    <!-- Black square base -->
+    <rect x="0" y="0" width="100" height="100" fill="#0A0A0A"/>
+    <!-- Hazard-orange wedge (diagonal cut from top-right to bottom-left) -->
+    <polygon points="100,0 100,100 0,100" fill="#FF4A00"/>
+    <!-- Concrete inner square (creates depth) -->
+    <rect x="14" y="14" width="72" height="72" fill="#D6D3CC"/>
+    <!-- Black inner mark: hard-edged "P" stamp -->
+    <rect x="28" y="28" width="12" height="44" fill="#0A0A0A"/>
+    <rect x="28" y="28" width="36" height="12" fill="#0A0A0A"/>
+    <rect x="52" y="28" width="12" height="24" fill="#0A0A0A"/>
+    <rect x="28" y="40" width="36" height="12" fill="#0A0A0A"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="128" y="78" font-family="'Fira Sans Condensed', 'Arial Narrow', sans-serif" font-weight="900" font-size="72" fill="#0A0A0A" letter-spacing="-2">PRAVEGA</text>
+
+  <!-- Hazard-orange period (single accent) -->
+  <rect x="452" y="62" width="14" height="14" fill="#FF4A00"/>
+
+  <!-- Micro-label (specimen plate) -->
+  <text x="128" y="102" font-family="'JetBrains Mono', 'SF Mono', monospace" font-weight="700" font-size="9" fill="#6B6560" letter-spacing="2.5">VERIFYING LEDGER</text>
+
+  <!-- Construction line -->
+  <line x1="128" y1="90" x2="466" y2="90" stroke="#0A0A0A" stroke-width="2"/>
+</svg>
+EOF
+echo "primary logo written"

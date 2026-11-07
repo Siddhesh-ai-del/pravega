@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   description:
     "One profile. One trail. Every decision explained. Evidence-gated skill verification, closed-loop learning paths, and human-approved AI for college placements.",
   robots: { index: false },
+  icons: {
+    icon: "/mark.svg",
+    apple: "/mark.svg",
+  },
 };
 
 export default function RootLayout({

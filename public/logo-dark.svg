@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120" role="img" aria-label="Pravega logo (dark)">
+  <title>Pravega — Evidence-Verified Placement Intelligence (dark variant)</title>
+  <desc>Bold Brutalist Ledger logo for dark backgrounds: concrete text on black, hazard-orange accent.</desc>
+
+  <!-- Mark: hard-edged square with diagonal cut, hazard-orange wedge -->
+  <g transform="translate(0, 10)">
+    <rect x="0" y="0" width="100" height="100" fill="#D6D3CC"/>
+    <polygon points="100,0 100,100 0,100" fill="#FF4A00"/>
+    <rect x="14" y="14" width="72" height="72" fill="#0A0A0A"/>
+    <rect x="28" y="28" width="12" height="44" fill="#D6D3CC"/>
+    <rect x="28" y="28" width="36" height="12" fill="#D6D3CC"/>
+    <rect x="52" y="28" width="12" height="24" fill="#D6D3CC"/>
+    <rect x="28" y="40" width="36" height="12" fill="#D6D3CC"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="128" y="78" font-family="'Fira Sans Condensed', 'Arial Narrow', sans-serif" font-weight="900" font-size="72" fill="#D6D3CC" letter-spacing="-2">PRAVEGA</text>
+
+  <!-- Hazard-orange period -->
+  <rect x="452" y="62" width="14" height="14" fill="#FF4A00"/>
+
+  <!-- Micro-label -->
+  <text x="128" y="102" font-family="'JetBrains Mono', 'SF Mono', monospace" font-weight="700" font-size="9" fill="#B5B1A8" letter-spacing="2.5">VERIFYING LEDGER</text>
+
+  <!-- Construction line -->
+  <line x1="128" y1="90" x2="466" y2="90" stroke="#D6D3CC" stroke-width="2"/>
+</svg>
+EOF
+echo "dark logo written"
