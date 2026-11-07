@@ -63,6 +63,12 @@ the deliverable is a convincing LIVE presentation — not a rush build.
   flip source data present; Rahul: Python claimed, SQL verified, React, Git).
 
 ## Artifacts
+- Repo: https://github.com/Siddhesh-ai-del/pravega (public, CI queued)
+- Research brief: docs/research-brief.md
+- Plan: docs/plan.md
+- Deck: pravega-round1.pptx
+- Demo video: pending (Phase 7)
+- README status: 90% complete (run steps, screenshots, badges live)
 - Research brief: `docs/research-brief.md` ✅ (2026-11-03, PASS WITH NOTES; provenance in outputs/.drafts/)
 - Plan: —
 - Deck: —
