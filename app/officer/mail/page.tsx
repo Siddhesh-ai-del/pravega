@@ -14,29 +14,31 @@ export default async function MailQueuePage() {
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Bulk mailing · logged, not blasted</p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Drafts, previews, audit</h1>
-        <p className="mt-1 text-[13px] text-muted">Mail never leaves without an explicit send. Every queued and sent mail is written to the audit trail.</p>
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>BULK MAILING · LOGGED, NOT BLASTED</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>DRAFTS, PREVIEWS, AUDIT</h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)" }}>Mail never leaves without an explicit send. Every queued and sent mail is written to the audit trail.</p>
       </header>
-      <div className="p-4 md:p-6 max-w-[880px] grid gap-4">
+      <div style={{ padding: "16px 24px", maxWidth: "880px", display: "flex", flexDirection: "column", gap: "12px" }}>
         {mails.map((m) => (
-          <article key={m.id} className="border border-line bg-panel p-4">
-            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-2">
-              <p className="font-semibold">To: {m.toEmail}</p>
-              <span className={`font-mono text-[10px] uppercase px-2 py-0.5 border ${m.status === "sent" ? "text-ledger border-ledger/40 bg-green-wash" : "text-amber border-amber/40 bg-amber-wash"}`}>{m.status}</span>
+          <div key={m.id} className="brutal-card" style={{ padding: "14px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: "8px", borderBottom: "2px solid var(--border)", marginBottom: "8px" }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase" }}>TO: {m.toEmail}</p>
+              <span className="brutal-chip" style={{ background: m.status === "sent" ? "var(--primary)" : "var(--muted)", color: m.status === "sent" ? "var(--primary-foreground)" : "var(--ink)" }}>
+                {m.status.toUpperCase()}
+              </span>
             </div>
-            <p className="mt-2 font-mono text-[10px] uppercase text-muted">template: {m.template}</p>
-            <pre className="mt-1 overflow-x-auto bg-panel-2 p-2 text-[11px]">{JSON.stringify(m.detail, null, 2)}</pre>
+            <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>TEMPLATE: {m.template}</p>
+            <pre style={{ background: "var(--concrete-dark)", padding: "8px", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", overflow: "auto", border: "2px solid var(--border)" }}>{JSON.stringify(m.detail, null, 2)}</pre>
             {m.status === "queued" && (
-              <form action={sendMailNow} className="mt-2">
+              <form action={sendMailNow} style={{ marginTop: "8px" }}>
                 <input type="hidden" name="mailId" value={m.id} />
-                <button type="submit" className="border border-probe text-probe px-3 py-1.5 text-[12px] font-medium hover:bg-panel-2">Send (demo — logged, not dispatched)</button>
+                <button type="submit" className="btn-brutal-outline" style={{ fontSize: "10px", padding: "6px 12px" }}>SEND (DEMO — LOGGED, NOT DISPATCHED)</button>
               </form>
             )}
-          </article>
+          </div>
         ))}
-        {mails.length === 0 && <p className="text-muted">Mail queue is empty.</p>}
+        {mails.length === 0 && <p className="body-md" style={{ color: "var(--muted-text)" }}>Mail queue is empty.</p>}
       </div>
     </AppShell>
   );

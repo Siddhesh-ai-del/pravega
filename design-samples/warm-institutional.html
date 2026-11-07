@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pravega — Warm Institutional (Sample)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --panel: #FFFFFF;
+    --panel-warm: #F5F3EE;
+    --panel-2: #EDEAE3;
+    --ink: #1A2332;
+    --ink-dim: #4A5568;
+    --ink-faint: #7A8599;
+    --line: #E2DFD8;
+    --line-strong: #C8C4BB;
+    --accent: #0F766E;
+    --accent-wash: #E6F2F0;
+    --accent-dim: #0D635C;
+    --danger: #C05621;
+    --danger-wash: #FDF0E8;
+    --radius: 8px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .mono { font-family: 'SF Mono', 'JetBrains Mono', monospace; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sidebar { background: var(--panel); border-right: 1px solid var(--line); padding: 20px 16px; display: flex; flex-direction: column; }
+  .sidebar-logo { font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+  .sidebar-logo span { color: var(--accent); }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; font-size: 13px; color: var(--ink-dim); border-radius: var(--radius); transition: all 0.15s; text-decoration: none; margin-bottom: 2px; }
+  .nav-item:hover { color: var(--ink); background: var(--panel-warm); }
+  .nav-item.active { color: var(--accent); background: var(--accent-wash); font-weight: 600; }
+  .nav-icon { width: 16px; height: 16px; opacity: 0.7; }
+  .main { background: var(--bg); }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 28px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  .breadcrumb { font-size: 12px; color: var(--ink-dim); }
+  .header { padding: 24px 28px 16px; }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .header p { color: var(--ink-dim); font-size: 13px; margin-top: 4px; max-width: 60ch; }
+  .kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); }
+  .kpi { padding: 16px 28px; border-right: 1px solid var(--line); }
+  .kpi:last-child { border-right: none; }
+  .kpi-value { font-size: 26px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .kpi-label { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }
+  .kpi-delta { font-size: 11px; color: var(--accent); margin-top: 2px; font-weight: 500; }
+  .content { display: grid; grid-template-columns: 1fr 360px; gap: 0; }
+  .queue { padding: 20px 28px; display: flex; flex-direction: column; gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.15s, border-color 0.15s; }
+  .card:hover { border-color: var(--line-strong); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .card-why { font-size: 12px; color: var(--ink-dim); margin: 4px 0 12px; }
+  .card-why span { color: var(--accent); font-weight: 600; }
+  .card-body { font-size: 13px; color: var(--ink); margin-bottom: 12px; }
+  .card-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .chip { display: inline-flex; align-items: center; font-family: 'SF Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; background: var(--panel-warm); color: var(--ink-dim); border: 1px solid var(--line); }
+  .questions { list-style: none; margin: 8px 0; }
+  .questions li { font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+  .questions li:last-child { border-bottom: none; }
+  .questions .q-label { font-family: 'SF Mono', monospace; font-size: 9px; color: var(--accent); font-weight: 600; margin-right: 6px; }
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 8px 16px; font-size: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+  .btn-primary:hover { background: var(--accent-dim); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); padding: 8px 16px; font-size: 12px; font-weight: 500; border-radius: 6px; cursor: pointer; transition: border-color 0.15s; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--ink-dim); border: none; padding: 8px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; }
+  .btn-ghost:hover { color: var(--ink); background: var(--panel-warm); }
+  .rail { border-left: 1px solid var(--line); padding: 20px 20px; background: var(--panel); }
+  .rail-section { margin-bottom: 20px; }
+  .rail-title { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+  .heatmap { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .heatmap th { font-size: 9px; text-transform: uppercase; color: var(--ink-faint); padding: 6px; text-align: center; font-weight: 600; }
+  .heatmap td { padding: 6px; text-align: center; font-variant-numeric: tabular-nums; border-radius: 4px; }
+  .heat-1 { background: #F0EDE6; color: var(--ink-faint); }
+  .heat-2 { background: #E5E0D5; color: var(--ink-dim); }
+  .heat-3 { background: #D5CFC0; color: var(--ink); }
+  .heat-4 { background: #B8B09E; color: var(--ink); }
+  .heat-5 { background: var(--accent); color: white; }
+  .fairness { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; background: var(--panel-warm); }
+  .fairness-flag { border-left: 3px solid var(--danger); padding-left: 12px; margin-top: 8px; font-size: 11px; color: var(--ink-dim); }
+  .ledger-panel { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; background: var(--panel-warm); }
+  .footer-strip { border-top: 1px solid var(--line); padding: 8px 28px; font-size: 10px; color: var(--ink-faint); display: flex; justify-content: space-between; background: var(--panel); }
+  .kbd-strip { display: flex; gap: 12px; font-size: 10px; color: var(--ink-faint); padding: 8px 0; border-top: 1px dashed var(--line); margin-top: 8px; }
+  .kbd { font-family: 'SF Mono', monospace; font-size: 9px; padding: 2px 6px; border: 1px solid var(--line); border-radius: 3px; background: var(--panel-warm); }
+  .kpi-row { display: flex; gap: 16px; margin-top: 4px; }
+  .kpi-item { text-align: center; }
+  .kpi-num { font-size: 20px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .kpi-lbl { font-size: 9px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+  .topbar-search { background: var(--panel-warm); border: 1px solid var(--line); padding: 6px 12px; font-size: 12px; color: var(--ink-dim); border-radius: 6px; width: 220px; }
+  .live-badge { display: flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--accent-wash); border-radius: 20px; }
+  .live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .content { grid-template-columns: 1fr; }
+    .rail { border-left: none; border-top: 1px solid var(--line); }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div style="margin-bottom: 24px;">
+      <div class="sidebar-logo">Pravega<span>.</span></div>
+      <div class="eyebrow" style="margin-top: 2px;">VERIFYING LEDGER</div>
+    </div>
+    <nav style="flex: 1;">
+      <a class="nav-item active" href="#"><svg style="width:16px;height:16px;opacity:0.7;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Decision Queue</a>
+      <a class="nav-item" href="#"><svg style="width:16px;height:16px;opacity:0.7;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 3v18"/></svg> Cohort Heatmap</a>
+      <a class="nav-item" href="#"><svg style="width:16px;height:16px;opacity:0.7;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Eligibility Rules</a>
+      <a class="nav-item" href="#"><svg style="width:16px;height:16px;opacity:0.7;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Fairness Check</a>
+      <a class="nav-item" href="#"><svg style="width:16px;height:16px;opacity:0.7;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> Audit Trail</a>
+    </nav>
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 36px; height: 36px; background: var(--accent); color: white; display: grid; place-items: center; font-size: 12px; font-weight: 600; border-radius: 50%;">AD</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600;">Anjali Deshmukh</div>
+          <div class="mono" style="font-size: 9px; color: var(--ink-faint);">T&P OFFICER · SIGNATORY</div>
+        </div>
+      </div>
+      <a href="#" class="btn-ghost" style="margin-top: 8px; font-size: 11px;">Sign out</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb">placement / nimbus-tech / decision-queue</div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <input type="text" placeholder="search cases, students, rules…" class="topbar-search" />
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          <span class="mono" style="font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600;">LIVE</span>
+        </div>
+        <span class="mono" style="font-size: 10px; color: var(--ink-faint);">2026-11-04 · 09:40 IST</span>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">NIMBUS TECH — BACKEND DEV DRIVE</div>
+      <h1>Decision Queue</h1>
+      <p>Agents propose. You dispose. Every sign-off appends to the ledger.</p>
+      <div class="kpi-row">
+        <div class="kpi-item"><div class="kpi-num">3</div><div class="kpi-lbl">PENDING</div></div>
+        <div class="kpi-item"><div class="kpi-num">2H 41M</div><div class="kpi-lbl">OLDEST</div></div>
+      </div>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-value">128</div><div class="kpi-label">Verified this week</div><div class="kpi-delta">+12</div></div>
+      <div class="kpi"><div class="kpi-value">3</div><div class="kpi-label">Approvals pending</div><div class="kpi-delta">—</div></div>
+      <div class="kpi"><div class="kpi-value">2</div><div class="kpi-label">Eligibility blocks</div><div class="kpi-delta">—</div></div>
+      <div class="kpi"><div class="kpi-value">1,204</div><div class="kpi-label">Audit entries</div><div class="kpi-delta">+47</div></div>
+    </div>
+
+    <div class="content">
+      <div class="queue">
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="chip">INTERVIEW SET</span>
+              <span class="mono" style="font-size: 10px; color: var(--ink-faint);">PVG-2026-0114 · agr-1</span>
+            </div>
+            <span class="mono" style="font-size: 10px; color: var(--ink-faint);">conf 92%</span>
+          </div>
+          <div class="card-title">Nimbus Tech — Backend Dev interview set</div>
+          <div class="card-why"><span>WHY</span> Generated from JD skills [sql, node, docker] + cohort weakness heatmap: SQL joins (41% weak)</div>
+          <ul class="questions">
+            <li><span class="q-label">Q1</span> Walk through your hostel-ledger API: how would you page a 1M-row table?</li>
+            <li><span class="q-label">Q2</span> A report query now takes 8s — diagnose and fix.</li>
+            <li><span class="q-label">Q3</span> When would you skip Docker for a small service?</li>
+          </ul>
+          <div class="card-actions">
+            <button class="btn-primary">✓ Approve</button>
+            <button class="btn-outline">Override</button>
+            <button class="btn-ghost">Defer</button>
+          </div>
+          <div class="kbd-strip">
+            <span>↑↓ navigate</span><span>A approve</span><span>O override</span><span>D defer</span><span>⌘K palette</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="chip">ELIGIBILITY SWEEP</span>
+              <span class="mono" style="font-size: 10px; color: var(--ink-faint);">PVG-2026-0114 · agr-2</span>
+            </div>
+            <span class="mono" style="font-size: 10px; color: var(--ink-faint);">conf 85%</span>
+          </div>
+          <div class="card-title">Nimbus Tech — eligibility sweep (7 students)</div>
+          <div class="card-why"><span>WHY</span> Rule v3: CGPA ≥ 60%, no backlogs, SQL Verified</div>
+          <div style="margin: 8px 0;">
+            <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">3 eligible</div>
+            <div class="mono" style="font-size: 11px; color: var(--ink-dim); padding: 4px 0; border-bottom: 1px solid var(--line);">vikram.r — 1 active backlog (rule c2)</div>
+            <div class="mono" style="font-size: 11px; color: var(--ink-dim); padding: 4px 0;">karan.b — CGPA 58% + 2 backlogs</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-primary">✓ Approve</button>
+            <button class="btn-outline">Override</button>
+            <button class="btn-ghost">Defer</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="chip">SCHEDULE DRAFT</span>
+              <span class="mono" style="font-size: 10px; color: var(--ink-faint);">PVG-2026-0114 · agr-3</span>
+            </div>
+            <span class="mono" style="font-size: 10px; color: var(--ink-faint);">conf 90%</span>
+          </div>
+          <div class="card-title">Nimbus Tech — 2 slots, Thu 14:00 / Fri 10:00</div>
+          <div class="card-why"><span>WHY</span> Confidence 90% · clash detected with Zen Financial</div>
+          <div style="margin: 8px 0; background: var(--panel-warm); padding: 10px; border-left: 3px solid var(--danger);">
+            <div class="mono" style="font-size: 11px; color: var(--danger);">clash: Zen Financial uses Fri 10:00 — conflict</div>
+            <div style="font-size: 12px; margin-top: 4px; color: var(--ink);">suggestion: Move Nimbus to Fri 14:00</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-primary">✓ Approve</button>
+            <button class="btn-outline">Override</button>
+            <button class="btn-ghost">Defer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rail">
+        <div class="rail-section">
+          <div class="rail-title">Cohort Weakness</div>
+          <table class="heatmap">
+            <thead>
+              <tr><th></th><th>SQL</th><th>Docker</th><th>Git</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-size: 10px; text-align: left; padding-left: 4px;">CSE</td><td class="heat-3">60%</td><td class="heat-5">90%</td><td class="heat-1">20%</td></tr>
+              <tr><td style="font-size: 10px; text-align: left; padding-left: 4px;">IT</td><td class="heat-2">35%</td><td class="heat-4">80%</td><td class="heat-1">15%</td></tr>
+              <tr><td style="font-size: 10px; text-align: left; padding-left: 4px;">EnTC</td><td class="heat-4">72%</td><td class="heat-5">95%</td><td class="heat-2">30%</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 8px; font-size: 11px; color: var(--ink-dim);">SQL joins — 41% weak. Docker workshop recommended before Nov 6 drive.</div>
+        </div>
+
+        <div class="rail-section">
+          <div class="rail-title">Fairness Check</div>
+          <div class="fairness">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span style="font-size: 13px; font-weight: 600;">Fairness passed</span>
+            </div>
+            <div class="mono" style="font-size: 10px; color: var(--ink-dim); margin-top: 4px;">parity 0.91 · χ² p = 0.44</div>
+            <div class="fairness-flag" style="font-size: 11px; color: var(--ink-dim); margin-top: 8px;">Zen Financial QA drive: F shortlist 20% vs M 89% — flagged for human review (four-fifths rule).</div>
+          </div>
+        </div>
+
+        <div class="rail-section">
+          <div class="rail-title">Ledger Invariant</div>
+          <div class="ledger-panel">
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">Append-only. One-way.</div>
+            <div style="font-size: 11px; color: var(--ink-dim);">Every action writes one row. There is no update path and no delete tool in the app.</div>
+            <button class="btn-outline" style="margin-top: 10px; width: 100%; font-size: 11px;">Export audit pack ↓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-strip">
+      <span>append-only · no delete path · tenant: vpcoe · 1,204 audit entries</span>
+      <span>Pravega · Warm Institutional · Round 1 candidate</span>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
+EOF
+echo "written"

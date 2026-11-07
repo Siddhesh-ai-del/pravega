@@ -10,18 +10,13 @@ export default async function VerifyPage() {
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
-          Evidence-gated verification
-        </p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">
-          Verify Python from your work<span className="text-ledger">.</span>
-        </h1>
-        <p className="mt-1 text-[13px] text-muted max-w-[64ch]">
-          Claims don&apos;t travel. Repos do. We read <b>language share, commit
-          history, and test presence</b> — nothing else — and flip the state
-          only if the evidence crosses the bar. Consent is read-only and can be
-          revoked at any time.
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>EVIDENCE-GATED VERIFICATION</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>VERIFY PYTHON FROM YOUR WORK</h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)", maxWidth: "64ch" }}>
+          Claims don&apos;t travel. Repos do. We read language share, commit history, and test presence —
+          nothing else — and flip the state only if the evidence crosses the bar. Consent is read-only
+          and revocable at any time.
         </p>
       </header>
       <VerifyClient name={session.name.split(" ")[0]} />

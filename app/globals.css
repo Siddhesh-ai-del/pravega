@@ -1,87 +1,170 @@
 @import "tailwindcss";
+@import "../node_modules/tw-animate-css/dist/tw-animate.css";
 
-/* Pravega — THE QUIET LEDGER (main UI)
-   Single-hue graphite, near-black · hairline rules · inverted neutral
-   controls · ONE violet accent reserved for verified/approved semantics
-   and the focus ring. Projector-legible, AA-contrast pairs only. */
-
-:root {
-  color-scheme: dark;
-  --paper: #0b0b0c;         /* page */
-  --panel: #131315;         /* cards */
-  --panel-2: #1a1a1d;       /* raised / hover */
-  --panel-3: #202024;       /* inputs */
-  --ink: #ededea;           /* primary text */
-  --muted: #a6a6a2;         /* secondary text */
-  --line: #26262a;          /* hairline */
-  --line-strong: #3a3a40;   /* emphasis hairline */
-  --probe: #ededea;         /* interactive = inverted neutral */
-  --ledger: #a78bfa;        /* the ONE accent — verified/approved */
-  --amber: #d4c290;         /* expiring / caution — desaturated */
-  --red: #d98c8c;           /* flags / errors — desaturated */
-  --red-wash: #221b1a;
-  --green-wash: #201d29;    /* violet-tinted verified wash */
-  --amber-wash: #232118;
-  --focus: #a78bfa;
-}
+/* Pravega — Bold Brutalist Ledger
+   béton brut: expose the structure, refuse the polish.
+   3 colors: concrete / ink / hazard orange. 2 fonts. 0 radius. Hard shadows. */
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-panel: var(--panel);
-  --color-panel-2: var(--panel-2);
-  --color-panel-3: var(--panel-3);
-  --color-ink: var(--ink);
+  /* NeoBrutalism UI variable mappings */
+  --font-head: var(--font-head);
+  --font-sans: var(--font-sans);
+  --radius: var(--radius);
+  --shadow-xs: 1px 1px 0 0 var(--border);
+  --shadow-sm: 2px 2px 0 0 var(--border);
+  --shadow: 3px 3px 0 0 var(--border);
+  --shadow-md: 4px 4px 0 0 var(--border);
+  --shadow-lg: 6px 6px 0 0 var(--border);
+  --shadow-xl: 10px 10px 0 1px var(--border);
+  --shadow-2xl: 16px 16px 0 1px var(--border);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
   --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-probe: var(--probe);
-  --color-ledger: var(--ledger);
-  --color-amber: var(--amber);
-  --color-red: var(--red);
-  --color-red-wash: var(--red-wash);
-  --color-green-wash: var(--green-wash);
-  --color-amber-wash: var(--amber-wash);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-popover: var(--popover);
+  --color-input: var(--input);
+  --background-image: var(--background-image);
+  --chart-1: var(--chart-1);
+  --chart-2: var(--chart-2);
+  --chart-3: var(--chart-3);
+  --chart-4: var(--chart-4);
+  --chart-5: var(--chart-5);
+
+  /* NeoBrutalism UI custom utilities (bg-main, text-main-foreground, etc.) */
+  --color-main: var(--main);
+  --color-main-foreground: var(--main-foreground);
+  --color-secondary-background: var(--secondary-background);
+  --color-overlay: var(--overlay);
+  --color-ring: var(--ring);
+
+  /* Product-specific color aliases */
+  --color-paper: var(--paper);
+  --color-concrete: var(--concrete);
+  --color-concrete-dark: var(--concrete-dark);
+  --color-spot: var(--spot);
+  --color-ink: var(--ink);
+  --color-muted-text: var(--muted-text);
+
+  /* Translate for hover press effect */
+  --translate-x-boxShadowX: var(--box-shadow-x);
+  --translate-y-boxShadowY: var(--box-shadow-y);
+  --translate-x-reverseBoxShadowX: var(--reverse-box-shadow-x);
+  --translate-y-reverseBoxShadowY: var(--reverse-box-shadow-y);
 }
 
-html, body {
-  height: 100%;
+:root {
+  --radius: 0;
+  /* brutalist palette — 3 colors only */
+  --background: #D6D3CC;          /* concrete page */
+  --foreground: #0A0A0A;          /* raw black text */
+  --card: #F5F3ED;                /* paper card surface */
+  --card-foreground: #0A0A0A;
+  --primary: #FF4A00;             /* hazard orange — THE one accent */
+  --primary-hover: #E64200;
+  --primary-foreground: #0A0A0A;  /* black on orange */
+  --secondary: #0A0A0A;           /* black secondary */
+  --secondary-foreground: #D6D3CC; /* concrete on black */
+  --muted: #B5B1A8;              /* concrete-dark */
+  --muted-foreground: #6B6560;    /* muted text */
+  --accent: #FF4A00;             /* same as primary — one accent */
+  --accent-foreground: #0A0A0A;
+  --destructive: #FF4A00;        /* danger uses the spot color */
+  --destructive-foreground: #0A0A0A;
+  --border: #0A0A0A;             /* raw black borders */
+  --input: #F5F3ED;              /* input bg = paper */
+  --popover: #F5F3ED;
+  --background-image: none;
+
+  /* NeoBrutalism UI custom vars (mapped above) */
+  --main: #FF4A00;
+  --main-foreground: #0A0A0A;
+  --secondary-background: #F5F3ED;
+  --overlay: rgba(10, 10, 10, 0.6);
+  --ring: #FF4A00;
+
+  /* shadow system — hard offset, no blur */
+  --box-shadow-x: 4px;
+  --box-shadow-y: 4px;
+  --reverse-box-shadow-x: -4px;
+  --reverse-box-shadow-y: -4px;
+  --shadow: #0A0A0A;
+
+  /* chart colors */
+  --chart-1: #FF4A00;
+  --chart-2: #0A0A0A;
+  --chart-3: #6B6560;
+  --chart-4: #B5B1A8;
+  --chart-5: #D6D3CC;
+
+  /* fonts */
+  --font-head: 'Fira Sans Condensed', sans-serif;
+  --font-sans: 'Fira Sans', sans-serif;
+
+  /* product-specific aliases */
+  --paper: #F5F3ED;
+  --concrete: #D6D3CC;
+  --concrete-dark: #B5B1A8;
+  --spot: #FF4A00;
+  --ink: #0A0A0A;
+  --muted-text: #6B6560;
+  --focus: #FF4A00;
+}
+
+/* dot-grid backdrop — brutalist signature */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #B5B1A8 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+  aria-hidden: true;
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
   font-size: 14px;
-  line-height: 1.45;
-  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--spot);
   outline-offset: 2px;
 }
 
-/* ledger row hover */
-.ledger-row:hover { background: var(--panel-2); }
+/* brutalist signature: hard shadows, zero radius, thick borders — already in @theme */
 
-/* receipt-style evidence packet */
-.receipt {
-  border: 1px dashed var(--line-strong);
-  background: var(--panel);
-}
-.receipt > * + * { border-top: 1px dashed var(--line-strong); }
+/* heatmap ramp — single hue (concrete lightness) + spot for worst */
+.heat-1 { background: #E8E5DE; color: #6B6560; }
+.heat-2 { background: #D4D0C6; color: #0A0A0A; }
+.heat-3 { background: #BFBAAE; color: #0A0A0A; }
+.heat-4 { background: #9E9888; color: #F5F3ED; }
+.heat-5 { background: #FF4A00; color: #0A0A0A; }
 
-/* heatmap cell ramps: single-hue paper → ink (lightness only) */
-.heat-1 { background: #17171a; }
-.heat-2 { background: #232327; }
-.heat-3 { background: #34343a; }
-.heat-4 { background: #55555e; color: #ededea; }
-.heat-5 { background: #ededea; color: #0b0b0c; }
+/* receipt-style evidence packet — dashed borders */
+.receipt { border: 1px dashed var(--border); background: var(--card); }
+.receipt > * + * { border-top: 1px dashed var(--border); }
 
-/* signature transition: verification stamp (reduced-motion = instant) */
+/* verification stamp flip — the one signature transition */
 .verify-stamp { animation: stampIn 480ms cubic-bezier(0.2, 1.4, 0.4, 1); }
 @keyframes stampIn {
   0% { transform: rotate(-8deg) scale(0.4); opacity: 0; }
@@ -90,68 +173,101 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .verify-stamp { animation: none; }
-  *, *::before, *::after { transition-duration: 0.01ms !important; }
 }
 
-/* ────────────────────────────────────────────────────────────────
-   Direction 06 — “The Quiet Ledger” (design-lab only, .mono-scope)
-   Single-hue graphite + ONE violet accent (verified/approved + focus).
-   Same values as the main skin, re-scoped so lab variants stay stable.
-   ──────────────────────────────────────────────────────────────── */
-/* Portals (Radix Dialog / sonner) mount on <body>, outside .mono-scope —
-   mirror the accent focus ring there too. */
-.mono-portal :focus-visible {
-  outline: 2px solid #a78bfa;
-  outline-offset: 2px;
-}
-.mono-scope {
-  --m-bg: #0b0b0c;
-  --m-panel: #131315;
-  --m-panel-2: #1a1a1d;
-  --m-panel-3: #202024;
-  --m-line: #26262a;
-  --m-line-strong: #3a3a40;
-  --m-ink: #ededea;
-  --m-ink-dim: #a6a6a2;
-  --m-ink-faint: #6e6e6a;
-  --m-accent: #a78bfa;
-  --m-accent-ink: #0b0b0c;
-  --m-invert-bg: #ededea;
-  --m-invert-ink: #0b0b0c;
-  --m-danger: #d98c8c;
-
-  background: var(--m-bg);
-  color: var(--m-ink);
-  font-variant-numeric: tabular-nums;
+/* marquee ticker — brutalist signature strip */
+.brutalist-ticker {
+  background: var(--ink);
+  color: var(--concrete);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
 }
 
-.mono-scope :focus-visible {
-  outline: 2px solid var(--m-accent);
-  outline-offset: 2px;
+/* utility: hard shadow */
+.hard-shadow {
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+.hard-shadow-lg {
+  box-shadow: 6px 6px 0 0 var(--ink);
 }
 
-/* single-hue heatmap ramp (lightness only — no hue shift) */
-.mono-scope .m-heat-1 { background: #17171a; color: #6e6e6a; }
-.mono-scope .m-heat-2 { background: #232327; color: #a6a6a2; }
-.mono-scope .m-heat-3 { background: #34343a; color: #c9c9c6; }
-.mono-scope .m-heat-4 { background: #55555e; color: #ededea; }
-.mono-scope .m-heat-5 { background: #ededea; color: #0b0b0c; }
-
-/* faint dot-grid backdrop — fixed texture used by product + lab shells */
-.m-dotgrid {
-  background-image: radial-gradient(circle, #1d1d20 1px, transparent 1px);
-  background-size: 24px 24px;
+/* utility: construction line */
+.construction-line {
+  border-top: 3px solid var(--ink);
 }
 
-/* signature transition: verification stamp (reduced-motion = instant) */
-.mono-scope .m-stamp {
-  animation: mStampIn 480ms cubic-bezier(0.2, 1.4, 0.4, 1);
+/* monospace for case numbers */
+.case-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-@keyframes mStampIn {
-  0% { transform: rotate(-10deg) scale(0.4); opacity: 0; }
-  60% { transform: rotate(2deg) scale(1.28); opacity: 1; }
-  100% { transform: rotate(0) scale(1); }
-}
+
+/* display type — giant numerals */
+.display-xl { font-family: 'Fira Sans Condensed', sans-serif; font-weight: 900; font-size: 96px; line-height: 0.85; letter-spacing: -0.03em; text-transform: uppercase; }
+.display-lg { font-family: 'Fira Sans Condensed', sans-serif; font-weight: 900; font-size: 64px; line-height: 0.88; letter-spacing: -0.02em; text-transform: uppercase; }
+.display-md { font-family: 'Fira Sans Condensed', sans-serif; font-weight: 800; font-size: 40px; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase; }
+.display-sm { font-family: 'Fira Sans Condensed', sans-serif; font-weight: 800; font-size: 28px; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; }
+
+/* body text */
+.body-lg { font-family: 'Fira Sans', sans-serif; font-weight: 500; font-size: 16px; line-height: 1.4; }
+.body-md { font-family: 'Fira Sans', sans-serif; font-weight: 400; font-size: 14px; line-height: 1.45; }
+.body-sm { font-family: 'Fira Sans', sans-serif; font-weight: 400; font-size: 12px; line-height: 1.4; }
+
+/* label text */
+.label { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* stamp badge */
+.stamp-badge { display: inline-flex; align-items: center; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border: 2px solid var(--border); background: var(--primary); color: var(--primary-foreground); }
+
+/* inverted button (primary) */
+.btn-brutal-primary { background: var(--secondary); color: var(--secondary-foreground); border: 3px solid var(--border); padding: 8px 16px; font-family: 'Fira Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; box-shadow: 4px 4px 0 0 var(--border); }
+.btn-brutal-primary:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--border); }
+.btn-brutal-primary:active { transform: translate(4px, 4px); box-shadow: none; }
+
+/* outline button */
+.btn-brutal-outline { background: var(--card); color: var(--foreground); border: 3px solid var(--border); padding: 8px 16px; font-family: 'Fira Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s, background 0.1s; box-shadow: 4px 4px 0 0 var(--border); }
+.btn-brutal-outline:hover { background: var(--primary); color: var(--primary-foreground); transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--border); }
+
+/* ghost button */
+.btn-brutal-ghost { background: transparent; color: var(--foreground); border: none; padding: 8px 12px; font-family: 'Fira Sans', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.btn-brutal-ghost:hover { color: var(--primary); }
+
+/* card */
+.brutal-card { background: var(--card); border: 3px solid var(--border); padding: 16px; box-shadow: 6px 6px 0 0 var(--border); position: relative; }
+.brutal-card::after { content: ''; position: absolute; top: 6px; left: 6px; width: 100%; height: 100%; background: var(--border); z-index: -1; }
+
+/* input */
+.brutal-input { background: var(--input); border: 3px solid var(--border); padding: 8px 12px; font-family: 'Fira Sans', sans-serif; font-size: 13px; color: var(--foreground); outline: none; transition: box-shadow 0.1s; }
+.brutal-input:focus { box-shadow: 4px 4px 0 0 var(--primary); }
+
+/* table */
+.brutal-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.brutal-table th { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 12px; border: 2px solid var(--border); background: var(--secondary); color: var(--secondary-foreground); text-align: left; }
+.brutal-table td { padding: 8px 12px; border: 2px solid var(--border); }
+.brutal-table tr:nth-child(even) td { background: var(--muted); }
+.brutal-table tr:hover td { background: var(--primary); color: var(--primary-foreground); }
+
+/* chip/badge */
+.brutal-chip { display: inline-flex; align-items: center; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border: 2px solid var(--border); background: var(--primary); color: var(--primary-foreground); }
+
+/* separator */
+.brutal-sep { border: none; border-top: 3px solid var(--border); margin: 0; }
+
+/* konami: reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .mono-scope .m-stamp { animation: none; }
+  .verify-stamp { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+EOF
+echo "globals.css written"

@@ -36,7 +36,7 @@ export function LearningPathClient({
       if (res.ok) {
         setTasks(data.tasks);
         if (data.evidenceCreated) {
-          setFlash("Evidence artifact created — this task now counts toward verification.");
+          setFlash("EVIDENCE ARTIFACT CREATED — THIS TASK NOW COUNTS TOWARD VERIFICATION.");
         } else {
           setFlash(null);
         }
@@ -48,73 +48,67 @@ export function LearningPathClient({
 
   return (
     <>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6 flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Gap-closing path · {gapSkill}</p>
-          <h1 className="mt-2 max-w-[22ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Close the gap, keep the evidence</h1>
-        </div>
-        <div className="text-right">
-          <p className="text-[44px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">{doneCount}<span className="text-base text-muted">/{tasks.length}</span></p>
-          <p className="font-mono text-[10px] uppercase tracking-wider text-muted mt-1">tasks done · {pct}%</p>
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>GAP-CLOSING PATH · {gapSkill.toUpperCase()}</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>CLOSE THE GAP, KEEP THE EVIDENCE</h1>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "16px", marginTop: "8px" }}>
+          <span className="display-lg" style={{ color: "var(--spot)" }}>{doneCount}</span>
+          <span className="display-lg" style={{ color: "var(--muted-text)", fontSize: "32px" }}>/{tasks.length}</span>
+          <span className="case-number" style={{ color: "var(--muted-text)" }}>TASKS DONE · {pct}%</span>
         </div>
       </header>
 
-      <div className="grid lg:grid-cols-[380px_1fr]">
-        {/* why panel */}
-        <aside className="border-b lg:border-b-0 lg:border-r border-line p-4 md:p-6">
-          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Why this path (explainable)</h2>
-          <div className="mt-3 border border-line bg-panel">
+      <div style={{ display: "grid", gridTemplateColumns: "380px 1fr", gap: 0 }}>
+        <aside style={{ borderRight: "4px solid var(--border)", padding: "16px", background: "var(--concrete-dark)" }}>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "12px" }}>WHY THIS PATH (EXPLAINABLE)</p>
+          <div className="brutal-card" style={{ padding: "0" }}>
             {[
-              ["Source", reason.source ?? "mock drive"],
-              ["Machine test signal", reason.machineNote ?? "JOIN grouping incomplete"],
-              ["JD demand signal", reason.jdSignal ?? "SQL in 61% of recent backend JDs"],
-            ].map(([k, v]) => (
-              <div key={k} className="flex gap-3 border-b last:border-b-0 border-line px-3 py-2 text-[13px]">
-                <span className="text-muted min-w-[140px] font-mono text-[11px] uppercase tracking-wide pt-0.5">{k}</span>
-                <span>{v}</span>
+              ["SOURCE", reason.source ?? "mock drive"],
+              ["MACHINE TEST SIGNAL", reason.machineNote ?? "JOIN grouping incomplete"],
+              ["JD DEMAND SIGNAL", reason.jdSignal ?? "SQL in 61% of recent backend JDs"],
+            ].map(([k, v], i) => (
+              <div key={k} style={{ padding: "10px 12px", borderBottom: i < 2 ? "2px solid var(--border)" : "none" }}>
+                <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>{k}</p>
+                <p className="body-sm" style={{ fontWeight: 600 }}>{v}</p>
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[12px] text-muted">
-            No hidden model decided this. Every input above is inspectable; if any is wrong,
-            say so — that&apos;s the appeal path.
+          <p className="body-sm" style={{ color: "var(--muted-text)", marginTop: "12px", fontSize: "11px" }}>
+            No hidden model decided this. Every input above is inspectable; if any is wrong, say so — that&apos;s the appeal path.
           </p>
-          <div className="mt-4 h-2 w-full bg-panel-2 overflow-hidden">
-            <div className="h-full bg-ledger transition-all" style={{ width: `${pct}%` }} />
+          <div style={{ height: "6px", background: "var(--muted)", marginTop: "12px", overflow: "hidden" }}>
+            <div style={{ height: "100%", background: "var(--primary)", width: `${pct}%`, transition: "width 0.3s" }} />
           </div>
-          <p className="mt-1 font-mono text-[10px] text-muted">path closes when the project artifact produces verifiable evidence</p>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginTop: "4px" }}>PATH CLOSES WHEN THE PROJECT ARTIFACT PRODUCES VERIFIABLE EVIDENCE</p>
           {flash && (
-            <p role="status" className="mt-3 border border-ledger/40 bg-green-wash px-3 py-2 text-[12px] text-ledger">
+            <div style={{ marginTop: "12px", border: "3px solid var(--primary)", background: "var(--primary)", color: "var(--primary-foreground)", padding: "8px 12px", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
               {flash}
-            </p>
+            </div>
           )}
-          <Link href="/student" className="mt-4 inline-block text-[13px] text-probe underline underline-offset-2">
-            Back to my ledger →
+          <Link href="/student" className="btn-brutal-ghost" style={{ marginTop: "12px", display: "inline-block", fontSize: "11px" }}>
+            ← BACK TO MY LEDGER
           </Link>
         </aside>
 
-        {/* tasks */}
-        <ol className="p-4 md:p-6 grid gap-3 content-start">
+        <ol style={{ listStyle: "none", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "10px" }}>
           {tasks.map((t, i) => (
-            <li key={t.id} className={`flex items-start gap-3 border bg-panel p-4 ${t.done ? "border-ledger/40" : "border-line"}`}>
+            <li key={t.id} className="brutal-card" style={{ padding: "14px", display: "flex", alignItems: "flex-start", gap: "12px", opacity: t.done ? 0.6 : 1 }}>
               <input
                 id={t.id}
                 type="checkbox"
-                className="mt-1 accent-[var(--ledger)]"
                 checked={t.done}
                 disabled={busy === t.id}
                 onChange={() => toggle(t.id)}
+                style={{ marginTop: "3px", width: "18px", height: "18px", accentColor: "var(--spot)", cursor: "pointer" }}
               />
-              <label htmlFor={t.id} className="flex-1 cursor-pointer">
-                <span className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">TASK {i + 1} · {t.kind}</span>
+              <label htmlFor={t.id} style={{ flex: 1, cursor: "pointer" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "4px" }}>
+                  <span className="case-number" style={{ color: "var(--muted-text)" }}>TASK {i + 1} · {t.kind.toUpperCase()}</span>
                   {t.producesEvidence && (
-                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-probe border border-probe/30 bg-panel-2 px-1.5 py-0.5">
-                      produces evidence
-                    </span>
+                    <span className="brutal-chip" style={{ fontSize: "8px" }}>PRODUCES EVIDENCE</span>
                   )}
-                </span>
-                <span className={`mt-1 block text-[14px] leading-snug ${t.done ? "line-through text-muted" : ""}`}>
+                </div>
+                <span style={{ fontSize: "13px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.02em", textDecoration: t.done ? "line-through" : "none" }}>
                   {t.title}
                 </span>
               </label>

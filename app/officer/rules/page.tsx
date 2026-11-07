@@ -21,85 +21,72 @@ export default async function OfficerRulesPage() {
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Versioned eligibility</p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Rules are code, not sheets</h1>
-        <p className="mt-1 text-[13px] text-muted max-w-[72ch]">
-          Every decision records the exact rule <b>version</b> and failed clauses. If a policy
-          changes, the rule increments its version — old decisions stay explainable forever.
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>VERSIONED ELIGIBILITY</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>RULES ARE CODE, NOT SHEETS</h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)", maxWidth: "72ch" }}>
+          Every decision records the exact rule version and failed clauses. If a policy changes, the rule increments its version — old decisions stay explainable forever.
         </p>
       </header>
-
-      <div className="grid lg:grid-cols-[420px_1fr]">
-        <aside className="border-b lg:border-b-0 lg:border-r border-line p-4 md:p-6">
+      <div style={{ display: "grid", gridTemplateColumns: "420px 1fr", gap: 0 }}>
+        <aside style={{ borderRight: "4px solid var(--border)", padding: "16px", background: "var(--concrete-dark)" }}>
           {rules.map((rule) => (
-            <div key={rule.id} className="border border-line bg-panel">
-              <div className="flex items-center justify-between border-b border-line px-3 py-2">
+            <div key={rule.id} className="brutal-card" style={{ padding: "0", marginBottom: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderBottom: "3px solid var(--border)", background: "var(--secondary)", color: "var(--secondary-foreground)" }}>
                 <div>
-                  <h2 className="font-semibold text-[14px]">{rule.name}</h2>
-                  <p className="font-mono text-[10px] text-muted">{rule.id}</p>
+                  <h2 className="display-sm" style={{ fontSize: "14px", color: "var(--concrete)" }}>{rule.name}</h2>
+                  <p className="case-number" style={{ color: "var(--concrete-dark)" }}>{rule.id}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] px-2 py-0.5 border border-probe/40 text-probe">v{rule.version}</span>
-                  <span className="font-mono text-[10px] px-2 py-0.5 border border-ledger/40 text-ledger bg-green-wash">ACTIVE</span>
+                <div style={{ display: "flex", gap: "6px" }}>
+                  <span className="brutal-chip" style={{ background: "var(--concrete)", color: "var(--ink)" }}>V{rule.version}</span>
+                  <span className="brutal-chip">ACTIVE</span>
                 </div>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[380px] text-[12px]">
-                  <thead className="font-mono text-[10px] uppercase text-muted">
-                    <tr className="text-left"><th className="px-3 py-1.5">Clause</th><th className="px-3 py-1.5">Check</th></tr>
-                  </thead>
-                  <tbody className="divide-y divide-line">
-                    {(rule.clauses as unknown as Clause[]).map((c) => (
-                      <tr key={c.id}>
-                        <td className="px-3 py-2 font-mono text-[11px] text-muted">{c.id}</td>
-                        <td className="px-3 py-2">{c.label}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <table className="brutal-table">
+                <thead><tr><th>CLAUSE</th><th>CHECK</th></tr></thead>
+                <tbody>
+                  {(rule.clauses as unknown as Clause[]).map((c) => (
+                    <tr key={c.id}>
+                      <td className="case-number" style={{ color: "var(--muted-text)" }}>{c.id}</td>
+                      <td style={{ fontSize: "11px", fontWeight: 600 }}>{c.label}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ))}
-          <p className="mt-3 font-mono text-[10px] text-muted">
-            Clause grammar is deliberately dumb — no eval(), no hidden DSLs.
-            NAAC reports will cite rule versions, not recollections.
-          </p>
+          <p className="case-number" style={{ color: "var(--muted-text)" }}>CLAUSE GRAMMAR IS DELIBERATELY DUMB — NO EVAL(), NO HIDDEN DSLS. NAAC REPORTS WILL CITE RULE VERSIONS, NOT RECOLLECTIONS.</p>
         </aside>
-
-        {/* cohort sweep */}
-        <section className="p-4 md:p-6">
-          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Cohort sweep — rule v3</h2>
-          <div className="mt-2 overflow-x-auto">
-            <table className="w-full min-w-[640px] text-[13px]">
-              <thead className="font-mono text-[10px] uppercase text-muted text-left">
-                <tr className="border-b border-line">
-                  <th className="py-1.5">Student</th><th className="py-1.5">Branch</th><th className="py-1.5">CGPA</th><th className="py-1.5">Backlogs</th><th className="py-1.5">Latest v3 decision</th><th />
+        <section style={{ padding: "16px 24px" }}>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "8px" }}>COHORT SWEEP — RULE V3</p>
+          <div className="brutal-card" style={{ padding: "0", overflow: "auto" }}>
+            <table className="brutal-table">
+              <thead>
+                <tr>
+                  <th>STUDENT</th><th>BRANCH</th><th>CGPA</th><th>BACKLOGS</th><th>LATEST V3 DECISION</th><th></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody>
                 {students.map((p) => {
                   const d = latest.get(p.userId);
                   return (
-                    <tr key={p.userId} className="ledger-row align-middle">
-                      <td className="py-2.5 font-medium">{nameOf[p.userId] ?? p.userId}</td>
-                      <td className="py-2.5">{p.branch === "Computer Engineering" ? "CSE" : p.branch}</td>
-                      <td className="py-2.5 font-mono">{p.cgpa}</td>
-                      <td className="py-2.5 font-mono">{p.activeBacklogs}</td>
-                      <td className="py-2.5">
+                    <tr key={p.userId}>
+                      <td style={{ fontWeight: 700, textTransform: "uppercase", fontSize: "11px" }}>{nameOf[p.userId] ?? p.userId}</td>
+                      <td style={{ fontSize: "11px" }}>{p.branch === "Computer Engineering" ? "CSE" : p.branch}</td>
+                      <td style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>{p.cgpa}</td>
+                      <td style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, textAlign: "center" }}>{p.activeBacklogs}</td>
+                      <td>
                         {d ? (
                           d.passed
-                            ? <span className="font-mono text-[11px] uppercase text-ledger border border-ledger/40 bg-green-wash px-2 py-0.5">Pass</span>
-                            : <span className="font-mono text-[11px] uppercase text-red border border-red/40 bg-red-wash px-2 py-0.5">Blocked · {(d.failedClauses as { id: string }[]).map((c) => c.id).join(",")}</span>
-                        ) : <span className="text-muted">—</span>}
+                            ? <span className="brutal-chip" style={{ background: "var(--primary)", color: "var(--primary-foreground)" }}>PASS</span>
+                            : <span className="brutal-chip" style={{ background: "var(--destructive)", color: "var(--destructive-foreground)" }}>BLOCKED · {(d.failedClauses as { id: string }[]).map((c) => c.id).join(",")}</span>
+                        ) : <span className="case-number" style={{ color: "var(--muted-text)" }}>—</span>}
                       </td>
-                      <td className="py-2.5 text-right">
+                      <td style={{ textAlign: "right" }}>
                         <form action={runEligibilitySweep}>
                           <input type="hidden" name="studentId" value={p.userId} />
                           <input type="hidden" name="ruleId" value="rule-nimbus-be" />
-                          <button type="submit" className="font-mono text-[10px] uppercase border border-line px-2 py-1 hover:border-probe hover:text-probe">
-                            Run check
-                          </button>
+                          <button type="submit" className="btn-brutal-outline" style={{ fontSize: "9px", padding: "4px 8px" }}>RUN CHECK</button>
                         </form>
                       </td>
                     </tr>
@@ -108,9 +95,7 @@ export default async function OfficerRulesPage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-[12px] text-muted">
-            Every check writes an <b>append-only audit row</b> (actor, rule id + version, failed clause ids).
-          </p>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginTop: "8px" }}>EVERY CHECK WRITES AN APPEND-ONLY AUDIT ROW (ACTOR, RULE ID + VERSION, FAILED CLAUSE IDS).</p>
         </section>
       </div>
     </AppShell>

@@ -47,47 +47,55 @@ export default async function RecruiterPage({
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Talent discovery · evidence-first</p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Search verified skills, read the receipts</h1>
-        <p className="mt-1 text-[13px] text-muted">Every match shows <b>why</b> — linked evidence, confidence, expiry. No composite scores, no black boxes.</p>
-        <form className="mt-3 flex max-w-[520px] gap-2" action="/recruiter">
-          <input name="q" defaultValue={query} placeholder="try: python · sql · react" aria-label="Search verified skills" className="flex-1 border border-line bg-panel px-3 py-2 text-[13px] font-mono" />
-          <button type="submit" className="bg-probe text-paper px-4 py-2 text-[13px]">Search</button>
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>TALENT DISCOVERY · EVIDENCE-FIRST</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>SEARCH VERIFIED SKILLS, READ THE RECEIPTS</h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)", maxWidth: "62ch" }}>
+          Every match shows <b>why</b> — linked evidence, confidence, expiry. No composite scores, no black boxes.
+        </p>
+        <form style={{ display: "flex", gap: "8px", marginTop: "12px", maxWidth: "520px" }} action="/recruiter">
+          <input name="q" defaultValue={query} placeholder="try: python · sql · react" aria-label="Search verified skills" className="brutal-input" style={{ flex: 1, fontFamily: "'JetBrains Mono', monospace", fontSize: "12px" }} />
+          <button type="submit" className="btn-brutal-primary" style={{ fontSize: "10px", padding: "8px 16px" }}>SEARCH</button>
         </form>
       </header>
-
-      <div className="p-4 md:p-6 grid gap-4 max-w-[920px]">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
-          {query ? `Verified matches for “${query}”` : "All verified candidates"} · {byStudent.size}
+      <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: "12px", maxWidth: "920px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)" }}>
+          {query ? `VERIFIED MATCHES FOR "${query.toUpperCase()}"` : "ALL VERIFIED CANDIDATES"} · {byStudent.size}
         </p>
-        {byStudent.size === 0 && <p className="text-muted text-[14px]">No verified matches. Skills stay “claimed” until evidence lands — that’s the point.</p>}
+        {byStudent.size === 0 && <p className="body-md" style={{ color: "var(--muted-text)" }}>No verified matches. Skills stay &ldquo;claimed&rdquo; until evidence lands — that&apos;s the point.</p>}
         {[...byStudent.entries()].map(([studentId, rows]) => {
           const u = userOf[studentId];
           const p = profileOf[studentId];
           const mine = evs.filter((e) => e.userId === studentId);
           return (
-            <article key={studentId} className="border border-line bg-panel">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-2.5">
+            <div key={studentId} className="brutal-card" style={{ padding: "0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", padding: "10px 14px", borderBottom: "3px solid var(--border)", background: "var(--secondary)", color: "var(--secondary-foreground)" }}>
                 <div>
-                  <h2 className="font-semibold">{u?.name}</h2>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">{p?.branch} · CGPA {p?.cgpa} · target {p?.targetRole}</p>
+                  <h2 className="display-sm" style={{ fontSize: "14px", color: "var(--concrete)" }}>{u?.name}</h2>
+                  <p className="case-number" style={{ color: "var(--concrete-dark)" }}>{p?.branch} · CGPA {p?.cgpa} · TARGET {p?.targetRole}</p>
                 </div>
-                <span className="font-mono text-[10px] uppercase text-ledger border border-ledger/40 bg-green-wash px-2 py-0.5">evidence on file</span>
+                <span className="brutal-chip" style={{ background: "var(--concrete)", color: "var(--ink)" }}>EVIDENCE ON FILE</span>
               </div>
-              <ul className="divide-y divide-line">
+              <ul style={{ listStyle: "none" }}>
                 {rows.map((r) => {
                   const related = mine.filter((e) => e.skillId === r.skillId);
                   return (
-                    <li key={r.id} className="px-4 py-2">
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <p className="text-[13px]"><b>{skillName[r.skillId] ?? r.skillId}</b> — verified<span className="text-muted"> · confidence {r.confidence}</span></p>
-                        <p className="font-mono text-[10px] text-muted">verified {r.verifiedAt ? new Date(r.verifiedAt).toLocaleDateString("en-IN") : "?"} · expires {r.expiresAt ? new Date(r.expiresAt).toLocaleDateString("en-IN") : "?"}</p>
+                    <li key={r.id} style={{ padding: "10px 14px", borderBottom: "2px solid var(--border)" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "8px" }}>
+                        <p style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase" }}>
+                          {skillName[r.skillId] ?? r.skillId} — VERIFIED
+                          <span style={{ color: "var(--muted-text)", fontWeight: 400, marginLeft: "8px", fontSize: "11px" }}>CONFIDENCE {r.confidence}</span>
+                        </p>
+                        <p className="case-number" style={{ color: "var(--muted-text)" }}>
+                          VERIFIED {r.verifiedAt ? new Date(r.verifiedAt).toLocaleDateString("en-IN") : "?"} · EXPIRES {r.expiresAt ? new Date(r.expiresAt).toLocaleDateString("en-IN") : "?"}
+                        </p>
                       </div>
                       {related.length > 0 && (
-                        <ul className="mt-1 font-mono text-[10px] text-muted">
+                        <ul style={{ listStyle: "none", marginTop: "4px", paddingLeft: "12px" }}>
                           {related.map((e) => (
-                            <li key={e.id}>↳ {e.kind.replace("_", " ")} — {e.title} <span className="text-muted">({e.id})</span></li>
+                            <li key={e.id} className="case-number" style={{ color: "var(--muted-text)", padding: "2px 0" }}>
+                              ↳ {e.kind.replace("_", " ").toUpperCase()} — {e.title} ({e.id})
+                            </li>
                           ))}
                         </ul>
                       )}
@@ -95,10 +103,10 @@ export default async function RecruiterPage({
                   );
                 })}
               </ul>
-            </article>
+            </div>
           );
         })}
-        <p className="font-mono text-[10px] text-muted">DPDPA note: you see evidence titles + skills only after the student granted recruiter access. No hidden scores are computed on your behalf.</p>
+        <p className="case-number" style={{ color: "var(--muted-text)" }}>DPDP NOTE: YOU SEE EVIDENCE TITLES + SKILLS ONLY AFTER THE STUDENT GRANTED RECRUITER ACCESS. NO HIDDEN SCORES ARE COMPUTED ON YOUR BEHALF.</p>
       </div>
     </AppShell>
   );

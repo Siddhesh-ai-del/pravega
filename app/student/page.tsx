@@ -5,21 +5,7 @@ import { getSession } from "@/lib/auth";
 import { AppShell } from "@/components/shell/app-shell";
 import Link from "next/link";
 
-
-const stateStyle: Record<string, string> = {
-  verified: "text-ledger border-ledger/40 bg-green-wash",
-  claimed: "text-amber border-amber/40 bg-amber-wash",
-  expired: "text-red border-red/40 bg-red-wash",
-};
-
-const kindLabel: Record<string, string> = {
-  github_repo: "REPO",
-  test: "TEST",
-  certificate: "CERT",
-  project: "PROJ",
-  attestation: "ATTEST",
-  practice: "PRACTICE",
-};
+export const dynamic = "force-dynamic";
 
 export default async function StudentLedgerPage() {
   const session = await getSession();
@@ -56,136 +42,123 @@ export default async function StudentLedgerPage() {
     .where(eq(schema.evidence.userId, session.userId))
     .orderBy(desc(schema.evidence.createdAt));
 
+  const kindLabel: Record<string, string> = {
+    github_repo: "REPO",
+    test: "TEST",
+    certificate: "CERT",
+    project: "PROJ",
+    attestation: "ATTEST",
+    practice: "PRACTICE",
+  };
+
+  const stateStyle: Record<string, string> = {
+    verified: "background: var(--primary); color: var(--primary-foreground); border: 2px solid var(--border);",
+    claimed: "background: var(--muted); color: var(--foreground); border: 2px solid var(--border);",
+    expired: "background: var(--destructive); color: var(--destructive-foreground); border: 2px solid var(--border);",
+  };
+
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6 flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">
-            ◈ My verified profile
-          </p>
-          <h1 className="mt-2 text-[32px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:text-[38px]">
-            Skill ledger — {session.name.split(" ")[0]}
-            <span className="mt-1 block text-[15px] font-normal text-muted md:inline md:text-[20px]">
-              {" "}· {profile?.branch ?? "Engineering"} · Final year · CGPA {profile?.cgpa}
-            </span>
-          </h1>
-        </div>
-        <div className="flex items-center gap-5">
-          <div className="text-right">
-            <p className="text-[44px] font-semibold leading-none tracking-[-0.02em] text-ink tabular-nums">
-              {verifiedCount}<span className="text-muted">/{skills.length}</span>
-            </p>
-            <p className="mt-1.5 font-mono text-[8px] uppercase tracking-[0.24em] text-muted">Verified skills</p>
+      <header style={{ borderBottom: "4px solid var(--border)", padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>MY VERIFIED PROFILE</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>
+          SKILL LEDGER — {session.name.split(" ")[0].toUpperCase()}
+        </h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)" }}>
+          {profile?.branch} · Final year · CGPA {profile?.cgpa} · {verifiedCount}/{skills.length} verified
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginTop: "12px" }}>
+          <div>
+            <span className="display-lg" style={{ color: "var(--spot)" }}>{verifiedCount}</span>
+            <span className="display-lg" style={{ color: "var(--muted-text)", fontSize: "32px" }}>/{skills.length}</span>
+            <div className="case-number" style={{ color: "var(--muted-text)", marginTop: "2px" }}>VERIFIED SKILLS</div>
           </div>
-          <Link
-            href="/student/verify"
-            className="inline-flex h-11 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
-          >
-            Verify from GitHub →
+          <Link href="/student/verify" className="btn-brutal-primary" style={{ marginLeft: "auto" }}>
+            VERIFY FROM GITHUB →
           </Link>
         </div>
       </header>
 
-      <div className="grid md:grid-cols-[1fr_360px] gap-0">
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 0 }}>
         {/* ledger table */}
-        <section aria-label="Skill ledger" className="overflow-x-auto">
-          {skills.length === 0 && (
-            <div className="m-8 rounded-[8px] border border-dashed border-line-strong p-6">
-              <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Empty register</p>
-              <p className="mt-2 text-[16px] font-semibold text-ink">No skills on file yet.</p>
-              <p className="mt-1 max-w-[52ch] text-[12px] leading-snug text-muted">
-                Nothing self-declared, nothing verified — which is allowed. When you claim a
-                skill, attach evidence in the same breath: a repo, a test, an attestation.
-              </p>
-              <Link
-                href="/student/verify"
-                className="mt-4 inline-flex h-10 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
-              >
-                Verify from GitHub →
-              </Link>
-            </div>
-          )}
-          {skills.length > 0 && (
-          <table className="w-full min-w-[720px] text-[13px]">
+        <section style={{ padding: "16px 24px" }}>
+          <table className="brutal-table">
             <thead>
-              <tr className="text-left font-mono text-[10px] uppercase tracking-[0.15em] text-muted border-b border-line">
-                <th className="px-4 md:px-8 py-2 font-medium">Skill</th>
-                <th className="px-4 py-2 font-medium">State</th>
-                <th className="px-4 py-2 font-medium">Confidence</th>
-                <th className="px-4 py-2 font-medium">Expires</th>
-                <th className="px-4 py-2 font-medium text-right">JD demand</th>
+              <tr>
+                <th>SKILL</th>
+                <th>STATE</th>
+                <th>CONFIDENCE</th>
+                <th>EXPIRES</th>
+                <th style={{ textAlign: "right" }}>JD DEMAND</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-line">
+            <tbody>
               {[...skills].sort((a, b) => b.demandShare - a.demandShare).map((s) => (
-                <tr key={s.id} className="ledger-row align-middle">
-                  <td className="px-4 md:px-8 py-3 font-medium">{s.name}
-                    <span className="block font-mono text-[10px] text-muted font-normal">ESCO</span></td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1.5 border px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider ${stateStyle[s.state]}`}>
-                      <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-current opacity-70" />
+                <tr key={s.id}>
+                  <td>
+                    <span style={{ fontWeight: 700, textTransform: "uppercase", fontSize: "12px" }}>{s.name}</span>
+                    <span className="case-number" style={{ display: "block", color: "var(--muted-text)", marginTop: "2px" }}>ESCO</span>
+                  </td>
+                  <td>
+                    <span style={{ ...parseStyle(stateStyle[s.state]), padding: "2px 8px", fontSize: "9px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase", display: "inline-block" }}>
                       {s.state}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
-                    <span className="font-mono">{s.confidence}</span>
-                    <span className="text-muted">/100</span>
+                  <td>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>{s.confidence}</span>
+                    <span style={{ color: "var(--muted-text)", fontSize: "11px" }}>/100</span>
                   </td>
-                  <td className="px-4 py-3 font-mono text-[12px]">
+                  <td className="mono" style={{ fontSize: "11px" }}>
                     {s.expiresAt ? new Date(s.expiresAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "2-digit" }) : "—"}
                   </td>
-                  <td className="px-4 py-3 text-right font-mono text-[12px]">{s.demandShare}%</td>
+                  <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 700 }}>
+                    {s.demandShare}%
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          )}
-          <p className="px-4 md:px-8 pt-3 pb-4 font-mono text-[10px] text-muted">
-            States per verified-trust protocol: <b>claimed</b> = self-declared · <b>verified</b> = evidence-gated (expiry tracked) · <b>expired</b> = must refresh evidence
+          <p className="case-number" style={{ color: "var(--muted-text)", marginTop: "12px" }}>
+            STATES: CLAIMED = SELF-DECLARED · VERIFIED = EVIDENCE-GATED (EXPIRY TRACKED) · EXPIRED = MUST REFRESH EVIDENCE
           </p>
         </section>
 
         {/* evidence packets rail */}
-        <aside className="border-t md:border-t-0 md:border-l border-line p-4 md:p-5">
-          <h2 className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Evidence packets</h2>
-          <div className="mt-3 grid gap-4">
-            {evs.length === 0 && (
-              <div className="rounded-[8px] border border-dashed border-line-strong p-4">
-                <p className="text-[12px] font-medium text-ink">No receipts yet.</p>
-                <p className="mt-1 text-[11px] text-muted">
-                  Verify a skill from your GitHub and this rail fills with
-                  tamper-evident packets — repo reads, test scores, attestations.
-                </p>
-                <Link
-                  href="/student/verify"
-                  className="mt-3 inline-flex h-9 items-center gap-2 rounded-[6px] bg-probe px-4 text-[12px] font-medium text-paper transition-colors hover:bg-white"
-                >
-                  Verify from GitHub →
-                </Link>
-              </div>
-            )}
+        <aside style={{ borderLeft: "4px solid var(--border)", padding: "16px", background: "var(--concrete-dark)" }}>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "12px" }}>EVIDENCE PACKETS</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {evs.map((e) => (
-              <figure key={e.id} className="receipt p-3">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-[10px] tracking-[0.18em] text-probe border border-line px-1.5 py-0.5">
-                    {kindLabel[e.kind] ?? e.kind.toUpperCase()}
-                  </span>
-                  <figcaption className="font-mono text-[10px] text-muted truncate">{e.id}</figcaption>
+              <div key={e.id} className="receipt" style={{ padding: "12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                  <span className="brutal-chip" style={{ fontSize: "8px" }}>{kindLabel[e.kind] ?? e.kind.toUpperCase()}</span>
+                  <span className="case-number" style={{ color: "var(--muted-text)" }}>{e.id}</span>
                 </div>
-                <blockquote className="pt-2 text-[13px] font-medium leading-snug">{e.title}</blockquote>
-                <dl className="pt-2 font-mono text-[11px] leading-5 text-muted">
+                <p style={{ fontSize: "13px", fontWeight: 700, marginBottom: "6px" }}>{e.title}</p>
+                <dl style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", lineHeight: "1.6" }}>
                   {Object.entries(e.refs as Record<string, unknown>).slice(0, 4).map(([k, v]) => (
-                    <div key={k} className="flex gap-2">
-                      <dt className="text-muted min-w-[88px]">{k}:</dt>
-                      <dd className="truncate">{typeof v === "object" ? JSON.stringify(v) : String(v)}</dd>
+                    <div key={k} style={{ display: "flex", gap: "8px" }}>
+                      <dt style={{ color: "var(--muted-text)", minWidth: "80px", textTransform: "uppercase", letterSpacing: "0.08em" }}>{k}:</dt>
+                      <dd style={{ color: "var(--ink)", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{typeof v === "object" ? JSON.stringify(v) : String(v)}</dd>
                     </div>
                   ))}
                 </dl>
-              </figure>
+              </div>
             ))}
           </div>
         </aside>
       </div>
     </AppShell>
   );
+}
+
+function parseStyle(styleStr: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  styleStr.split(";").forEach((part) => {
+    const [key, val] = part.split(":").map((s) => s.trim());
+    if (key && val) {
+      const camelKey = key.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      result[camelKey] = val;
+    }
+  });
+  return result;
 }

@@ -1,37 +1,25 @@
-import { and, asc, count, desc, eq } from "drizzle-orm";
-import { Check, FileDown, ShieldCheck, TriangleAlert } from "lucide-react";
+import { desc, eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/shell/app-shell";
 import { decideAgentAction } from "@/lib/actions/agent";
-import { KpiStrip, KindChip, MonoEyebrow, RailPanel, SealChip, SegmentMeter } from "@/components/mono/ui";
 
 const kindLabel: Record<string, string> = {
-  interview_questions: "Interview Set",
-  eligibility_sweep: "Eligibility Sweep",
-  schedule_draft: "Schedule Draft",
-  forecast: "Forecast",
+  interview_questions: "INTERVIEW SET",
+  eligibility_sweep: "ELIGIBILITY SWEEP",
+  schedule_draft: "SCHEDULE DRAFT",
+  forecast: "FORECAST",
 };
-
-const caseNo = (i: number) => `PVG-2026-${String(114 + i).padStart(4, "0")}`;
-
-function age(from: Date) {
-  const mins = Math.max(0, Math.floor((Date.now() - from.getTime()) / 60000));
-  if (mins < 60) return `${mins}m`;
-  const h = Math.floor(mins / 60);
-  return `${h}h ${String(mins % 60).padStart(2, "0")}m`;
-}
 
 function DraftBody({ kind, detail }: { kind: string; detail: Record<string, unknown> }) {
   const draft = (detail as { draft?: unknown }).draft;
   if (kind === "interview_questions" && Array.isArray(draft)) {
     return (
-      <ol className="divide-y divide-line border-y border-line">
+      <ol style={{ listStyle: "none" }}>
         {(draft as string[]).map((q: string, i: number) => (
-          <li key={i} className="flex items-baseline gap-3 py-2 text-[12px] leading-snug text-ink">
-            <span className="font-mono text-[8px] text-muted">Q{i + 1}</span>
-            {q}
+          <li key={i} style={{ borderBottom: "1px dashed var(--border)", padding: "6px 0", fontSize: "12px" }}>
+            <span className="case-number" style={{ color: "var(--spot)", marginRight: "6px" }}>Q{i + 1}</span>{q}
           </li>
         ))}
       </ol>
@@ -40,293 +28,117 @@ function DraftBody({ kind, detail }: { kind: string; detail: Record<string, unkn
   if (kind === "eligibility_sweep" && draft && typeof draft === "object") {
     const d = draft as { eligible: string[]; blocked: Array<{ id: string; clause: string; note: string }>; ruleVersion: number };
     return (
-      <div className="text-[12px]">
-        <p className="text-ink"><span className="font-semibold text-ink">{d.eligible.length} eligible</span> <span className="text-muted">· rule v{d.ruleVersion}</span></p>
-        <ul className="mt-1.5">
-          {d.blocked.map((b) => (
-            <li key={b.id} className="flex items-baseline gap-2 border-t border-line py-1.5">
-              <span aria-hidden className="font-mono text-[10px] text-red">×</span>
-              <span className="font-mono text-[10px] text-red">{b.id} — {b.note}</span>
-            </li>
-          ))}
-        </ul>
+      <div style={{ fontSize: "12px" }}>
+        <p style={{ fontWeight: 700, marginBottom: "4px" }}>{d.eligible.length} ELIGIBLE · RULE V{d.ruleVersion}</p>
+        {d.blocked.map((b) => (
+          <div key={b.id} style={{ borderTop: "1px dashed var(--border)", padding: "4px 0", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", color: "var(--muted-text)" }}>
+            {b.id} — {b.note}
+          </div>
+        ))}
       </div>
     );
   }
   if (kind === "schedule_draft" && draft && typeof draft === "object") {
     const d = draft as { slots: string[]; clash: string; suggestion: string };
     return (
-      <div className="text-[12px]">
-        <ul className="font-mono text-[11px] text-muted">
-          {(d.slots as string[]).map((s) => <li key={s} className="py-0.5">→ {s}</li>)}
+      <div style={{ fontSize: "12px" }}>
+        <ul style={{ listStyle: "none", marginBottom: "6px" }}>
+          {(d.slots as string[]).map((s) => <li key={s} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", padding: "2px 0" }}>→ {s}</li>)}
         </ul>
-        <p className="mt-2 rounded-[6px] border border-line bg-panel-2 px-3 py-2 text-[10px] text-amber">
-          <span className="mr-1 font-mono text-[8px] uppercase tracking-[0.18em] text-muted">clash</span>
-          {d.clash}
-        </p>
-        <p className="mt-1.5 px-3 text-[10px] text-ink">
-          <span className="mr-1 font-mono text-[8px] uppercase tracking-[0.18em] text-muted">remedy</span>
-          {d.suggestion}
-        </p>
+        <div style={{ borderLeft: "4px solid var(--spot)", paddingLeft: "8px", fontSize: "11px", color: "var(--muted-text)", marginBottom: "4px" }}>CLASH: {d.clash}</div>
+        <p style={{ fontSize: "11px", fontWeight: 600 }}>SUGGESTION: {d.suggestion}</p>
       </div>
     );
   }
-  return <pre className="overflow-x-auto font-mono text-[11px] text-muted">{JSON.stringify(detail, null, 2)}</pre>;
+  return <pre style={{ fontSize: "10px", overflow: "auto" }}>{JSON.stringify(detail, null, 2)}</pre>;
 }
 
 export default async function OfficerQueuePage() {
   const session = await getSession();
   if (!session) redirect("/login");
   if (session.role !== "officer") redirect("/student");
-  const T = session.tenantId;
 
-  const [runs, verifiedAgg, blocksAgg, auditAgg, signals, latestFairness] = await Promise.all([
-    db.select().from(schema.agentRuns).where(eq(schema.agentRuns.tenantId, T)).orderBy(asc(schema.agentRuns.createdAt)),
-    db.select({ n: count() }).from(schema.studentSkills).where(and(eq(schema.studentSkills.tenantId, T), eq(schema.studentSkills.state, "verified"))),
-    db.select({ n: count() }).from(schema.eligibilityDecisions).where(and(eq(schema.eligibilityDecisions.tenantId, T), eq(schema.eligibilityDecisions.passed, false))),
-    db.select({ n: count() }).from(schema.auditLog).where(eq(schema.auditLog.tenantId, T)),
-    db.select().from(schema.cohortSignals).where(eq(schema.cohortSignals.tenantId, T)),
-    db.select().from(schema.fairnessReports).where(eq(schema.fairnessReports.tenantId, T)).orderBy(desc(schema.fairnessReports.createdAt)).limit(1),
-  ]);
-
+  const runs = await db.select().from(schema.agentRuns).where(eq(schema.agentRuns.tenantId, session.tenantId)).orderBy(desc(schema.agentRuns.createdAt));
   const pending = runs.filter((r) => r.status === "pending");
   const decided = runs.filter((r) => r.status !== "pending");
-  const oldest = pending[0]?.createdAt ? age(pending[0].createdAt) : "—";
-  const fairness = latestFairness[0];
-  const fairnessFlagged = Boolean(fairness && Array.isArray(fairness.findings) && fairness.findings.length > 0);
-  const sqlSignals = signals.filter((s) => s.skillId === "sql");
 
   return (
     <AppShell session={session}>
-      {/* ── header ─────────────────────────────────────────────── */}
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <MonoEyebrow>◈ Nimbus Tech — Backend Dev drive</MonoEyebrow>
-            <h1 className="mt-2 text-[32px] font-semibold leading-none tracking-[-0.03em] text-ink md:text-[38px]">
-              Decision Queue
-            </h1>
-            <p className="mt-2 max-w-[52ch] text-[12px] leading-snug text-muted">
-              Agents propose. You dispose. Every sign-off appends to the ledger —
-              appended, never edited.
-            </p>
-          </div>
-
-          {/* pending / oldest cluster */}
-          <div
-            className="flex items-center gap-5 rounded-[8px] border border-line bg-panel px-5 py-3"
-            aria-label="Queue summary"
-          >
-            <div>
-              <p className="font-mono text-[8px] uppercase tracking-[0.24em] text-muted">Pending</p>
-              <p className="mt-1 text-[26px] leading-none font-semibold tabular-nums text-ink">
-                {pending.length}
-              </p>
-            </div>
-            <div aria-hidden className="h-9 w-px bg-line" />
-            <div>
-              <p className="font-mono text-[8px] uppercase tracking-[0.24em] text-muted">Oldest</p>
-              <p className="mt-1 text-[26px] leading-none font-semibold tabular-nums text-ink">{oldest}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* KPI strip — hairline rules, no boxes */}
-        <div className="mt-4">
-          <KpiStrip
-            items={[
-              { label: "Verified skills", value: verifiedAgg[0]?.n ?? 0, hint: "evidence-gated" },
-              { label: "Approvals pending", value: pending.length, hint: "agent drafts" },
-              { label: "Eligibility blocks", value: blocksAgg[0]?.n ?? 0, hint: "rule v3 · failed" },
-              { label: "Audit entries", value: auditAgg[0]?.n ?? 0, hint: "append-only" },
-            ]}
-          />
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>AI DRAFTS · HUMAN DECIDES</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>DECISION QUEUE</h1>
+        <p className="body-sm" style={{ color: "var(--muted-text)" }}>Agents propose. You dispose. Every decision appends to the ledger.</p>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginTop: "8px" }}>
+          <span className="display-lg" style={{ color: "var(--spot)" }}>{pending.length}</span>
+          <span className="case-number" style={{ color: "var(--muted-text)" }}>PENDING</span>
         </div>
       </header>
 
-      {/* ── main grid ───────────────────────────────────────────── */}
-      <div className="grid gap-4 p-4 md:p-6 xl:grid-cols-12">
-        {/* queue column */}
-        <section aria-label="Agent proposals" className="min-w-0 space-y-3 xl:col-span-8">
-          {pending.length === 0 && (
-            <p className="rounded-[8px] border border-line bg-panel p-6 text-[12px] text-muted">
-              Queue is clear. Outstanding agent drafts will appear here.
-            </p>
-          )}
+      <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: "12px", maxWidth: "920px" }}>
+        {pending.length === 0 && (
+          <div className="brutal-card" style={{ padding: "20px", textAlign: "center" }}>
+            <p className="body-md" style={{ color: "var(--muted-text)" }}>Queue is clear. Outstanding agent drafts will appear here.</p>
+          </div>
+        )}
 
-          {pending.map((run, idx) => {
-            const detail = run.detail as { draft?: unknown; rationale?: string; confidence?: number; draftDetail?: unknown };
-            const conf = Math.round(((detail.confidence ?? 0) as number) * 100);
-            return (
-              <article
-                key={run.id}
-                className="rounded-[8px] border border-line bg-panel transition-colors hover:border-line-strong"
-              >
-                {/* card head */}
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-2">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <KindChip>{kindLabel[run.kind] ?? run.kind}</KindChip>
-                    <span className="truncate font-mono text-[9px] text-muted">
-                      {caseNo(idx)} · {run.id}
-                    </span>
-                  </div>
-                  <SegmentMeter value={conf / 100} />
-                </div>
+        {pending.map((run) => {
+          const detail = run.detail as { draft?: unknown; rationale?: string; confidence?: number };
+          return (
+            <div key={run.id} className="brutal-card" style={{ padding: "0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderBottom: "3px solid var(--border)", background: "var(--secondary)", color: "var(--secondary-foreground)" }}>
+                <span className="brutal-chip" style={{ background: "var(--concrete)", color: "var(--ink)", border: "2px solid var(--border)" }}>{kindLabel[run.kind] ?? run.kind}</span>
+                <span className="case-number" style={{ color: "var(--concrete-dark)" }}>{run.id} · CONF {Math.round(((detail.confidence ?? 0) as number) * 100)}%</span>
+              </div>
+              <div style={{ padding: "12px 14px" }}>
+                <h2 className="display-sm" style={{ fontSize: "16px", marginBottom: "2px" }}>{run.subject}</h2>
+                {detail.rationale && <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "8px" }}>WHY: {detail.rationale}</p>}
+                <DraftBody kind={run.kind} detail={detail} />
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", padding: "10px 14px", borderTop: "3px solid var(--border)", background: "var(--concrete-dark)" }}>
+                <form action={decideAgentAction}>
+                  <input type="hidden" name="agentRunId" value={run.id} />
+                  <input type="hidden" name="decision" value="approve" />
+                  <button type="submit" className="btn-brutal-primary" style={{ fontSize: "10px", padding: "6px 12px" }}>✓ APPROVE</button>
+                </form>
+                <form action={decideAgentAction} style={{ display: "flex", gap: "6px", flex: 1, minWidth: "200px" }}>
+                  <input type="hidden" name="agentRunId" value={run.id} />
+                  <input type="hidden" name="decision" value="override" />
+                  <input name="reason" required minLength={8} placeholder="WHY ARE YOU OVERRIDING? (≥8 CHARS)" className="brutal-input" style={{ flex: 1, fontSize: "10px", textTransform: "uppercase" }} aria-label="Override reason" />
+                  <button type="submit" className="btn-brutal-outline" style={{ fontSize: "10px", padding: "6px 12px", background: "var(--destructive)", color: "var(--destructive-foreground)", borderColor: "var(--border)" }}>OVERRIDE</button>
+                </form>
+                <form action={decideAgentAction}>
+                  <input type="hidden" name="agentRunId" value={run.id} />
+                  <input type="hidden" name="decision" value="defer" />
+                  <button type="submit" className="btn-brutal-ghost" style={{ fontSize: "10px" }}>DEFER</button>
+                </form>
+              </div>
+            </div>
+          );
+        })}
 
-                {/* body */}
-                <div className="px-4 py-3.5">
-                  <h2 className="text-[15px] font-semibold leading-snug tracking-[-0.01em] text-ink">
+        {decided.length > 0 && (
+          <div>
+            <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "8px" }}>DECIDED</p>
+            <div className="brutal-card" style={{ padding: "0" }}>
+              {decided.map((run, i) => (
+                <div key={run.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", padding: "8px 14px", borderBottom: i < decided.length - 1 ? "2px solid var(--border)" : "none", fontSize: "11px" }}>
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <span className="case-number" style={{ color: "var(--muted-text)", marginRight: "8px" }}>{run.id}</span>
                     {run.subject}
-                  </h2>
-                  {detail.rationale && (
-                    <p className="mt-1 text-[11px] leading-snug text-muted">
-                      <span className="mr-1 font-mono text-[8px] uppercase tracking-[0.18em] text-muted">why</span>
-                      {detail.rationale}
-                    </p>
-                  )}
-                  <div className="mt-3"><DraftBody kind={run.kind} detail={detail} /></div>
-                </div>
-
-                {/* actions */}
-                <div className="flex flex-wrap items-center gap-2 border-t border-line px-4 py-3">
-                  <form action={decideAgentAction}>
-                    <input type="hidden" name="agentRunId" value={run.id} />
-                    <input type="hidden" name="decision" value="approve" />
-                    <button
-                      type="submit"
-                      className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-[6px] bg-probe px-4 text-[12.5px] font-medium text-paper transition-colors hover:bg-white sm:w-auto"
-                    >
-                      <Check size={13} strokeWidth={3} aria-hidden />
-                      Approve &amp; seal
-                    </button>
-                  </form>
-                  <form action={decideAgentAction} className="flex w-full flex-1 items-center gap-2 sm:min-w-[240px]">
-                    <input type="hidden" name="agentRunId" value={run.id} />
-                    <input type="hidden" name="decision" value="override" />
-                    <input
-                      name="reason"
-                      required
-                      minLength={8}
-                      placeholder="Why are you overriding? (min 8, logged)"
-                      aria-label="Override reason"
-                      className="h-9 min-w-0 flex-1 rounded-[6px] border border-line bg-panel-3 px-3 text-[12px] text-ink outline-none transition-colors placeholder:text-muted focus:border-ledger"
-                    />
-                    <button
-                      type="submit"
-                      className="h-9 shrink-0 rounded-[6px] border border-red px-3 text-[12px] font-medium text-red transition-colors hover:bg-red-wash sm:px-4"
-                    >
-                      Override
-                    </button>
-                  </form>
-                  <form action={decideAgentAction}>
-                    <input type="hidden" name="agentRunId" value={run.id} />
-                    <input type="hidden" name="decision" value="defer" />
-                    <button
-                      type="submit"
-                      className="h-9 rounded-[6px] px-3 text-[12px] text-muted transition-colors hover:bg-panel-2 hover:text-ink"
-                    >
-                      Defer
-                    </button>
-                  </form>
-                </div>
-              </article>
-            );
-          })}
-
-          {/* decided — the register */}
-          {decided.length > 0 && (
-            <section aria-label="Decided" className="pt-2">
-              <h2 className="font-mono text-[8px] uppercase tracking-[0.28em] text-muted">Decided · The Register</h2>
-              <ul className="mt-2 overflow-hidden rounded-[8px] border border-line">
-                {decided.map((run) => (
-                  <li key={run.id} className="flex items-center justify-between gap-3 border-b border-line bg-panel px-4 py-2.5 text-[12px] last:border-b-0">
-                    <span className="min-w-0 truncate text-ink">
-                      <span className="mr-2 font-mono text-[9px] text-muted">{run.id}</span>
-                      {run.subject}
-                    </span>
-                    <SealChip tone={run.status === "approved" ? "sealed" : run.status === "overridden" ? "overridden" : "deferred"}>
-                      {run.status}
-                    </SealChip>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          <p className="hidden items-center gap-3 px-1 font-mono text-[8px] uppercase tracking-[0.2em] text-muted md:flex">
-            <kbd className="rounded-[4px] border border-line-strong px-1.5 py-0.5">↑↓</kbd> navigate
-            <kbd className="rounded-[4px] border border-line-strong px-1.5 py-0.5">A</kbd> approve
-            <kbd className="rounded-[4px] border border-line-strong px-1.5 py-0.5">O</kbd> override
-            <kbd className="rounded-[4px] border border-line-strong px-1.5 py-0.5">D</kbd> defer
-            <kbd className="rounded-[4px] border border-line-strong px-1.5 py-0.5">⌘K</kbd> palette
-          </p>
-        </section>
-
-        {/* right rail */}
-        <aside aria-label="Evidence and fairness" className="space-y-4 xl:col-span-4">
-          {/* cohort heat — real signals only */}
-          <RailPanel title="Cohort heat · SQL" right="live signals">
-            <ul className="space-y-2">
-              {sqlSignals.map((s) => (
-                <li key={s.id} className="flex items-center gap-3">
-                  <span className="w-24 truncate text-[10px] text-muted">{s.branch.replace(" Engineering", "")}</span>
-                  <span className="h-2 flex-1 overflow-hidden rounded-full bg-panel-3" role="img" aria-label={`${s.branch}: ${s.weakShare}% weak in SQL`}>
-                    <span
-                      className={`block h-full rounded-full ${s.weakShare >= 50 ? "bg-ink" : "bg-line-strong"}`}
-                      style={{ width: `${s.weakShare}%` }}
-                    />
                   </span>
-                  <span className="w-8 text-right font-mono text-[9px] text-muted tabular-nums">{s.weakShare}%</span>
-                </li>
+                  <span style={{
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: "9px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+                    padding: "2px 8px", border: "2px solid var(--border)",
+                    background: run.status === "approved" ? "var(--primary)" : run.status === "overridden" ? "var(--destructive)" : "var(--muted)",
+                    color: run.status === "approved" ? "var(--primary-foreground)" : run.status === "overridden" ? "var(--destructive-foreground)" : "var(--ink)",
+                  }}>
+                    {run.status}
+                  </span>
+                </div>
               ))}
-            </ul>
-            <p className="mt-3 border-t border-line pt-2 text-[10px] leading-snug text-muted">
-              SQL is the bottleneck for backend roles — <span className="font-semibold text-ink">60% of CSE weak</span>; both mock-fix drives on the calendar test SQL.
-            </p>
-          </RailPanel>
-
-          {/* fairness — honest state from the latest report */}
-          <RailPanel title="Fairness · Latest sweep" right={fairness ? fairness.driveId : "none"}>
-            {fairnessFlagged ? (
-              <div className="flex items-start gap-2.5">
-                <TriangleAlert size={16} strokeWidth={1.5} aria-hidden className="mt-0.5 shrink-0 text-amber" />
-                <div>
-                  <p className="text-[12px] font-semibold text-amber">Human review required</p>
-                  <p className="mt-1 text-[10px] leading-snug text-muted">
-                    {(fairness!.findings as unknown[]).length} flagged finding(s) in the latest
-                    fairness report. Parity must be reviewed and countersigned before this drive
-                    proceeds.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-start gap-2.5">
-                <ShieldCheck size={16} strokeWidth={1.5} aria-hidden className="mt-0.5 shrink-0 text-ledger" />
-                <div>
-                  <p className="text-[12px] font-semibold text-ink">No skew detected</p>
-                  <p className="mt-1 text-[10px] leading-snug text-muted">
-                    No segment breached the 0.8 parity benchmark in the latest report.
-                  </p>
-                </div>
-              </div>
-            )}
-          </RailPanel>
-
-          {/* ledger invariant + export */}
-          <RailPanel title="Ledger invariant">
-            <p className="text-[10px] leading-relaxed text-muted">
-              Approves are one-way. The trail is append-only and SHA-chained — reversals are new
-              entries, never edits. Exports carry the NAAC / NIRF verification seal.
-            </p>
-            <a
-              href="/api/export/accreditation"
-              className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[6px] bg-probe text-[12.5px] font-medium text-paper transition-colors hover:bg-white"
-            >
-              <FileDown size={13} strokeWidth={2} aria-hidden />
-              Export audit pack ↓
-            </a>
-          </RailPanel>
-        </aside>
+            </div>
+          </div>
+        )}
       </div>
     </AppShell>
   );

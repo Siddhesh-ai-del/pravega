@@ -40,48 +40,39 @@ export function VerifyClient({ name }: { name: string }) {
       else setResult(data);
     } catch {
       clearInterval(tick);
-      setError("Network error — is the dev server / API reachable from your browser?");
+      setError("Network error — is the dev server / API reachable?");
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <div className="grid lg:grid-cols-[1fr_400px]">
-      {/* input panel */}
-      <div className="p-4 md:p-8">
-        <div className="max-w-[560px]">
-          <label htmlFor="repo" className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-            Repository to verify — Python
-          </label>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 0 }}>
+      <div style={{ padding: "20px 24px" }}>
+        <div style={{ maxWidth: "560px" }}>
+          <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "8px" }}>REPOSITORY TO VERIFY — PYTHON</p>
           <input
-            id="repo"
             value={repo}
             onChange={(e) => setRepo(e.target.value)}
             disabled={busy}
             spellCheck={false}
-            className="mt-2 w-full border border-line bg-panel px-3 py-2.5 font-mono text-[13px] focus:border-probe"
+            className="brutal-input"
+            style={{ width: "100%", fontFamily: "'JetBrains Mono', monospace", fontSize: "12px" }}
             placeholder="github.com/owner/repo"
           />
-          <p className="mt-2 text-[12px] text-muted">
+          <p className="body-sm" style={{ color: "var(--muted-text)", marginTop: "8px", fontSize: "11px" }}>
             Try a seeded replay, or any public repo — e.g.{" "}
-            <button type="button" className="underline underline-offset-2 hover:text-ink"
+            <button type="button" style={{ textDecoration: "underline", color: "var(--ink)", background: "none", border: "none", cursor: "pointer", fontSize: "11px" }}
               onClick={() => setRepo("github.com/pallets/click")}>
               github.com/pallets/click
             </button>
           </p>
 
-          <label className="mt-4 flex items-start gap-2 border border-line bg-panel p-3 text-[13px]">
-            <input
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="mt-0.5 accent-[var(--probe)]"
-            />
-            <span>
-              I consent to <b>read-only</b> access (repo metadata, languages, commit
-              timestamps). I can revoke this at any time in{" "}
-              <Link href="/student/consent" className="underline underline-offset-2">My Privacy</Link>.
+          <label style={{ display: "flex", alignItems: "flex-start", gap: "8px", border: "3px solid var(--border)", background: "var(--card)", padding: "12px", marginTop: "12px", cursor: "pointer" }}>
+            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ marginTop: "2px", accentColor: "var(--spot)" }} />
+            <span className="body-sm" style={{ fontSize: "12px" }}>
+              I consent to <b>read-only</b> access (repo metadata, languages, commit timestamps). I can revoke this at any time in{" "}
+              <Link href="/student/consent" style={{ textDecoration: "underline", color: "var(--ink)" }}>My Privacy</Link>.
             </span>
           </label>
 
@@ -89,113 +80,115 @@ export function VerifyClient({ name }: { name: string }) {
             type="button"
             onClick={run}
             disabled={!consent || busy || repo.trim().length < 9}
-            className="mt-4 inline-flex items-center gap-2 bg-probe text-paper px-5 py-2.5 text-[14px] font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
+            className="btn-brutal-primary"
+            style={{ marginTop: "12px" }}
           >
-            {busy ? "Verifying…" : "Verify Python →"}
+            {busy ? "VERIFYING…" : "VERIFY PYTHON →"}
           </button>
         </div>
 
-        {/* progress steps */}
-        <ol className="mt-6 max-w-[560px] border border-line bg-panel">
+        <ol style={{ listStyle: "none", marginTop: "16px", maxWidth: "560px", border: "3px solid var(--border)", background: "var(--card)" }}>
           {STEPS.map((label, i) => {
             const done = step > i || step === STEPS.length;
             const active = step === i;
             return (
-              <li key={i} className="flex items-center gap-3 px-3 py-2 border-b last:border-b-0 border-line text-[13px]">
-                <span
-                  aria-hidden
-                  className={`grid place-items-center w-5 h-5 font-mono text-[10px] border ${
-                    done ? "border-ledger bg-green-wash text-ledger" : active ? "border-probe text-probe animate-pulse" : "border-line text-muted"
-                  }`}
-                >
+              <li key={i} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", borderBottom: i < STEPS.length - 1 ? "2px solid var(--border)" : "none", fontSize: "12px" }}>
+                <span style={{
+                  width: "24px", height: "24px", display: "grid", placeItems: "center",
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", fontWeight: 700,
+                  border: "2px solid var(--border)",
+                  background: done ? "var(--primary)" : active ? "var(--concrete)" : "var(--muted)",
+                  color: done ? "var(--primary-foreground)" : "var(--ink)",
+                }}>
                   {done ? "✓" : i + 1}
                 </span>
-                <span className={done ? "text-ink" : "text-muted"}>{label}</span>
+                <span style={{ color: done ? "var(--ink)" : "var(--muted-text)" }}>{label}</span>
               </li>
             );
           })}
         </ol>
         {error && (
-          <p role="alert" className="mt-3 max-w-[560px] border border-red/40 bg-red-wash px-3 py-2 text-[13px] text-red">
+          <div role="alert" style={{ marginTop: "12px", maxWidth: "560px", border: "3px solid var(--destructive)", background: "var(--destructive-foreground)", padding: "10px 12px", fontSize: "12px", color: "var(--destructive)" }}>
             {error}
-          </p>
+          </div>
         )}
       </div>
 
       {/* result panel */}
-      <aside className="border-t lg:border-t-0 lg:border-l border-line bg-panel p-4 md:p-6" aria-live="polite">
-        <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Evidence chain</h2>
+      <aside style={{ borderLeft: "4px solid var(--border)", padding: "20px", background: "var(--concrete-dark)" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "12px" }}>EVIDENCE CHAIN</p>
 
         {!result && !busy && (
-          <div className="mt-4 rounded-none border border-dashed border-line-strong p-4 text-[13px] text-muted">
-            {name}, your check will resolve into one of two outcomes — there is no
-            &quot;submit &amp; hope&quot;. The chain shows <b>why</b> it passed or failed.
+          <div style={{ border: "2px dashed var(--border)", padding: "16px", fontSize: "12px", color: "var(--muted-text)" }}>
+            {name}, your check resolves into one of two outcomes — there is no &ldquo;submit &amp; hope&rdquo;.
+            The chain shows <b>why</b> it passed or failed.
           </div>
         )}
 
-        {busy && <p className="mt-4 text-[13px] text-muted animate-pulse">Reading the repository…</p>}
+        {busy && <p className="body-sm" style={{ color: "var(--muted-text)", animation: "pulse 1.5s infinite" }}>Reading the repository…</p>}
 
         {result && (
-          <div className="mt-4">
+          <div>
             {result.findings.mode === "fixtures" && (
-              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-amber border border-amber/40 bg-amber-wash px-2 py-1 inline-block">
-                Replay mode — precomputed evidence, labeled
-              </p>
+              <span className="brutal-chip" style={{ marginBottom: "12px", display: "inline-block" }}>REPLAY MODE — PRECOMPUTED EVIDENCE, LABELED</span>
             )}
-            <div className="flex items-center gap-4">
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px" }}>
               <span
-                aria-hidden
-                className={`verify-stamp grid place-items-center w-24 h-24 shrink-0 border-4 ${
-                  result.findings.verdict === "verified"
-                    ? "border-ledger text-ledger"
-                    : "border-red text-red"
-                } font-mono text-center text-[13px] font-bold leading-tight rotate-[-3deg]`}
+                className="verify-stamp"
+                style={{
+                  width: "80px", height: "80px", display: "grid", placeItems: "center",
+                  border: `4px solid ${result.findings.verdict === "verified" ? "var(--primary)" : "var(--destructive)"}`,
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 700,
+                  textAlign: "center", lineHeight: "1.2", transform: "rotate(-3deg)",
+                  background: result.findings.verdict === "verified" ? "var(--primary)" : "var(--destructive)",
+                  color: result.findings.verdict === "verified" ? "var(--primary-foreground)" : "var(--destructive-foreground)",
+                }}
               >
                 {result.findings.verdict === "verified" ? "✓\nVERIFIED" : "✗\nREJECTED"}
               </span>
               <div>
-                <p className="text-lg font-semibold leading-tight">
+                <p style={{ fontSize: "16px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "-0.01em" }}>
                   {result.findings.verdict === "verified" ? "Python is now Verified" : "Evidence below the bar"}
                 </p>
-                <p className="mt-1 text-[12px] text-muted font-mono break-all">
+                <p className="case-number" style={{ color: "var(--muted-text)", marginTop: "4px" }}>
                   {result.findings.repoName} · {result.findings.mode.toUpperCase()}
                 </p>
               </div>
             </div>
 
-            <dl className="mt-4 receipt">
-              <div className="grid grid-cols-2 gap-2 p-3 text-[12px]">
+            <div className="receipt" style={{ padding: "12px", marginBottom: "12px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "11px" }}>
                 <div>
-                  <dt className="text-muted font-mono text-[10px] uppercase">Language bytes</dt>
-                  <dd className="font-medium">{Object.entries(result.findings.languageShare).map(([k, v]) => `${k} ${v}%`).join("  ·  ")}</dd>
+                  <div className="case-number" style={{ color: "var(--muted-text)" }}>LANGUAGE BYTES</div>
+                  <div style={{ fontWeight: 700, marginTop: "2px" }}>{Object.entries(result.findings.languageShare).map(([k, v]) => `${k} ${v}%`).join(" · ")}</div>
                 </div>
                 <div>
-                  <dt className="text-muted font-mono text-[10px] uppercase">Commits (last 100)</dt>
-                  <dd className="font-medium">{result.findings.commitsLastYear ?? "—"}</dd>
+                  <div className="case-number" style={{ color: "var(--muted-text)" }}>COMMITS (LAST 100)</div>
+                  <div style={{ fontWeight: 700, marginTop: "2px" }}>{result.findings.commitsLastYear ?? "—"}</div>
                 </div>
                 <div>
-                  <dt className="text-muted font-mono text-[10px] uppercase">Last push</dt>
-                  <dd className="font-medium">{result.findings.lastCommitDays ?? "—"} days ago</dd>
+                  <div className="case-number" style={{ color: "var(--muted-text)" }}>LAST PUSH</div>
+                  <div style={{ fontWeight: 700, marginTop: "2px" }}>{result.findings.lastCommitDays ?? "—"} days ago</div>
                 </div>
                 <div>
-                  <dt className="text-muted font-mono text-[10px] uppercase">Evidence ID</dt>
-                  <dd className="font-medium">{result.evidenceId ?? "—"}</dd>
+                  <div className="case-number" style={{ color: "var(--muted-text)" }}>EVIDENCE ID</div>
+                  <div style={{ fontWeight: 700, marginTop: "2px", fontFamily: "'JetBrains Mono', monospace", fontSize: "10px" }}>{result.evidenceId ?? "—"}</div>
                 </div>
               </div>
-            </dl>
+            </div>
 
-            <h3 className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Why</h3>
-            <ul className="mt-1 list-none text-[13px]">
+            <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "6px" }}>WHY</p>
+            <ul style={{ listStyle: "none" }}>
               {result.findings.reasons.map((r, i) => (
-                <li key={i} className="flex gap-2 py-1 border-b border-dashed border-line">
-                  <span aria-hidden className="text-probe font-mono">→</span>
+                <li key={i} style={{ display: "flex", gap: "8px", padding: "6px 0", borderBottom: "1px dashed var(--border)", fontSize: "12px" }}>
+                  <span style={{ color: "var(--spot)", fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>→</span>
                   {r}
                 </li>
               ))}
             </ul>
             {result.findings.verdict === "verified" && (
-              <Link href="/student" className="mt-4 inline-flex items-center gap-2 border border-ledger text-ledger px-4 py-2 text-[13px] font-medium hover:bg-green-wash">
-                See it on my ledger →
+              <Link href="/student" className="btn-brutal-primary" style={{ marginTop: "12px", display: "inline-flex" }}>
+                SEE IT ON MY LEDGER →
               </Link>
             )}
           </div>

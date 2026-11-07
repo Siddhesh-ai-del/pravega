@@ -27,57 +27,57 @@ export default async function StudentDrivesPage() {
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">My drives &amp; eligibility</p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">Where you stand, and why</h1>
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>MY DRIVES &amp; ELIGIBILITY</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>WHERE YOU STAND, AND WHY</h1>
       </header>
-      <div className="p-4 md:p-6 grid gap-4 max-w-[880px]">
+      <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: "12px", maxWidth: "880px" }}>
         {drives.map((d) => {
           const isNimbus = d.id === "drv-nimbus";
           const v = isNimbus ? verdict : null;
           return (
-            <article key={d.id} className="border border-line bg-panel">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-2.5">
+            <div key={d.id} className="brutal-card" style={{ padding: "16px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px", paddingBottom: "10px", borderBottom: "2px solid var(--border)" }}>
                 <div>
-                  <h2 className="font-semibold">{d.company} — {d.role}</h2>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-                    {d.status} · JD skills: {(d.jdSkills as string[]).join(", ")} · {d.scheduledAt ? new Date(d.scheduledAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "TBD"}
+                  <h2 className="display-sm" style={{ fontSize: "18px", marginBottom: "2px" }}>{d.company} — {d.role}</h2>
+                  <p className="case-number" style={{ color: "var(--muted-text)" }}>
+                    {d.status.toUpperCase()} · JD: {(d.jdSkills as string[]).join(", ").toUpperCase()} · {d.scheduledAt ? new Date(d.scheduledAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "TBD"}
                   </p>
                 </div>
                 {isNimbus && v && (
-                  <span className={`font-mono text-[11px] uppercase tracking-wider px-2 py-1 border ${v.passed ? "text-ledger border-ledger/40 bg-green-wash" : "text-red border-red/40 bg-red-wash"}`}>
-                    {v.passed ? "Eligible · rule v3" : `Blocked · rule v${nimbusRule?.version}`}
+                  <span style={{
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+                    padding: "4px 10px", border: "3px solid var(--border)",
+                    background: v.passed ? "var(--primary)" : "var(--destructive)",
+                    color: v.passed ? "var(--primary-foreground)" : "var(--destructive-foreground)",
+                  }}>
+                    {v.passed ? "ELIGIBLE · RULE V3" : `BLOCKED · RULE V${nimbusRule?.version}`}
                   </span>
                 )}
               </div>
-              {!isNimbus && (
-                <div className="px-4 py-3">
-                  <p className="font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted">
-                    Eligibility evaluated at sweep time · reason codes cited per clause
-                  </p>
-                </div>
-              )}
               {isNimbus && v && (
-                <div className="px-4 py-3 text-[13px]">
+                <div style={{ fontSize: "12px" }}>
                   {v.passed ? (
                     <p>All clauses pass against <b>Nimbus Tech — Backend Dev v3</b>. Your SQL evidence (verified, expires Sep 2027) satisfies clause <b>c3</b>.</p>
                   ) : (
                     <div>
-                      <p className="text-red">Blocked by:</p>
-                      <ul className="mt-1 list-disc pl-5">
-                        {v.failedClauses.map((c) => <li key={c.id}><b>{c.id}</b> — {c.label}</li>)}
+                      <p style={{ color: "var(--destructive)", fontWeight: 700, textTransform: "uppercase", fontSize: "11px", marginBottom: "6px" }}>Blocked by:</p>
+                      <ul style={{ paddingLeft: "16px", marginBottom: "8px" }}>
+                        {v.failedClauses.map((c) => <li key={c.id} style={{ marginBottom: "2px" }}><b>{c.id}</b> — {c.label}</li>)}
                       </ul>
-                      <p className="mt-2 text-muted">Decision is recorded with rule version <b>{nimbusRule?.version}</b>. If you believe this is wrong, appeal — the T&amp;P cell reviews with the evidence chain in front of them.</p>
-                      <form action={recordAppeal} className="mt-2 flex gap-2">
+                      <p style={{ color: "var(--muted-text)", fontSize: "11px", marginBottom: "8px" }}>
+                        Decision recorded with rule version <b>{nimbusRule?.version}</b>. If you believe this is wrong, appeal.
+                      </p>
+                      <form action={recordAppeal} style={{ display: "flex", gap: "8px" }}>
                         <input type="hidden" name="driveId" value={d.id} />
-                        <input name="reason" defaultValue="eligibility review request" className="flex-1 border border-line px-3 py-1.5 text-[12px]" aria-label="Appeal reason" />
-                        <button type="submit" className="border border-probe text-probe px-3 py-1.5 text-[12px] hover:bg-panel-2">File appeal</button>
+                        <input name="reason" defaultValue="eligibility review request" className="brutal-input" style={{ flex: 1, fontSize: "11px" }} aria-label="Appeal reason" />
+                        <button type="submit" className="btn-brutal-outline" style={{ fontSize: "10px", padding: "6px 12px" }}>FILE APPEAL</button>
                       </form>
                     </div>
                   )}
                 </div>
               )}
-            </article>
+            </div>
           );
         })}
       </div>

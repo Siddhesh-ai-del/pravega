@@ -17,50 +17,55 @@ export default async function ConsentPage() {
 
   return (
     <AppShell session={session}>
-      <header className="m-dotgrid border-b border-line px-4 pb-5 pt-5 md:px-8 md:pt-6">
-        <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">My privacy · DPDP 2023 patterns</p>
-        <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">You opt in. You opt out. Any time.</h1>
+      <header className="construction-line" style={{ padding: "20px 24px" }}>
+        <p className="case-number" style={{ color: "var(--muted-text)", marginBottom: "4px" }}>MY PRIVACY · DPDP 2023 PATTERNS</p>
+        <h1 className="display-md" style={{ marginBottom: "4px" }}>YOU OPT IN. YOU OPT OUT. ANY TIME.</h1>
       </header>
-      <div className="p-4 md:p-6 grid gap-5 max-w-[880px]">
-        <section className="border border-line bg-panel" aria-labelledby="consent-heading">
-          <h2 id="consent-heading" className="border-b border-line px-4 py-2 font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Data access consents</h2>
+      <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: "16px", maxWidth: "880px" }}>
+        <div className="brutal-card" style={{ padding: "0" }}>
+          <div style={{ padding: "10px 14px", borderBottom: "3px solid var(--border)", background: "var(--secondary)", color: "var(--secondary-foreground)" }}>
+            <p className="case-number">DATA ACCESS CONSENTS</p>
+          </div>
           {[
             ["github", github, "Repository read — metadata, languages, commit timestamps", "Recruiter & T&P see sourced evidence only"],
             ["leetcode", leetcode, "Practice history — problem acceptance rate only", "Currently no integration linked"],
-          ].map(([key, grantedNow, scope, note]) => (
-            <div key={String(key)} className="flex items-center justify-between gap-4 border-b last:border-b-0 border-line px-4 py-3">
+          ].map(([key, grantedNow, scope, note], i) => (
+            <div key={String(key)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", padding: "14px", borderBottom: i === 0 ? "2px solid var(--border)" : "none" }}>
               <div>
-                <p className="text-[13px] font-medium uppercase font-mono">{String(key)}</p>
-                <p className="text-[12px] text-muted">{String(scope)}</p>
-                <p className="text-[11px] text-muted">{String(note)}</p>
+                <p style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>{String(key)}</p>
+                <p className="body-sm" style={{ color: "var(--muted-text)", fontSize: "11px" }}>{String(scope)}</p>
+                <p className="case-number" style={{ color: "var(--muted-text)", marginTop: "2px" }}>{String(note)}</p>
               </div>
               <form action={toggleConsent}>
                 <input type="hidden" name="key" value={String(key)} />
                 <input type="hidden" name="granted" value={String(!grantedNow)} />
-                <button type="submit" className={`font-mono text-[11px] uppercase border px-3 py-1.5 ${grantedNow ? "border-ledger text-ledger" : "border-red/50 text-red"}`}>
-                  {grantedNow ? "granted — revoke?" : "revoked — grant?"}
+                <button type="submit" className={grantedNow ? "btn-brutal-primary" : "btn-brutal-outline"} style={{ fontSize: "10px", padding: "6px 12px" }}>
+                  {grantedNow ? "GRANTED — REVOKE?" : "REVOKED — GRANT?"}
                 </button>
               </form>
             </div>
           ))}
-        </section>
+        </div>
 
-        <section className="border border-line bg-panel" aria-labelledby="why-heading">
-          <h2 id="why-heading" className="border-b border-line px-4 py-2 font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Why your scores look like this</h2>
-          <ul className="divide-y divide-line text-[13px]">
-            {[
-              ["SQL — verified", "T&P mock series 2025.11 · 82/100 · evidence ev-r-sql-test · report expires Sep 2027. If the score is wrong, appeal to T&P with your own test — the officer reviews the chain, not the number."],
-              ["Git — verified", "Mentor attestation by Prof. S. Kulkarni · expires Jul 2027. Not a screenshot anyone uploaded — a named human said so, on record."],
-              ["Python — claimed", "Your Coursera certificate aged past its validity window. Nothing about you is 'bad' — the evidence simply expired. Verify from your repo or re-assert with fresh proof."],
-            ].map(([t, d]) => (
-              <li key={String(t)} className="px-4 py-3">
-                <b>{String(t)}.</b> <span className="text-muted">{String(d)}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <div className="brutal-card" style={{ padding: "0" }}>
+          <div style={{ padding: "10px 14px", borderBottom: "3px solid var(--border)", background: "var(--secondary)", color: "var(--secondary-foreground)" }}>
+            <p className="case-number">WHY YOUR SCORES LOOK LIKE THIS</p>
+          </div>
+          {[
+            ["SQL — VERIFIED", "T&P mock series 2025.11 · 82/100 · evidence ev-r-sql-test · expires Sep 2027. If the score is wrong, appeal to T&P with your own test — the officer reviews the chain, not the number."],
+            ["GIT — VERIFIED", "Mentor attestation by Prof. S. Kulkarni · expires Jul 2027. Not a screenshot anyone uploaded — a named human said so, on record."],
+            ["PYTHON — CLAIMED", "Your Coursera certificate aged past its validity window. Nothing about you is 'bad' — the evidence simply expired. Verify from your repo or re-assert with fresh proof."],
+          ].map(([t, d], i) => (
+            <div key={String(t)} style={{ padding: "12px 14px", borderBottom: i < 2 ? "2px solid var(--border)" : "none" }}>
+              <p style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>{String(t)}.</p>
+              <p className="body-sm" style={{ color: "var(--muted-text)", fontSize: "11px" }}>{String(d)}</p>
+            </div>
+          ))}
+        </div>
 
-        <p className="font-mono text-[10px] text-muted">Full export of your profile + complete audit of who viewed it is available on request to the DPO (data protection officer) — demo placeholder, not a legal notice.</p>
+        <p className="case-number" style={{ color: "var(--muted-text)" }}>
+          Full export of your profile + complete audit of who viewed it is available on request to the DPO — demo placeholder, not a legal notice.
+        </p>
       </div>
     </AppShell>
   );

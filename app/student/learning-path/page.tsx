@@ -2,7 +2,6 @@ import { desc, eq } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { AppShell } from "@/components/shell/app-shell";
 import { LearningPathClient } from "@/components/student/learning-path-client";
 
@@ -23,21 +22,8 @@ export default async function LearningPathPage() {
   if (!path) {
     return (
       <AppShell session={session}>
-        <div className="p-6 md:p-10">
-          <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted">Gap-closing path</p>
-          <h1 className="mt-2 max-w-[20ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink md:text-[38px]">
-            No active path yet.
-          </h1>
-          <p className="mt-2 max-w-[52ch] text-[13px] leading-snug text-muted">
-            Complete a mock drive and the system will draft a gap-closing path from
-            your evidence — every step inspectable, no hidden model calls.
-          </p>
-          <Link
-            href="/student/mock-drive"
-            className="mt-5 inline-flex h-10 items-center gap-2 rounded-[6px] bg-probe px-5 text-[13px] font-medium text-paper transition-colors hover:bg-white"
-          >
-            Go to Mock Drive →
-          </Link>
+        <div style={{ padding: "40px", textAlign: "center" }}>
+          <p className="body-md" style={{ color: "var(--muted-text)" }}>No active learning path. Complete a Mock Drive first.</p>
         </div>
       </AppShell>
     );
