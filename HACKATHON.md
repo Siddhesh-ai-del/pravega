@@ -47,6 +47,12 @@ the deliverable is a convincing LIVE presentation — not a rush build.
 - 2026-11-04: National NAAC/NIRF CSV export checks out; heatmap export button renders.
 - 2026-11-04: Golden e2e (Playwright) passes 3/3 — tests/golden-flow.spec.ts
   (global setup reseeds factory data). Full keyboard+375px pass done via MCP.
+- 2026-11-07: UI redesign complete — **Bold Brutalist Ledger** chosen and verified
+  (owner verdict: "really liked the UI … feels human"). Replaced all 21 visual
+  surfaces. NeoBrutalism UI + react-fast-marquee + Motion + NumberFlow +
+  Aceternity + Magic UI integrated. Golden flow e2e 3/3, build clean, 375px verified.
+  Documented as canonical brutalist reference in hackathon-mode skill:
+  `references/brutalist-ledger.md`. Future brutalist requests should load that file.
 - 2026-11-04: TIMELINE CORRECTED by user: this is the PRE-competition stage.
   Live presentation on **Jan 1, 2027** is the selection gate; the actual
   36-hour build happens only after selection. ~58 days to prep. Feature-freeze
