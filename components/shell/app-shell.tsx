@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE, type Session } from "@/lib/auth";
@@ -29,14 +30,14 @@ export async function AppShell({
       {/* rail — black, heavy left border */}
       <aside className="hidden md:flex md:flex-col bg-secondary text-secondary-foreground border-r-4 border-border">
         <div className="border-b-4 border-border px-4 py-4">
-          <a href="/" className="block" aria-label="Pravega home">
+          <Link href="/" className="block" aria-label="Pravega home">
             <span className="case-number" style={{ color: "var(--concrete-dark)" }}>
               VERIFYING LEDGER
             </span>
             <span className="display-md" style={{ color: "var(--concrete)", marginTop: "4px", display: "block" }}>
               PRAVEGA<span style={{ color: "var(--spot)" }}>.</span>
             </span>
-          </a>
+          </Link>
         </div>
         <div className="p-3 flex-1">
           <p className="case-number" style={{ color: "var(--concrete-dark)", marginBottom: "8px", paddingLeft: "12px" }}>
@@ -74,9 +75,9 @@ export async function AppShell({
 
       {/* mobile top bar */}
       <header className="md:hidden sticky top-0 z-20 flex items-center justify-between bg-secondary text-secondary-foreground border-b-4 border-border px-4 py-2">
-        <a href="/" className="display-sm" style={{ color: "var(--concrete)" }}>
+        <Link href="/" className="display-sm" style={{ color: "var(--concrete)" }}>
           PRAVEGA<span style={{ color: "var(--spot)" }}>.</span>
-        </a>
+        </Link>
         <form action={signOut}>
           <button type="submit" className="btn-brutal-ghost" style={{ color: "var(--concrete)", fontSize: "10px" }}>
             Sign out

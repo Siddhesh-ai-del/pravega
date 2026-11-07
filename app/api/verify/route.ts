@@ -44,7 +44,7 @@ export async function POST(request: Request) {
   }
   const { repoUri, skillId } = parsed.data;
 
-  const findings = await analyzeRepo(repoUri, skillId);
+  const findings = await analyzeRepo(repoUri);
 
   if (findings.verdict === "verified") {
     const now = new Date();

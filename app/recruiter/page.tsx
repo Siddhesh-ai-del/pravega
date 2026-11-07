@@ -1,4 +1,4 @@
-import { desc, eq, inArray, ne } from "drizzle-orm";
+import { desc, inArray, ne } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";

@@ -38,7 +38,6 @@ export default async function LearningPathPage() {
         gapSkill="SQL"
         reason={reason}
         initialTasks={path.tasks as Task[]}
-        name={session.name.split(" ")[0]}
       />
     </AppShell>
   );

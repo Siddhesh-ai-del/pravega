@@ -21,7 +21,7 @@ const roleLabel: Record<string, string> = {
 async function signInAs(formData: FormData) {
   "use server";
   const userId = String(formData.get("userId") ?? "");
-  const user = await db.select().from(schema.users).where(eq(schema.users.id, userId)).then((r) => r[0]);
+  const user = await db.query.users.findFirst({ where: eq(schema.users.id, userId) });
   if (!user) return;
   const session = {
     userId: user.id,

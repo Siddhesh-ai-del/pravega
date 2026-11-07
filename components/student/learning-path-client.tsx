@@ -9,13 +9,11 @@ export function LearningPathClient({
   gapSkill,
   reason,
   initialTasks,
-  name,
 }: {
   pathId: string;
   gapSkill: string;
   reason: { source?: string; machineNote?: string; jdSignal?: string };
   initialTasks: Task[];
-  name: string;
 }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [busy, setBusy] = useState<string | null>(null);

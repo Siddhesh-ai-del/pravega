@@ -1,6 +1,5 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { db, schema } from "@/db";
 import { getSession } from "@/lib/auth";
 import { recordAudit } from "@/lib/audit";
 

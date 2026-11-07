@@ -15,7 +15,6 @@ export type AnalysisFindings = {
   mode: "live" | "fixtures";
 };
 
-const FIXTURE_REPO = "github.com/rahuljadhav/placement-lab";
 const FIXTURE_FINDINGS: AnalysisFindings = {
   repoName: "rahuljadhav/placement-lab",
   repoUri: "https://github.com/rahuljadhav/placement-lab",
@@ -51,7 +50,7 @@ async function gh(path: string): Promise<unknown> {
   return res.json();
 }
 
-export async function analyzeRepo(repoUri: string, skillId: string): Promise<AnalysisFindings> {
+export async function analyzeRepo(repoUri: string): Promise<AnalysisFindings> {
   const normalized = repoUri.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\.git$/, "");
   const m = normalized.match(/^github\.com\/([\w.-]+)\/([\w.-]+)/);
   if (!m) {
