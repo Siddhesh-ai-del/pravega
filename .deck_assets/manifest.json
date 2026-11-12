@@ -1,0 +1,9 @@
+{
+  "design": "pravega-brutalist",
+  "assets": [
+    ".deck_assets/backdrop.png",
+    ".deck_assets/employability.png",
+    ".deck_assets/weakshare.png",
+    ".deck_assets/qr_github.png"
+  ]
+}
