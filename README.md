@@ -65,14 +65,36 @@ not compiled by hand.
 
 ## Architecture
 
+```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#F5F3ED",
+    "primaryTextColor": "#0A0A0A",
+    "primaryBorderColor": "#0A0A0A",
+    "lineColor": "#0A0A0A",
+    "secondaryColor": "#D6D3CC",
+    "tertiaryColor": "#FF4A00",
+    "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+  }
+}}%%
+flowchart LR
+  GH["GitHub REST<br/>read-only · revocable"]
+  AN["Analyzer<br/>ports/adapters · labeled fallback"]
+  EV["Evidence ledger<br/>DB · expiry-tracked"]
+  RU["Rules engine v3<br/>parse-free · reason codes"]
+  AG["Agent runner<br/>+ human gate · audit log"]
+
+  GH --> AN --> EV --> RU --> AG
+
+  classDef ledger fill:#F5F3ED,stroke:#0A0A0A,stroke-width:2px,color:#0A0A0A;
+  classDef gate fill:#FF4A00,stroke:#0A0A0A,stroke-width:3px,color:#0A0A0A,font-weight:700;
+  class GH,AN,EV,RU ledger;
+  class AG gate;
+  linkStyle default stroke:#0A0A0A,stroke-width:2px;
 ```
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│  GitHub REST │ → │  Analyzer    │ → │  Evidence    │ → │  Rules       │ → │  Agent runner│
-│  read-only   │   │  ports/adapt │   │  ledger (DB) │   │  engine v3   │   │  + human gate│
-│  revocable   │   │  labeled FB  │   │  expiry-tracked│  │  parse-free  │   │  audit_log   │
-└──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘
-       Next.js 16 · React 19 · TypeScript · Tailwind v4 · Drizzle ORM · Postgres (Supabase ap-south-1)
-```
+
+*Stack:* Next.js 16 · React 19 · TypeScript · Tailwind v4 · Drizzle ORM · Postgres (Supabase ap-south-1)
 
 The analyzer is a **port/adapter**: swap fixtures ↔ live GitHub with zero change above
 the ledger. Agents are deterministic engines with reason codes and confidence — no LLM
