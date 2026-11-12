@@ -69,12 +69,12 @@ not compiled by hand.
 %%{init: {
   "theme": "base",
   "themeVariables": {
-    "primaryColor": "#F5F3ED",
-    "primaryTextColor": "#0A0A0A",
-    "primaryBorderColor": "#0A0A0A",
-    "lineColor": "#0A0A0A",
-    "secondaryColor": "#D6D3CC",
-    "tertiaryColor": "#FF4A00",
+    "primaryColor": "#313244",
+    "primaryTextColor": "#cdd6f4",
+    "primaryBorderColor": "#89b4fa",
+    "lineColor": "#89b4fa",
+    "secondaryColor": "#45475a",
+    "tertiaryColor": "#cba6f7",
     "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
   }
 }}%%
@@ -87,11 +87,11 @@ flowchart LR
 
   GH --> AN --> EV --> RU --> AG
 
-  classDef ledger fill:#F5F3ED,stroke:#0A0A0A,stroke-width:2px,color:#0A0A0A;
-  classDef gate fill:#FF4A00,stroke:#0A0A0A,stroke-width:3px,color:#0A0A0A,font-weight:700;
-  class GH,AN,EV,RU ledger;
+  classDef node fill:#313244,stroke:#89b4fa,stroke-width:2px,color:#cdd6f4;
+  classDef gate fill:#45475a,stroke:#cba6f7,stroke-width:3px,color:#cdd6f4;
+  class GH,AN,EV,RU node;
   class AG gate;
-  linkStyle default stroke:#0A0A0A,stroke-width:2px;
+  linkStyle default stroke:#89b4fa,stroke-width:3px,color:#89b4fa;
 ```
 
 *Stack:* Next.js 16 · React 19 · TypeScript · Tailwind v4 · Drizzle ORM · Postgres (Supabase ap-south-1)
