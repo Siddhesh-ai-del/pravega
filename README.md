@@ -66,18 +66,7 @@ not compiled by hand.
 ## Architecture
 
 ```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "primaryColor": "#313244",
-    "primaryTextColor": "#cdd6f4",
-    "primaryBorderColor": "#89b4fa",
-    "lineColor": "#89b4fa",
-    "secondaryColor": "#45475a",
-    "tertiaryColor": "#cba6f7",
-    "fontFamily": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
-  }
-}}%%
+%%{init: {'theme':'base','themeVariables': {'primaryColor':'#313244','primaryTextColor':'#cdd6f4','primaryBorderColor':'#89b4fa','lineColor':'#89b4fa','fontFamily':'monospace'}}}%%
 flowchart LR
   GH["GitHub REST<br/>read-only · revocable"]
   AN["Analyzer<br/>ports/adapters · labeled fallback"]
@@ -87,11 +76,11 @@ flowchart LR
 
   GH --> AN --> EV --> RU --> AG
 
-  classDef node fill:#313244,stroke:#89b4fa,stroke-width:2px,color:#cdd6f4;
-  classDef gate fill:#45475a,stroke:#cba6f7,stroke-width:3px,color:#cdd6f4;
-  class GH,AN,EV,RU node;
-  class AG gate;
-  linkStyle default stroke:#89b4fa,stroke-width:3px,color:#89b4fa;
+  classDef catNode fill:#313244,stroke:#89b4fa,stroke-width:2px,color:#cdd6f4;
+  classDef catGate fill:#45475a,stroke:#cba6f7,stroke-width:3px,color:#cdd6f4;
+  class GH,AN,EV,RU catNode;
+  class AG catGate;
+  linkStyle default stroke:#89b4fa,stroke-width:3px;
 ```
 
 *Stack:* Next.js 16 · React 19 · TypeScript · Tailwind v4 · Drizzle ORM · Postgres (Supabase ap-south-1)
