@@ -1,20 +1,23 @@
 {
-  "name": "swiss",
+  "name": "pravega-brutalist",
   "mode": "light",
   "palette": {
-    "paper": "FFFFFF",
-    "ink": "000000",
-    "slate": "757575",
-    "line": "000000",
-    "accent": "E62B1E"
+    "paper": "D6D3CC",
+    "ink": "0A0A0A",
+    "slate": "6B6560",
+    "line": "0A0A0A",
+    "accent": "FF4A00",
+    "mist": "F5F3ED",
+    "concrete": "D6D3CC",
+    "concrete-dark": "B5B1A8"
   },
   "faces": {
-    "display": "Fira Sans",
+    "display": "Fira Sans Condensed",
     "body": "Fira Sans",
-    "mono": "Fira Sans"
+    "mono": "JetBrainsMono Nerd Font"
   },
   "scale_pt": {
-    "display": 84,
+    "display": 96,
     "title": 32,
     "subtitle": 14,
     "heading": 15,
@@ -26,12 +29,13 @@
   "margins_in": { "left": 0.6, "right": 0.6, "top": 0.5, "bottom": 0.45 },
   "line_spacing": 1.2,
   "style": {
-    "border_pt": 0,
-    "shadow": "none",
-    "shadow_offset_in": 0.0,
+    "border_pt": 3,
+    "shadow": "hard",
+    "shadow_offset_in": 0.08,
+    "shadow_color": "0A0A0A",
     "radius_in": 0.0,
     "grid_cols": 12,
     "folio": "corner",
-    "rules_pt": 0.75
+    "rules_pt": 3
   }
 }

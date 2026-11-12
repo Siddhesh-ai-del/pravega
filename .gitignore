@@ -7,3 +7,6 @@ next-env.d.ts
 .playwright-mcp/
 test-results/
 playwright-report/
+
+# Python
+__pycache__/
